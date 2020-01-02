@@ -4,10 +4,9 @@ const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-
 // Mongoose
 const mongoose = require("mongoose");
-// db = require("./models");
+db = require("./models");
 mongoose.Promise = Promise;
 const mongoUrl = process.env.MONGODB_URI;
 mongoose.connect(mongoUrl, {
