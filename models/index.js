@@ -1,4 +1,5 @@
 module.exports = {
   User: require("./User"),
-  Event: require("./Event")
+  Event: require("./Event"),
+  Post: require("./Post")
 };
