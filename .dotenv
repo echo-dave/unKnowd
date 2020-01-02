@@ -1,0 +1,4 @@
+MONGODB_URI=mongodb://localhost/unKowd
+
+touch .env
+nano .env
