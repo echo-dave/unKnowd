@@ -12,7 +12,11 @@ const EventSchema = new Schema({
   name: String,
   description: String,
   img: String,
-  private: Boolean
+  private: Boolean,
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  }
 });
 
 const Event = mongoose.model("Event", EventSchema);
