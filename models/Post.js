@@ -10,8 +10,10 @@ const PostSchema = new Schema({
   },
   dateCreated: Date,
   photos: Array,
-  replies: [PostSchema]
+  replies: Array
 });
 
 const Post = mongoose.model("Post", PostSchema);
 module.exports = Post;
+
+//[0]   replies: [PostSchema]
