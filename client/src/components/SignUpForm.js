@@ -8,7 +8,9 @@ class SignUpForm extends Component {
 
   state = {
     email: "",
-    password: ""
+    password: "",
+    firstName: "",
+    lastName: ""
   };
 
   changeHandler = e => {
@@ -18,9 +20,9 @@ class SignUpForm extends Component {
 
   submitHandler = e => {
     e.preventDefault();
-    const { email, password } = this.state;
-    if (email && password) {
-      Auth.register(email, password, response => {
+    const { email, password, firstName, lastName } = this.state;
+    if (email && password && firstName && lastName) {
+      Auth.register(email, password, firstName, lastName, response => {
         this.context.setUser(response);
         this.props.history.push("/");
       });
@@ -33,14 +35,14 @@ class SignUpForm extends Component {
         <h1>first name</h1>
         <input
           type="text"
-          name="name.first"
+          name="firstName"
           value={this.state.first}
           onChange={this.changeHandler}
         />
         <h1>last name</h1>
         <input
           type="text"
-          name="name.last"
+          name="lastName"
           value={this.state.last}
           onChange={this.changeHandler}
         />

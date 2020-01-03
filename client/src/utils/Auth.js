@@ -1,18 +1,32 @@
 import axios from "axios";
 
 function Auth() {
-  function logIn(username, password, cb) {
+  function logIn(email, password, cb) {
     //code goes here
     axios
-      .post("/api/authenticate", { username: username, password: password })
+      .post("/api/authenticate", { email: email, password: password })
       .then(response => {
         localStorage.setItem("token", response.data.token);
         cb(response.data);
+        console.log(response);
       });
   }
 
-  function register(username, password, cb) {
-    // go to stuff with axios
+  function register(email, password, first, last, cb) {
+    console.log("register");
+    axios
+      .post("/api/signup", {
+        email: email,
+        password: password,
+        firstName: first,
+        lastName: last
+      })
+      .then(function(data) {
+        console.log(data);
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
   }
 
   function logOut(cb) {

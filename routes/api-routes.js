@@ -37,6 +37,7 @@ module.exports = function(app) {
           email: dbUser.email,
           token: token
         });
+        console.log(email);
       } else {
         res.status(401).json({ message: "email or password incorrect" });
       }
