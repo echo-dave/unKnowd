@@ -18,12 +18,12 @@ module.exports = function(app) {
   });
 
   app.post("/api/authenticate", function(req, res) {
-    const { username, password } = req.body;
-    User.findOne({ username: username }).then(function(dbUser) {
+    const { email, password } = req.body;
+    User.findOne({ email: email }).then(function(dbUser) {
       if (!dbUser)
         return res
           .status(401)
-          .json({ message: "username or password is incorrect" });
+          .json({ message: "email or password is incorrect" });
       if (dbUser.comparePassword(password)) {
         const token = jwt.sign(
           {
@@ -34,11 +34,11 @@ module.exports = function(app) {
 
         res.json({
           id: dbUser._id,
-          username: dbUser.username,
+          email: dbUser.email,
           token: token
         });
       } else {
-        res.status(401).json({ message: "username or password incorrect" });
+        res.status(401).json({ message: "email or password incorrect" });
       }
     });
   });
@@ -47,13 +47,19 @@ module.exports = function(app) {
     const user = req.user;
     res.json({
       message:
-        user.username + ", you should only see this if you're authenticated."
+        user.email + ", you should only see this if you're authenticated."
     });
   });
 
   app.get("/api/public", function(req, res) {
     res.json({
       message: "this is available for everyone"
+    });
+  });
+
+  app.get("/api/me", authWare, function(req, res) {
+    User.findById(req.user._id).then(dbUser => {
+      res.json(dbUser);
     });
   });
 };
