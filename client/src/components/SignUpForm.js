@@ -32,35 +32,45 @@ class SignUpForm extends Component {
   render() {
     return (
       <form onSubmit={this.submitHandler}>
-        <h1>first name</h1>
-        <input
-          type="text"
-          name="firstName"
-          value={this.state.first}
-          onChange={this.changeHandler}
-        />
-        <h1>last name</h1>
-        <input
-          type="text"
-          name="lastName"
-          value={this.state.last}
-          onChange={this.changeHandler}
-        />
-        <h1>password</h1>
-        <input
-          type="password"
-          name="password"
-          value={this.state.password}
-          onChange={this.changeHandler}
-        />
-        <h1>email</h1>
-        <input
-          type="text"
-          name="email"
-          value={this.state.email}
-          onChange={this.changeHandler}
-        />
-        <button type="submit">Submit</button>
+        <div class="field">
+          <h1>First Name</h1>
+          <input
+            type="text"
+            name="firstName"
+            value={this.state.first}
+            onChange={this.changeHandler}
+          />
+        </div>
+        <div class="field">
+          <h1>Last Name</h1>
+          <input
+            type="text"
+            name="lastName"
+            value={this.state.last}
+            onChange={this.changeHandler}
+          />
+        </div>
+        <div class="field">
+          <h1>Password (min of 8 characters)</h1>
+          <input
+            type="password"
+            name="password"
+            value={this.state.password}
+            onChange={this.changeHandler}
+          />
+        </div>
+        <div class="field">
+          <h1>Email</h1>
+          <input
+            type="text"
+            name="email"
+            value={this.state.email}
+            onChange={this.changeHandler}
+          />
+        </div>
+        <button class="button is-primary is-small" type="submit">
+          Sign up
+        </button>
       </form>
     );
   }

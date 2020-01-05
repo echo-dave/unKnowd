@@ -1,1 +1,16 @@
-@import "../../node_modules/bulma/bulma.sass";
+@import "../../../node_modules/bulma/bulma.sass";
+
+.container {
+  height: 200px;
+  position: relative;
+}
+
+#login {
+  border: none;
+  margin-top: 10px;
+  background-color: lightgrey;
+}
+
+h1 {
+  font-size: 15px;
+}
