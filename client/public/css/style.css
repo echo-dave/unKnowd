@@ -9340,4 +9340,19 @@ label.panel-block:hover {
   padding: 3rem 1.5rem 6rem;
 }
 
+.container {
+  height: 200px;
+  position: relative;
+}
+
+#login {
+  border: none;
+  margin-top: 10px;
+  background-color: lightgrey;
+}
+
+h1 {
+  font-size: 15px;
+}
+
 /*# sourceMappingURL=style.css.map */

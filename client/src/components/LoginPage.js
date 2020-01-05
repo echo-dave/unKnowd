@@ -13,10 +13,22 @@ class LoginPage extends React.Component {
     const { isRegister } = this.state;
     return (
       <>
-        {isRegister ? <SignUpForm /> : <LoginForm />}
-        <button onClick={this.changeForm}>
-          {isRegister ? "login" : "signup"}
-        </button>
+        <div class="container">
+          <div class="columns is-centered is-vcentered">
+            <div class="column is-narrow">
+              {isRegister ? <SignUpForm /> : <LoginForm />}
+              <button
+                class="button is-primary is-small"
+                id="login"
+                onClick={this.changeForm}
+              >
+                {isRegister
+                  ? "Already have an account?"
+                  : "Sign up for an account"}
+              </button>
+            </div>
+          </div>
+        </div>
       </>
     );
   }

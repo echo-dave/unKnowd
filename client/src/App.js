@@ -35,7 +35,7 @@ class App extends Component {
               setUser: setUser
             }}
           >
-            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/" component={LoginPage} />
           </UserContext.Provider>
         </div>
       </Router>
