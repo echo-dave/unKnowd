@@ -12,28 +12,24 @@ class LoginPage extends React.Component {
   render() {
     const { isRegister } = this.state;
     return (
-      <>
+      <div id="wrap">
         <nav>
           <h1 id="main-name">UnKnowed</h1>
         </nav>
         <h5 id="quote">Putting community back in community</h5>
-        <div class="container">
-          <div class="columns is-centered is-vcentered">
-            <div class="column is-narrow">
+        <div className="container" id="signup-container">
+          <div className="columns is-centered is-vcentered">
+            <div className="column is-narrow box">
               {isRegister ? <SignUpForm /> : <LoginForm />}
-              <button
-                class="button is-primary is-small"
-                id="login"
-                onClick={this.changeForm}
-              >
+              <a className="" id="login" onClick={this.changeForm}>
                 {isRegister
                   ? "Already have an account?"
                   : "Sign up for an account"}
-              </button>
+              </a>
             </div>
           </div>
         </div>
-      </>
+      </div>
     );
   }
 }
