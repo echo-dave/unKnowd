@@ -18,7 +18,7 @@ class Post extends Component {
 
   render() {
     return (
-      <div class="posts container">
+      <div class="posts box">
         <p>{this.props.msg}</p>
         <div class="postPhotos">{this.props.photos}</div>
         <div class="username">{this.props.creator.firstName}</div>

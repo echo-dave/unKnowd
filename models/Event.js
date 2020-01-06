@@ -9,7 +9,7 @@ const EventSchema = new Schema({
     start: Date,
     end: Date
   },
-  name: String,
+  title: String,
   description: String,
   img: String,
   private: Boolean,
