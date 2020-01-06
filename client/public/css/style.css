@@ -9340,9 +9340,26 @@ label.panel-block:hover {
   padding: 3rem 1.5rem 6rem;
 }
 
+#main-name {
+  font-size: 30px;
+  text-align: center;
+  margin-top: 20px;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  background: lightgray;
+  color: white;
+}
+
+#quote {
+  text-align: center;
+  font-style: italic;
+  font-size: 17px;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
 .container {
   height: 200px;
   position: relative;
+  margin-top: 30px;
 }
 
 #login {
@@ -9351,8 +9368,13 @@ label.panel-block:hover {
   background-color: lightgrey;
 }
 
+#login:hover {
+  background-color: #c5c3c3;
+}
+
 h1 {
   font-size: 15px;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 /*# sourceMappingURL=style.css.map */
