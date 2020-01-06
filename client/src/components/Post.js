@@ -18,11 +18,11 @@ class Post extends Component {
 
   render() {
     return (
-      <div class="posts box">
+      <div className="posts box">
         <p>{this.props.msg}</p>
-        <div class="postPhotos">{this.props.photos}</div>
-        <div class="username">{this.props.creator.firstName}</div>
-        <div class="userphoto">{this.props.creator.photo}</div>
+        <div className="postPhotos">{this.props.photos}</div>
+        <div className="username">{this.props.creator.firstName}</div>
+        <div className="userphoto">{this.props.creator.photo}</div>
       </div>
     );
   }

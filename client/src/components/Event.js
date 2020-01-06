@@ -18,15 +18,15 @@ class Event extends Component {
 
   render() {
     return (
-      <div class="events box">
+      <div className="events box">
         <h2>{this.props.title}</h2>
-        <div class="postPhotos">{this.props.img}</div>
-        <p class="description">{this.props.description}</p>
-        <span class="dates">
+        <div className="postPhotos">{this.props.img}</div>
+        <p className="description">{this.props.description}</p>
+        <span className="dates">
           {this.props.date.start} - {this.props.date.end}
         </span>
-        <div class="username">{this.props.creator.firstName}</div>
-        <div class="userphoto">{this.props.creator.photo}</div>
+        <div className="username">{this.props.creator.firstName}</div>
+        <div className="userphoto">{this.props.creator.photo}</div>
       </div>
     );
   }
