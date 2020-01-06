@@ -1,8 +1,14 @@
 require("dotenv").config();
 const express = require("express");
+var io = require("socket.io")(http);
 const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
+var http = require("http").createServer(app);
+
+io.on("connection", function(socket) {
+  console.log("a user connected");
+});
 
 // Mongoose
 const mongoose = require("mongoose");
@@ -32,6 +38,6 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.listen(PORT, () => {
+http.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`);
 });

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 class Post extends Component {
-  state = {
+  /*  state = {
     posts: []
   };
 
@@ -14,7 +14,7 @@ class Post extends Component {
       .get("/api/posts")
       .then(res => this.setState({ posts: res.data }))
       .cach(err => console.log(err));
-  };
+  }; */
 
   render() {
     return (

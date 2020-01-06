@@ -63,4 +63,21 @@ module.exports = function(app) {
       res.json(dbUser);
     });
   });
+
+  app.post("/api/post", function(req, res) {
+    db.Post.create(req.body).then(function(data) {
+      res.json(data);
+    });
+  });
+
+  //we need to have the user _id to insert into the event as well as getting the user name and user photo from the User collection
+  app.post("/api/event", function(req, res) {
+    db.Event.create()
+      .then(function(data) {
+        res.json(data);
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+  });
 };
