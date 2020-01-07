@@ -10,9 +10,27 @@ class Mainpage extends React.Component {
     events: []
   };
 
+  socket = socketIOClient();
+
   componentDidMount() {
     this.getPosts();
     this.getEvents();
+
+    this.socket.on("new event", event => {
+      this.setState({
+        events: [event, ...this.state.events]
+      });
+    });
+
+    this.socket.on("new post", post => {
+      this.setState({
+        posts: [post, ...this.state.posts]
+      });
+    });
+  }
+
+  componentWillUnmount() {
+    this.socket.close();
   }
 
   getPosts = () => {
@@ -43,3 +61,5 @@ class Mainpage extends React.Component {
     );
   }
 }
+
+export default Mainpage;
