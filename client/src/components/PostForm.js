@@ -9,12 +9,13 @@ class PostForm extends Component {
   //settting compoent forms initial structure
   state = {
     msg: "",
-    creator: "",
+    creator: "5e13e9c75293fcd9f353d106",
     dateCreated: "",
     photos: ""
   };
 
-  socket = socketIOClient();
+  componentDidMount() {}
+  // socket = socketIOClient();
 
   //this gets the value and name of the inputs that triggered the change
   changeHandler = e => {
@@ -27,6 +28,7 @@ class PostForm extends Component {
   //want to prevent the default of form submit which is to just refresh the page
   submitHandler = e => {
     e.preventDefault();
+    // console.log(Auth.getToken());
     let currentDate = new Date();
     let postData = {
       msg: this.state.msg,
@@ -38,11 +40,12 @@ class PostForm extends Component {
 
   savePost = postData => {
     axios
-      .post("/api/newpost", postData)
+      .post("/api/post", postData)
       .then(returnedData => {
-        this.socket.emit("new post", {
-          returnedData
-        });
+        // console.log(returnedData);
+        // this.socket.emit("new post", {
+        //   returnedData
+        // });
       })
       .catch(err => console.log(err));
   };
@@ -52,7 +55,7 @@ class PostForm extends Component {
       <div id="postform">
         <form className="event" onSubmit={this.submitHandler}>
           <div className="field">
-            <label className="label" for="msg">
+            <label className="label" htmlFor="msg">
               Message
             </label>
             <input
@@ -63,7 +66,7 @@ class PostForm extends Component {
             />
           </div>
           <div className="field">
-            <label className="label" for="photo">
+            <label className="label" htmlFor="photo">
               Photo
             </label>
             <div className="control">

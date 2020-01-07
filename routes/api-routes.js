@@ -3,10 +3,12 @@ const path = require("path");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const authWare = require("../middleware/authware");
+// const socketIOClient = require("socket.io-client");
+// const socket = socketIOClient("http://127.0.0.1:3001");
 
 // const cloud = require("../nodejs/cloudinaryUp");
 
-module.exports = function(app) {
+module.exports = function(app, socket) {
   app.post("/api/signup", function(req, res) {
     User.create(req.body)
       .then(function(result) {
@@ -60,6 +62,11 @@ module.exports = function(app) {
 
   app.get("/api/me", authWare, function(req, res) {
     User.findById(req.user._id).then(dbUser => {
+      dbUser = {
+        id: dbUser._id,
+        firstName: dbUser.firstName
+      };
+      console.log(dbUser);
       res.json(dbUser);
     });
   });
@@ -76,14 +83,18 @@ module.exports = function(app) {
   });
   app.post("/api/post", function(req, res) {
     db.Post.create(req.body).then(function(data) {
-      res.json(data);
+      console.log(data);
+      socket.emit("new post", data);
+      res.end();
+      // res.json(data);
     });
   });
 
   app.get("/api/events", function(req, res) {
     let currentDate = new Date();
+    console.log(currentDate);
     db.Event.find({
-      "date.end": { $lt: currentDate }
+      "date.end": { $gt: currentDate }
     }).then(events => {
       res.json(events);
     });

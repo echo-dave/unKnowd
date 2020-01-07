@@ -10,6 +10,11 @@ const PORT = process.env.PORT || 3001;
 
 io.on("connection", function(socket) {
   console.log("a user connected");
+  // Define API routes here
+  require("./routes/api-routes.js")(app, socket);
+
+  socket.on("disconnect", () => console.log("user disconnected"));
+  // socket.emit("new post", "server emitter");
 });
 
 // Mongoose
@@ -30,8 +35,6 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-// Define API routes here
-require("./routes/api-routes.js")(app);
 // Send every other request to the React app
 // Define any API routes before this runs
 if (process.env.NODE_ENV === "production") {

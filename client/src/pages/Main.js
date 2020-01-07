@@ -3,33 +3,52 @@ import axios from "axios";
 import Post from "../components/Post";
 import Event from "../components/Event";
 import Postform from "../components/PostForm";
+import authenticatedAxios from "../utils/AuthenticatedAxios";
+
 // import Nav from "../components/Nav";
 import socketIOClient from "socket.io-client";
 
 class Mainpage extends React.Component {
   state = {
     posts: [],
-    events: []
+    events: [],
+    user: ""
   };
 
-  socket = socketIOClient();
+  setUser = user => {
+    this.setState({ user });
+  };
 
   componentDidMount() {
     this.getPosts();
     this.getEvents();
+    const socket = socketIOClient("http://127.0.0.1:3001");
+    // socket.on("new post", data => console.log(data));
 
-    this.socket.on("new event", event => {
+    socket.on("new post", post => {
+      console.log(post);
       this.setState({
-        events: [event, ...this.state.events]
+        posts: [post, ...this.state.posts]
       });
     });
 
-    // this.socket.on("new post", post => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      authenticatedAxios.get("/api/me").then(response => {
+        console.log(response.data);
+        this.setUser(response.data);
+        console.log(this.state.user);
+      });
+    }
+
+    // this.socket.on("new event", event => {
     //   this.setState({
-    //     posts: [post, ...this.state.posts]
+    //     events: [event, ...this.state.events]
     //   });
     // });
-    this.socket.on("new test", console.log);
+
+    //
+    // this.socket.on("new test", console.log);
   }
 
   componentWillUnmount() {

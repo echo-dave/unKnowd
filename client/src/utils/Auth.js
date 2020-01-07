@@ -6,9 +6,9 @@ function Auth() {
     axios
       .post("/api/authenticate", { email: email, password: password })
       .then(response => {
+        console.log(response);
         localStorage.setItem("token", response.data.token);
         cb(response.data);
-        console.log(response);
       });
   }
 
