@@ -2,15 +2,19 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import Auth from "../utils/Auth";
+import axios from "axios";
+import socketIOClient from "socket.io-client";
 
 class PostForm extends Component {
   //settting compoent forms initial structure
   state = {
     msg: "",
     creator: "",
-    dateCreated,
+    dateCreated: "",
     photos: ""
   };
+
+  socket = socketIOClient();
 
   //this gets the value and name of the inputs that triggered the change
   changeHandler = e => {
@@ -23,6 +27,24 @@ class PostForm extends Component {
   //want to prevent the default of form submit which is to just refresh the page
   submitHandler = e => {
     e.preventDefault();
+    let currentDate = new Date();
+    let postData = {
+      msg: this.state.msg,
+      creator: this.state.creator,
+      dateCreated: currentDate
+    };
+    this.savePost(postData);
+  };
+
+  savePost = postData => {
+    axios
+      .post("/api/newpost", postData)
+      .then(returnedData => {
+        socket.emit("new post", {
+          returnedData
+        });
+      })
+      .catch(err => console.log(err));
   };
 
   render() {
@@ -55,3 +77,5 @@ class PostForm extends Component {
     );
   }
 }
+
+export default PostForm;

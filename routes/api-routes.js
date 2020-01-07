@@ -64,9 +64,28 @@ module.exports = function(app) {
     });
   });
 
+  app.get("/api/posts", function(req, res) {
+    db.Post.find()
+      .sort({ dateCreated: -1 })
+      .limit(20)
+      .populate("creator")
+      .then(posts => {
+        res.json(posts);
+      })
+      .catch(err => console.log(err));
+  });
   app.post("/api/post", function(req, res) {
     db.Post.create(req.body).then(function(data) {
       res.json(data);
+    });
+  });
+
+  app.get("/api/events", function(req, res) {
+    let currentDate = new Date();
+    db.Event.find({
+      "date.end": { $lt: currentDate }
+    }).then(events => {
+      res.json(events);
     });
   });
 

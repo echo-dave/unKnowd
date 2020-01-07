@@ -20,9 +20,9 @@ class Post extends Component {
     return (
       <div className="posts box">
         <p>{this.props.msg}</p>
-        <div className="postPhotos">{this.props.photos}</div>
-        <div className="username">{this.props.creator.firstName}</div>
-        <div className="userphoto">{this.props.creator.photo}</div>
+        <img alt="" className="postPhotos" src={this.props.photos} />
+        <div className="username">{this.props.firstName}</div>
+        <img alt="" className="userphoto" src={this.props.creatorPhoto} />
       </div>
     );
   }

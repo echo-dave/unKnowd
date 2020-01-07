@@ -32,7 +32,7 @@ class SignUpForm extends Component {
   render() {
     return (
       <form onSubmit={this.submitHandler}>
-        <div class="field">
+        <div className="field">
           <h1>First Name</h1>
           <input
             type="text"
@@ -41,7 +41,7 @@ class SignUpForm extends Component {
             onChange={this.changeHandler}
           />
         </div>
-        <div class="field">
+        <div className="field">
           <h1>Last Name</h1>
           <input
             type="text"
@@ -50,7 +50,7 @@ class SignUpForm extends Component {
             onChange={this.changeHandler}
           />
         </div>
-        <div class="field">
+        <div className="field">
           <h1>Password (min of 8 characters)</h1>
           <input
             type="password"
@@ -59,7 +59,7 @@ class SignUpForm extends Component {
             onChange={this.changeHandler}
           />
         </div>
-        <div class="field">
+        <div className="field">
           <h1>Email</h1>
           <input
             type="text"
@@ -68,7 +68,7 @@ class SignUpForm extends Component {
             onChange={this.changeHandler}
           />
         </div>
-        <button class="button is-primary is-small" type="submit">
+        <button className="button is-primary is-small" type="submit">
           Sign up
         </button>
       </form>

@@ -1,7 +1,9 @@
 import React from "react";
+import axios from "axios";
 import Post from "../components/Post";
-import Event from "../componets/Event";
-import Nav from "../components/Nav";
+import Event from "../components/Event";
+import Postform from "../components/PostForm";
+// import Nav from "../components/Nav";
 import socketIOClient from "socket.io-client";
 
 class Mainpage extends React.Component {
@@ -36,8 +38,11 @@ class Mainpage extends React.Component {
   getPosts = () => {
     axios
       .get("/api/posts")
-      .then(res => this.setState({ posts: res.data }))
-      .cach(err => console.log(err));
+      .then(res => {
+        console.log(res);
+        this.setState({ posts: res.data });
+      })
+      .catch(err => console.log(err));
   };
 
   getEvents = () => {
@@ -49,15 +54,26 @@ class Mainpage extends React.Component {
 
   render() {
     return (
-      <>
-        <Nav />
-        {this.state.posts.map(post => (
-          <Post key={post._id} />
-        ))}
-        {this.state.events.map(event => (
-          <Event key={event._id} />
-        ))}
-      </>
+      <div className="container main">
+        <div className="columns">
+          <div className="column posts">
+            {this.state.posts.map(post => (
+              <Post
+                key={post._id}
+                msg={post.msg}
+                firstName={post.creator.firstName}
+                creatorPhoto={post.creator.photo}
+              />
+            ))}
+          </div>
+          <div className="column events">
+            {this.state.events.map(event => (
+              <Event key={event._id} />
+            ))}
+          </div>
+        </div>
+        <Postform />
+      </div>
     );
   }
 }
