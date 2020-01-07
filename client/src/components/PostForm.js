@@ -39,6 +39,7 @@ class PostForm extends Component {
   };
 
   savePost = postData => {
+    console.log(postData);
     axios
       .post("/api/post", postData)
       .then(returnedData => {

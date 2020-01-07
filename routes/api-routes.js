@@ -8,7 +8,7 @@ const authWare = require("../middleware/authware");
 
 // const cloud = require("../nodejs/cloudinaryUp");
 
-module.exports = function(app, socket) {
+module.exports = function(app, io) {
   app.post("/api/signup", function(req, res) {
     User.create(req.body)
       .then(function(result) {
@@ -83,9 +83,13 @@ module.exports = function(app, socket) {
   });
   app.post("/api/post", function(req, res) {
     db.Post.create(req.body).then(function(data) {
-      console.log(data);
-      socket.emit("new post", data);
-      res.end();
+      data
+        .populate("creator")
+        .execPopulate()
+        .then(populatedData => {
+          io.sockets.emit("new post", populatedData);
+          res.end();
+        });
       // res.json(data);
     });
   });
