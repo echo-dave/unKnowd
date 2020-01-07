@@ -24,11 +24,12 @@ class Mainpage extends React.Component {
       });
     });
 
-    this.socket.on("new post", post => {
-      this.setState({
-        posts: [post, ...this.state.posts]
-      });
-    });
+    // this.socket.on("new post", post => {
+    //   this.setState({
+    //     posts: [post, ...this.state.posts]
+    //   });
+    // });
+    this.socket.on("new test", console.log);
   }
 
   componentWillUnmount() {

@@ -40,7 +40,7 @@ class PostForm extends Component {
     axios
       .post("/api/newpost", postData)
       .then(returnedData => {
-        socket.emit("new post", {
+        this.socket.emit("new post", {
           returnedData
         });
       })
@@ -49,10 +49,12 @@ class PostForm extends Component {
 
   render() {
     return (
-      <div>
+      <div id="postform">
         <form className="event" onSubmit={this.submitHandler}>
           <div className="field">
-            <h1>Post</h1>
+            <label className="label" for="msg">
+              Message
+            </label>
             <input
               type="text"
               name="msg"
@@ -61,13 +63,19 @@ class PostForm extends Component {
             />
           </div>
           <div className="field">
-            <h1>Photos</h1>
-            <input
-              type="image"
-              name="photos"
-              value={this.state.photos}
-              onChange={this.changeHandler}
-            />
+            <label className="label" for="photo">
+              Photo
+            </label>
+            <div className="control">
+              <span id="imageRemove">X</span>
+              <input
+                className="input"
+                name="photo"
+                type="file"
+                value={this.state.photos}
+                onChange={this.changeHandler}
+              />
+            </div>
           </div>
           <button className="button is-primary is-small" type="submit">
             Post!
