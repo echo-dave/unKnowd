@@ -28,7 +28,7 @@ class Mainpage extends React.Component {
     socket.on("new post", post => {
       console.log(post);
       this.setState({
-        posts: [post, ...this.state.posts]
+        posts: [...this.state.posts, post]
       });
     });
 
