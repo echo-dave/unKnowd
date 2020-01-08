@@ -1,6 +1,7 @@
 // const db = require("../models");
 const path = require("path");
 const User = require("../models/User");
+const Event = require("../models/Event");
 const jwt = require("jsonwebtoken");
 const authWare = require("../middleware/authware");
 
@@ -9,6 +10,16 @@ const authWare = require("../middleware/authware");
 module.exports = function(app) {
   app.post("/api/signup", function(req, res) {
     User.create(req.body)
+      .then(function(result) {
+        res.json({ message: "user created" });
+      })
+      .catch(function(err) {
+        res.status(500).json({ error: err.message });
+      });
+  });
+
+  app.post("/api/eventForm", function(req, res) {
+    Event.create(req.body)
       .then(function(result) {
         res.json({ message: "user created" });
       })
@@ -42,6 +53,16 @@ module.exports = function(app) {
         res.status(401).json({ message: "email or password incorrect" });
       }
     });
+  });
+
+  app.get("/api/all", function(req, res) {
+    Event.find({})
+      .then(function(result) {
+        res.json(result);
+      })
+      .catch(function(err) {
+        res.status(500).json({ error: err.message });
+      });
   });
 
   app.get("/api/protected", authWare, function(req, res) {

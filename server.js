@@ -3,6 +3,31 @@ const express = require("express");
 const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
+var databaseUrl = "unKowd";
+var collections = ["events"];
+var mongojs = require("mongojs");
+var model = require("./models/Event");
+
+// Use mongojs to hook the database to the db variable
+var db = mongojs(databaseUrl, collections);
+
+// This makes sure that any errors are logged if mongodb runs into an issue
+db.on("error", function(error) {
+  console.log("Database Error:", error);
+});
+
+app.get("/api/all", function(req, res) {
+  // Query: In our database, go to the animals collection, then "find" everything
+  model.find({}, function(err, data) {
+    // Log any errors if the server encounters one
+    if (err) {
+      console.log(err);
+    } else {
+      // Otherwise, send the result of this query to the browser
+      res.json(data);
+    }
+  });
+});
 
 // Mongoose
 const mongoose = require("mongoose");

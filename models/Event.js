@@ -3,14 +3,15 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const EventSchema = new Schema({
-  lat: Number,
-  lon: Number,
+  lat: String,
+  lon: String,
   date: {
     start: Date,
     end: Date
   },
   title: String,
   description: String,
+  address: String,
   img: String,
   private: Boolean,
   creator: {

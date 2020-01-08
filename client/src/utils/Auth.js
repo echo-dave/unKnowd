@@ -9,6 +9,8 @@ function Auth() {
         localStorage.setItem("token", response.data.token);
         cb(response.data);
         console.log(response);
+        alert("Welcome back! " + response.data.email);
+        window.location = "/main";
       });
   }
 
@@ -23,6 +25,26 @@ function Auth() {
       })
       .then(function(data) {
         console.log(data);
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+  }
+
+  function event(title, description, address, lat, lon, cb) {
+    console.log("Event Created");
+    axios
+      .post("/api/EventForm", {
+        title: title,
+        description: description,
+        address: address,
+        lat: lat,
+        lon: lon
+      })
+      .then(function(data) {
+        console.log(data);
+        alert("Success!");
+        window.location = "/main";
       })
       .catch(function(err) {
         console.log(err);
@@ -52,7 +74,8 @@ function Auth() {
     logIn,
     logOut,
     getToken,
-    register
+    register,
+    event
   };
 }
 

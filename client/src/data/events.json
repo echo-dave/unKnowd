@@ -1,0 +1,17 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 1,
+        "NAME": "World of Coca Cola",
+        "DESCRIPTION": "Drink Coke"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-84.3890936, 33.7509397]
+      }
+    }
+  ]
+}
