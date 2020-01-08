@@ -5,8 +5,7 @@ const jwt = require("jsonwebtoken");
 const authWare = require("../middleware/authware");
 // const socketIOClient = require("socket.io-client");
 // const socket = socketIOClient("http://127.0.0.1:3001");
-
-// const cloud = require("../nodejs/cloudinaryUp");
+const cloud = require("../nodejs/cloudinaryUp");
 
 module.exports = function(app, io) {
   app.post("/api/signup", function(req, res) {
@@ -82,6 +81,38 @@ module.exports = function(app, io) {
       .catch(err => console.log(err));
   });
   app.post("/api/post", function(req, res) {
+    console.log(req.body);
+
+    if (req.files != null) {
+      console.log("file--------------file");
+      console.log(req.files);
+
+      req.files.photos.namelong =
+        req.files.photos.name.slice(0, -4) +
+        "-" +
+        Date.now() +
+        req.files.photos.name.slice(-4);
+
+      req.files.photos.mv(
+        path.join(
+          __dirname,
+          "../client/public/upload",
+          req.files.photos.namelong
+        ),
+        function(err) {
+          if (err) {
+            console.log(err);
+            res.send(err);
+          } else {
+            console.log("upload success");
+            cloud(req.files.photos.namelong).then(function(imageurl) {
+              req.body.photos[0] = imageurl;
+            });
+          }
+        }
+      );
+    }
+
     db.Post.create(req.body).then(function(data) {
       data
         .populate("creator")

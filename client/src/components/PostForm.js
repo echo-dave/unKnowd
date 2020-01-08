@@ -25,6 +25,14 @@ class PostForm extends Component {
     });
   };
 
+  fileChangeHandler = event => {
+    var file = event.target.files[0];
+    // console.log(file);
+    this.setState({
+      photos: file
+    });
+  };
+
   //want to prevent the default of form submit which is to just refresh the page
   submitHandler = e => {
     e.preventDefault();
@@ -35,14 +43,33 @@ class PostForm extends Component {
       creator: this.state.creator,
       dateCreated: currentDate
     };
-    this.savePost(postData);
+    let formPostData = new FormData();
+    formPostData.set("creator", this.state.creator);
+    formPostData.append("photos", this.state.photos);
+    formPostData.append("msg", this.state.msg);
+    formPostData.append("dateCreated", currentDate);
+
+    console.log("form data for axios");
+    for (var [key, value] of formPostData.entries()) {
+      console.log(key, value);
+    }
+
+    this.savePost(formPostData);
   };
 
   savePost = postData => {
-    console.log(postData);
-    axios
-      .post("/api/post", postData)
-      .then(returnedData => {
+    axios({
+      method: "post",
+      url: "/api/post",
+      data: postData,
+      headers: { "Content-Type": "multipart/form-data" }
+    })
+      // .post("/api/post", postData)
+      .then(() => {
+        this.setState({
+          msg: "",
+          photos: ""
+        });
         // console.log(returnedData);
         // this.socket.emit("new post", {
         //   returnedData
@@ -59,7 +86,7 @@ class PostForm extends Component {
             <label className="label" htmlFor="msg">
               Message
             </label>
-            <input
+            <textarea
               type="text"
               name="msg"
               value={this.state.msg}
@@ -76,8 +103,8 @@ class PostForm extends Component {
                 className="input"
                 name="photo"
                 type="file"
-                value={this.state.photos}
-                onChange={this.changeHandler}
+                // value={this.state.photos}
+                onChange={this.fileChangeHandler}
               />
             </div>
           </div>
