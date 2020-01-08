@@ -44,7 +44,7 @@ function Auth() {
       .then(function(data) {
         console.log(data);
         alert("Success!");
-        window.location = "/main";
+        window.location = "/mainpage";
       })
       .catch(function(err) {
         console.log(err);
