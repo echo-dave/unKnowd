@@ -13,7 +13,8 @@ class Mainpage extends React.Component {
     posts: [],
     events: [],
     user: "",
-    eventShow: false
+    eventShow: false,
+    formShow: false
   };
 
   setUser = user => {
@@ -77,6 +78,10 @@ class Mainpage extends React.Component {
     this.setState({ eventShow: !this.state.eventShow });
   };
 
+  viewForm = () => {
+    this.setState({ formShow: !this.state.formShow });
+  };
+
   render() {
     return (
       <div className="container main">
@@ -88,7 +93,15 @@ class Mainpage extends React.Component {
           >
             {this.state.eventShow ? "View Posts" : "View Events"}
           </button>
+          <button
+            className="button is-primary is-small"
+            id="formButton"
+            onClick={this.viewForm}
+          >
+            {this.state.formShow ? "close" : "Make a Post"}
+          </button>
         </nav>
+        <div>{this.state.formShow ? <Postform /> : null}</div>
         <div className="columns">
           <div className="column posts">
             {!this.state.eventShow
@@ -105,7 +118,6 @@ class Mainpage extends React.Component {
           </div>
           <div className="column events"></div>
         </div>
-        <Postform />
       </div>
     );
   }

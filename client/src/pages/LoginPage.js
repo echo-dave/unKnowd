@@ -1,6 +1,6 @@
 import React from "react";
-import SignUpForm from "./SignUpForm";
-import LoginForm from "./LoginForm";
+import SignUpForm from "../components/SignUpForm";
+import LoginForm from "../components/LoginForm";
 
 class LoginPage extends React.Component {
   state = {
