@@ -81,6 +81,7 @@ class Mainpage extends React.Component {
               <Post
                 key={post._id}
                 msg={post.msg}
+                photos={post.photos[0]}
                 firstName={post.creator.firstName}
                 creatorPhoto={post.creator.photo}
               />
