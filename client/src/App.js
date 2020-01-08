@@ -5,6 +5,9 @@ import authenticatedAxios from "./utils/AuthenticatedAxios";
 import LoginPage from "./components/LoginPage";
 import UserContext from "./context/UserContext";
 import Mainpage from "./pages/Main";
+//rename these to something more descriptive to what they are
+import Main from "./components/Main";
+import PostForm from "./components/EventForm";
 
 class App extends Component {
   state = {
@@ -38,6 +41,8 @@ class App extends Component {
           >
             <Route exact path="/" component={LoginPage} />
             <Route exact path="/mainpage" component={Mainpage} />
+            <Route exact path="/main" component={Main} />
+            <Route exact path="/event" component={PostForm} />
           </UserContext.Provider>
         </div>
       </Router>
