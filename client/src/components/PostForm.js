@@ -9,12 +9,14 @@ class PostForm extends Component {
   //settting compoent forms initial structure
   state = {
     msg: "",
-    creator: "5e12136c47f1c7664750d4c8",
+    creator: this.props.userState.id,
     dateCreated: "",
     photos: ""
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    console.log("post form user", this.props.userState);
+  }
   // socket = socketIOClient();
 
   //this gets the value and name of the inputs that triggered the change

@@ -5,7 +5,6 @@ import Event from "../components/Event";
 import Postform from "../components/PostForm";
 import authenticatedAxios from "../utils/AuthenticatedAxios";
 
-// import Nav from "../components/Nav";
 import socketIOClient from "socket.io-client";
 
 class Mainpage extends React.Component {
@@ -37,20 +36,11 @@ class Mainpage extends React.Component {
     const token = localStorage.getItem("token");
     if (token) {
       authenticatedAxios.get("/api/me").then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         this.setUser(response.data);
-        console.log(this.state.user);
+        // console.log(this.state.user);
       });
     }
-
-    // this.socket.on("new event", event => {
-    //   this.setState({
-    //     events: [event, ...this.state.events]
-    //   });
-    // });
-
-    //
-    // this.socket.on("new test", console.log);
   }
 
   componentWillUnmount() {
@@ -101,7 +91,11 @@ class Mainpage extends React.Component {
             {this.state.formShow ? "close" : "Make a Post"}
           </button>
         </nav>
-        <div>{this.state.formShow ? <Postform /> : null}</div>
+        <div>
+          {this.state.formShow ? (
+            <Postform userState={this.state.user} />
+          ) : null}
+        </div>
         <div className="columns">
           <div className="column posts">
             {!this.state.eventShow
