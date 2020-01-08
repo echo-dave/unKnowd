@@ -12,7 +12,8 @@ class Mainpage extends React.Component {
   state = {
     posts: [],
     events: [],
-    user: ""
+    user: "",
+    eventShow: false
   };
 
   setUser = user => {
@@ -72,26 +73,37 @@ class Mainpage extends React.Component {
       .catch(err => console.log(err));
   };
 
+  changeView = () => {
+    this.setState({ eventShow: !this.state.eventShow });
+  };
+
   render() {
     return (
       <div className="container main">
+        <nav>
+          <button
+            className="button is-primary is-small"
+            id="viewChange"
+            onClick={this.changeView}
+          >
+            {this.state.eventShow ? "View Posts" : "View Events"}
+          </button>
+        </nav>
         <div className="columns">
           <div className="column posts">
-            {this.state.posts.map(post => (
-              <Post
-                key={post._id}
-                msg={post.msg}
-                photos={post.photos[0]}
-                firstName={post.creator.firstName}
-                creatorPhoto={post.creator.photo}
-              />
-            ))}
+            {!this.state.eventShow
+              ? this.state.posts.map(post => (
+                  <Post
+                    key={post._id}
+                    msg={post.msg}
+                    photos={post.photos[0]}
+                    firstName={post.creator.firstName}
+                    creatorPhoto={post.creator.photo}
+                  />
+                ))
+              : this.state.events.map(event => <Event key={event._id} />)}
           </div>
-          <div className="column events">
-            {this.state.events.map(event => (
-              <Event key={event._id} />
-            ))}
-          </div>
+          <div className="column events"></div>
         </div>
         <Postform />
       </div>

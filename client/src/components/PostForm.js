@@ -9,7 +9,7 @@ class PostForm extends Component {
   //settting compoent forms initial structure
   state = {
     msg: "",
-    creator: "5e13e9c75293fcd9f353d106",
+    creator: "5e12136c47f1c7664750d4c8",
     dateCreated: "",
     photos: ""
   };
