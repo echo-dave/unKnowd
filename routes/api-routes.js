@@ -82,6 +82,7 @@ module.exports = function(app, io) {
   });
   app.post("/api/post", function(req, res) {
     console.log(req.body);
+    console.log(req.files);
 
     if (req.files != null) {
       console.log("file--------------file");
@@ -105,24 +106,40 @@ module.exports = function(app, io) {
             res.send(err);
           } else {
             console.log("upload success");
-            cloud(req.files.photos.namelong).then(function(imageurl) {
-              req.body.photos[0] = imageurl;
-            });
+            cloud(req.files.photos.namelong)
+              .then(function(imageurl) {
+                console.log("create doc next");
+                req.body.photos = [imageurl];
+
+                db.Post.create(req.body).then(function(data) {
+                  data
+                    .populate("creator")
+                    .execPopulate()
+                    .then(populatedData => {
+                      io.sockets.emit("new post", populatedData);
+                      res.end();
+                    });
+                  // res.json(data);
+                });
+              })
+              .catch(function(err) {
+                console.log(err);
+              });
           }
         }
       );
+    } else {
+      db.Post.create(req.body).then(function(data) {
+        data
+          .populate("creator")
+          .execPopulate()
+          .then(populatedData => {
+            io.sockets.emit("new post", populatedData);
+            res.end();
+          });
+        // res.json(data);
+      });
     }
-
-    db.Post.create(req.body).then(function(data) {
-      data
-        .populate("creator")
-        .execPopulate()
-        .then(populatedData => {
-          io.sockets.emit("new post", populatedData);
-          res.end();
-        });
-      // res.json(data);
-    });
   });
 
   app.get("/api/events", function(req, res) {
