@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import authenticatedAxios from "./utils/AuthenticatedAxios";
 import LoginPage from "./components/LoginPage";
 import UserContext from "./context/UserContext";
+import Mainpage from "./pages/Main";
 
 class App extends Component {
   state = {
@@ -36,6 +37,7 @@ class App extends Component {
             }}
           >
             <Route exact path="/" component={LoginPage} />
+            <Route exact path="/mainpage" component={Mainpage} />
           </UserContext.Provider>
         </div>
       </Router>

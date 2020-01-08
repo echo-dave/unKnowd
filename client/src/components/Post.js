@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 class Post extends Component {
-  state = {
+  /*  state = {
     posts: []
   };
 
@@ -14,15 +14,15 @@ class Post extends Component {
       .get("/api/posts")
       .then(res => this.setState({ posts: res.data }))
       .cach(err => console.log(err));
-  };
+  }; */
 
   render() {
     return (
       <div className="posts box">
         <p>{this.props.msg}</p>
-        <div className="postPhotos">{this.props.photos}</div>
-        <div className="username">{this.props.creator.firstName}</div>
-        <div className="userphoto">{this.props.creator.photo}</div>
+        <img alt="" className="postPhotos" src={this.props.photos} />
+        <div className="username">{this.props.firstName}</div>
+        <img alt="" className="userphoto" src={this.props.creatorPhoto} />
       </div>
     );
   }

@@ -5,16 +5,16 @@ class Event extends Component {
     events: []
   };
 
-  componentDidMount() {
-    this.getPosts();
-  }
+  //   componentDidMount() {
+  //     this.getPosts();
+  //   }
 
-  getPosts = () => {
-    axios
-      .get("/api/events")
-      .then(res => this.setState({ events: res.data }))
-      .cach(err => console.log(err));
-  };
+  //   getPosts = () => {
+  //     axios
+  //       .get("/api/events")
+  //       .then(res => this.setState({ events: res.data }))
+  //       .cach(err => console.log(err));
+  //   };
 
   render() {
     return (

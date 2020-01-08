@@ -8,7 +8,12 @@ class LoginForm extends Component {
 
   state = {
     email: "",
-    password: ""
+    password: "",
+    user: ""
+  };
+
+  setUser = user => {
+    this.setState({ user });
   };
 
   changeHandler = e => {
@@ -23,6 +28,7 @@ class LoginForm extends Component {
       Auth.logIn(email, password, response => {
         this.context.setUser(response);
         this.props.history.push("/");
+        console.log(this.state.user);
       });
     }
   };
