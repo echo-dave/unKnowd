@@ -28,17 +28,25 @@ class SignUpForm extends Component {
   submitHandler = e => {
     e.preventDefault();
     const { email, password, firstName, lastName, photo } = this.state;
+
+    const userData = new FormData(document.querySelector("#newUserForm"));
+
     if (email && password && firstName && lastName) {
-      Auth.register(email, password, firstName, lastName, photo, response => {
+      Auth.register(userData, response => {
         this.context.setUser(response);
         this.props.history.push("/");
       });
+
+      // Auth.register(email, password, firstName, lastName, photo, response => {
+      //   this.context.setUser(response);
+      //   this.props.history.push("/");
+      // });
     }
   };
 
   render() {
     return (
-      <form onSubmit={this.submitHandler}>
+      <form id="newUserForm" onSubmit={this.submitHandler}>
         <div className="field">
           <h1>First Name</h1>
           <input

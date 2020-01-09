@@ -63,20 +63,20 @@ class EventForm extends Component {
           eventData.append("img", this.state.img);
 
           console.log("event data", eventData);
+          this.props.closeForm();
 
           axios
             .post("/api/event", eventData)
             .then(() => {
-              this.props.closeForm();
-              this.setState({
-                title: "",
-                description: "",
-                address: "",
-                lat: "",
-                lon: "",
-                start: "",
-                end: ""
-              });
+              // this.setState({
+              //   title: "",
+              //   description: "",
+              //   address: "",
+              //   lat: "",
+              //   lon: "",
+              //   start: "",
+              //   end: ""
+              // });
             })
             .catch(err => console.log(err));
 

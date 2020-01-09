@@ -21,9 +21,19 @@ class Mainpage extends React.Component {
 
   setUser = user => {
     this.setState({ user });
+    setTimeout(() => console.log("****STATE", this.state), 100);
   };
 
   componentDidMount() {
+    const token = localStorage.getItem("token");
+    if (token) {
+      authenticatedAxios.get("/api/me").then(response => {
+        console.log(response);
+        this.setUser(response.data);
+        // console.log(this.state.user);
+      });
+    }
+
     this.getPosts();
     this.getEvents();
     const socket = socketIOClient("http://127.0.0.1:3001");
@@ -42,15 +52,6 @@ class Mainpage extends React.Component {
         events: [event, ...this.state.events]
       });
     });
-
-    const token = localStorage.getItem("token");
-    if (token) {
-      authenticatedAxios.get("/api/me").then(response => {
-        // console.log(response.data);
-        this.setUser(response.data);
-        // console.log(this.state.user);
-      });
-    }
   }
 
   componentWillUnmount() {
@@ -125,6 +126,11 @@ class Mainpage extends React.Component {
 
           <div className="navbar-menu">
             <div className="navbar-start">
+           {this.state.user ? (
+            <h1>Welcome back {this.state.user.firstName}!</h1>
+          ) : (
+            ""
+          )}
               <div className="navbar-item" id="viewChanger">
                 <p className="control">
                   <button
@@ -160,6 +166,8 @@ class Mainpage extends React.Component {
               </div>
             </div>
           </div>
+
+
         </nav>
         <div>
           {this.state.postFormShow ? (
@@ -182,6 +190,7 @@ class Mainpage extends React.Component {
               ? this.state.posts.map(post => (
                   <Post
                     key={post._id}
+                    _id={post._id}
                     msg={post.msg}
                     photos={post.photos[0]}
                     firstName={post.creator.firstName}
