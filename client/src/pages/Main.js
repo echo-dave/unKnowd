@@ -129,6 +129,7 @@ class Mainpage extends React.Component {
               ? this.state.posts.map(post => (
                   <Post
                     key={post._id}
+                    _id={post._id}
                     msg={post.msg}
                     photos={post.photos[0]}
                     firstName={post.creator.firstName}

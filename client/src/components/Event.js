@@ -17,9 +17,16 @@ class Event extends Component {
   //   };
 
   render() {
-    const { title, img, description, date, creator } = this.props.eventData;
+    const {
+      title,
+      img,
+      description,
+      date,
+      creator,
+      _id
+    } = this.props.eventData;
     return (
-      <div className="events box">
+      <div className="events box" data-attr={_id}>
         <h2>{title}</h2>
         <div className="postPhotos">
           <img src={img} alt="" />
