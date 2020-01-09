@@ -40,7 +40,7 @@ class MapContainer extends Component {
       <Map
         google={this.props.google}
         zoom={8}
-        style={mapStyles}
+        // style={mapStyles}
         initialCenter={{ lat: 47.444, lng: -122.176 }}
       >
         {this.displayMarkers()}
@@ -53,10 +53,10 @@ export default GoogleApiWrapper({
   apiKey: "AIzaSyAePGrHhmiuMqr9vOL5PxtJpvSNsYjEnDk"
 })(MapContainer);
 
-const mapStyles = {
-  width: "50%",
-  height: "50%"
-};
+// const mapStyles = {
+//   width: "50%",
+//   height: "50%"
+// };
 
 // class Main extends React.Component {
 //   state = {

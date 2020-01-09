@@ -21,13 +21,15 @@ class Event extends Component {
     return (
       <div className="events box">
         <h2>{title}</h2>
-        <div className="postPhotos">{img}</div>
+        <div className="postPhotos">
+          <img src={img} alt="" />
+        </div>
         <p className="description">{description}</p>
         <span className="dates">
           {date.start} - {date.end}
         </span>
         <div className="username">{creator.firstName}</div>
-        <div className="userphoto">photo</div>
+        <div className="userphoto">user photo</div>
       </div>
     );
   }

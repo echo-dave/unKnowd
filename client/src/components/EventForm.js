@@ -13,6 +13,8 @@ class EventForm extends Component {
       lat: "",
       lon: "",
       start: "",
+      end: "",
+      img: "",
       creator: this.props.userState.id
     };
   }
@@ -22,6 +24,14 @@ class EventForm extends Component {
   }
   changeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
+  };
+
+  fileChangeHandler = event => {
+    var file = event.target.files[0];
+    // console.log(file);
+    this.setState({
+      img: file
+    });
   };
 
   submitHandler = e => {
@@ -41,15 +51,17 @@ class EventForm extends Component {
           console.log(this.state.lat);
           console.log(this.state.lon);
 
-          let eventData = {
-            title: this.state.title,
-            description: this.state.description,
-            address: this.state.address,
-            lat: this.state.lat,
-            lon: this.state.lon,
-            date: { start: this.state.start, end: this.state.end },
-            creator: this.state.creator
-          };
+          let eventData = new FormData();
+          eventData.append("title", this.state.title);
+          eventData.append("description", this.state.description);
+          eventData.append("address", this.state.address);
+          eventData.append("lat", this.state.lat);
+          eventData.append("lon", this.state.lon);
+          eventData.append("date.start", this.state.start);
+          eventData.append("date.end", this.state.end);
+          eventData.append("creator", this.state.creator);
+          eventData.append("img", this.state.img);
+
           console.log("event data", eventData);
 
           axios
@@ -61,7 +73,8 @@ class EventForm extends Component {
                 address: "",
                 lat: "",
                 lon: "",
-                start: ""
+                start: "",
+                end: ""
               })
             )
             .catch(err => console.log(err));
@@ -121,46 +134,61 @@ class EventForm extends Component {
                 onChange={this.changeHandler}
               />
             </div>
-            <div className="field">
-              <label className="label" htmlFor="start">
-                Start Date
-              </label>
-              <div className="control">
-                <input
-                  type="date"
-                  name="start"
-                  value={start}
-                  onChange={this.changeHandler}
-                />
-              </div>
+          </div>
+          <div className="field">
+            <label className="label" htmlFor="start">
+              Start Date
+            </label>
+            <div className="control">
+              <input
+                type="date"
+                name="start"
+                value={start}
+                onChange={this.changeHandler}
+              />
             </div>
+          </div>
 
-            <div className="field">
-              <label className="label" htmlFor="end">
-                End Date
-              </label>
-              <div className="control">
-                <input
-                  type="date"
-                  name="end"
-                  value={end}
-                  onChange={this.changeHandler}
-                />
-              </div>
+          <div className="field">
+            <label className="label" htmlFor="end">
+              End Date
+            </label>
+            <div className="control">
+              <input
+                type="date"
+                name="end"
+                value={end}
+                onChange={this.changeHandler}
+              />
             </div>
+          </div>
 
-            <div className="field">
-              <label className="label">Description of event</label>
-              <div className="control">
-                <textarea
-                  type="text"
-                  className="textarea"
-                  name="description"
-                  placeholder="Description of the event"
-                  value={description}
-                  onChange={this.changeHandler}
-                />
-              </div>
+          <div className="field">
+            <label className="label">Description of event</label>
+            <div className="control">
+              <textarea
+                type="text"
+                className="textarea"
+                name="description"
+                placeholder="Description of the event"
+                value={description}
+                onChange={this.changeHandler}
+              />
+            </div>
+          </div>
+          <div className="field">
+            <label className="label" htmlFor="img">
+              Photo
+            </label>
+            <div className="control">
+              <span id="imageRemove">X</span>
+              <input
+                className="input"
+                name="img"
+                type="file"
+                // value={this.state.photos}
+                onChange={this.fileChangeHandler}
+              />
             </div>
           </div>
 

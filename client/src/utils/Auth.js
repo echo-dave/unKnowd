@@ -14,14 +14,15 @@ function Auth() {
       });
   }
 
-  function register(email, password, first, last, cb) {
+  function register(email, password, first, last, photo, cb) {
     console.log("register");
     axios
       .post("/api/signup", {
         email: email,
         password: password,
         firstName: first,
-        lastName: last
+        lastName: last,
+        photo: photo
       })
       .then(function(data) {
         console.log(data);
