@@ -20,9 +20,19 @@ class Mainpage extends React.Component {
 
   setUser = user => {
     this.setState({ user });
+    setTimeout(() => console.log("****STATE", this.state), 100);
   };
 
   componentDidMount() {
+    const token = localStorage.getItem("token");
+    if (token) {
+      authenticatedAxios.get("/api/me").then(response => {
+        console.log(response);
+        this.setUser(response.data);
+        // console.log(this.state.user);
+      });
+    }
+
     this.getPosts();
     this.getEvents();
     const socket = socketIOClient("http://127.0.0.1:3001");
@@ -41,15 +51,6 @@ class Mainpage extends React.Component {
         events: [event, ...this.state.events]
       });
     });
-
-    const token = localStorage.getItem("token");
-    if (token) {
-      authenticatedAxios.get("/api/me").then(response => {
-        // console.log(response.data);
-        this.setUser(response.data);
-        // console.log(this.state.user);
-      });
-    }
   }
 
   componentWillUnmount() {
@@ -92,6 +93,11 @@ class Mainpage extends React.Component {
     return (
       <div className="container main">
         <nav>
+          {this.state.user ? (
+            <h1>Welcome back {this.state.user.firstName}!</h1>
+          ) : (
+            ""
+          )}
           <button
             className="button is-primary is-small"
             id="viewChange"
@@ -120,7 +126,10 @@ class Mainpage extends React.Component {
           ) : null}
 
           {this.state.eventFormShow ? (
-            <EventForm userState={this.state.user} closeForm={this.eventForm} />
+            <EventForm
+              userState={this.state.user}
+              closeForm={this.toggleEventForm}
+            />
           ) : null}
         </div>
         <div className="columns">
