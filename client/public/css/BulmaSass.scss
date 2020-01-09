@@ -25,9 +25,9 @@ div #wrap {
 }
 
 .container {
-  height: 200px;
   position: relative;
   margin-top: 30px;
+  padding-top: 40px;
 }
 
 #signup-container .box {
@@ -48,4 +48,28 @@ h1 {
 div.column.events > div {
   height: calc(100vh - 30px - 4em);
   position: relative;
+}
+
+//main
+
+body {
+  background: rgba(121, 160, 121, 0.945);
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+#title {
+  font-size: 30px;
+  padding-left: 10px;
+}
+
+.posts {
+  margin: 10px;
+}
+
+#postform {
+  border: 2px solid white;
+  margin: 10px;
+  padding: 10px;
+  background: rgb(214, 214, 214);
 }
