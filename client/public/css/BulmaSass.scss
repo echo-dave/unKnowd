@@ -44,3 +44,8 @@ div #wrap {
 h1 {
   font-size: 15px;
 }
+
+div.column.events > div {
+  height: calc(100vh - 30px - 4em);
+  position: relative;
+}

@@ -10,9 +10,11 @@ const cloud = require("../nodejs/cloudinaryUp");
 
 module.exports = function(app, io) {
   app.post("/api/signup", function(req, res) {
+    console.log(req.body, req.files);
+
     User.create(req.body)
       .then(function(result) {
-        res.json({ message: "user created" });
+        res.json({ message: "user created", user: result._id });
       })
       .catch(function(err) {
         res.status(500).json({ error: err.message });
@@ -167,20 +169,73 @@ module.exports = function(app, io) {
     let currentDate = new Date();
     console.log(currentDate);
     db.Event.find({
-      "date.end": { $gt: currentDate }
-    }).then(events => {
-      res.json(events);
-    });
+      // "date.end": { $gt: currentDate }
+    })
+      .populate("creator")
+      .then(events => {
+        res.json(events);
+      });
   });
 
   //we need to have the user _id to insert into the event as well as getting the user name and user photo from the User collection
   app.post("/api/event", function(req, res) {
-    db.Event.create()
-      .then(function(data) {
-        res.json(data);
-      })
-      .catch(function(err) {
-        console.log(err);
-      });
+    console.log(req);
+
+    if (req.files != null) {
+      console.log("file--------------file");
+      console.log(req.files);
+
+      req.files.img.namelong =
+        req.files.img.name.slice(0, -4) +
+        "-" +
+        Date.now() +
+        req.files.img.name.slice(-4);
+
+      req.files.img.mv(
+        path.join(__dirname, "../client/public/upload", req.files.img.namelong),
+        function(err) {
+          if (err) {
+            console.log(err);
+            res.send(err);
+          } else {
+            console.log("upload success");
+            cloud(req.files.img.namelong)
+              .then(function(imageurl) {
+                console.log("create doc next");
+                req.body.img = imageurl;
+                console.log(req.body);
+
+                db.Event.create(req.body).then(function(data) {
+                  data
+                    .populate("creator")
+                    .execPopulate()
+                    .then(populatedData => {
+                      io.sockets.emit("new event", populatedData);
+                      res.end();
+                    });
+                  // res.json(data);
+                });
+              })
+              .catch(function(err) {
+                console.log(err);
+              });
+          }
+        }
+      );
+    } else {
+      db.Event.create(req.body)
+        .then(function(data) {
+          data
+            .populate("creator")
+            .execPopulate()
+            .then(populatedData => {
+              io.sockets.emit("new event", populatedData);
+              res.end();
+            });
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+    }
   });
 };

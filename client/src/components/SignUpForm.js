@@ -10,19 +10,29 @@ class SignUpForm extends Component {
     email: "",
     password: "",
     firstName: "",
-    lastName: ""
+    lastName: "",
+    photo: ""
   };
 
   changeHandler = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
-
+  fileChangeHandler = event => {
+    var file = event.target.files[0];
+    // console.log(file);
+    this.setState({
+      photo: file
+    });
+  };
   submitHandler = e => {
     e.preventDefault();
-    const { email, password, firstName, lastName } = this.state;
+    const { email, password, firstName, lastName, photo } = this.state;
+
+    const userData = new FormData(document.querySelector("#newUserForm"));
+
     if (email && password && firstName && lastName) {
-      Auth.register(email, password, firstName, lastName, response => {
+      Auth.register(email, password, firstName, lastName, photo, response => {
         this.context.setUser(response);
         this.props.history.push("/");
       });
@@ -31,7 +41,7 @@ class SignUpForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.submitHandler}>
+      <form id="newUserForm" onSubmit={this.submitHandler}>
         <div className="field">
           <h1>First Name</h1>
           <input
@@ -68,6 +78,23 @@ class SignUpForm extends Component {
             onChange={this.changeHandler}
           />
         </div>
+
+        <div className="field">
+          <label className="label" htmlFor="photo">
+            Photo
+          </label>
+          <div className="control">
+            <span id="imageRemove">X</span>
+            <input
+              className="input"
+              name="photo"
+              type="file"
+              // value={this.state.photo}
+              onChange={this.fileChangeHandler}
+            />
+          </div>
+        </div>
+
         <button className="button is-primary is-small" type="submit">
           Sign up
         </button>

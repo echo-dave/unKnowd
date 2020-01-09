@@ -10,18 +10,19 @@ function Auth() {
         localStorage.setItem("token", response.data.token);
         cb(response.data);
         alert("Welcome back! " + response.data.email);
-        window.location = "/main";
+        window.location = "/mainpage";
       });
   }
 
-  function register(email, password, first, last, cb) {
+  function register(email, password, first, last, photo, cb) {
     console.log("register");
     axios
       .post("/api/signup", {
         email: email,
         password: password,
         firstName: first,
-        lastName: last
+        lastName: last,
+        photo: photo
       })
       .then(function(data) {
         console.log(data);

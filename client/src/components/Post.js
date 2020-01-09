@@ -18,7 +18,7 @@ class Post extends Component {
 
   render() {
     return (
-      <div className="posts box">
+      <div className="posts box" data-attr={this.props._id}>
         <p>{this.props.msg}</p>
         <img alt="" className="postPhotos" src={this.props.photos} />
         <div className="username">{this.props.firstName}</div>
