@@ -66,7 +66,8 @@ class EventForm extends Component {
 
           axios
             .post("/api/event", eventData)
-            .then(() =>
+            .then(() => {
+              this.props.closeForm();
               this.setState({
                 title: "",
                 description: "",
@@ -75,8 +76,8 @@ class EventForm extends Component {
                 lon: "",
                 start: "",
                 end: ""
-              })
-            )
+              });
+            })
             .catch(err => console.log(err));
 
           // eventPost(
@@ -99,6 +100,7 @@ class EventForm extends Component {
         });
     }
 
+    // !!!DELETE ME!!!!
     axios.get("api/all").then(function(data2) {
       console.log(data2);
     });

@@ -14,7 +14,7 @@ class Mainpage extends React.Component {
     events: [],
     user: "",
     eventShow: false,
-    formShow: false,
+    postFormShow: false,
     eventFormShow: false
   };
 
@@ -76,15 +76,15 @@ class Mainpage extends React.Component {
       .catch(err => console.log(err));
   };
 
-  changeView = () => {
+  togglePostEventViews = () => {
     this.setState({ eventShow: !this.state.eventShow });
   };
 
-  viewForm = () => {
-    this.setState({ formShow: !this.state.formShow });
+  togglePostForm = () => {
+    this.setState({ postFormShow: !this.state.postFormShow });
   };
 
-  eventForm = () => {
+  toggleEventForm = () => {
     this.setState({ eventFormShow: !this.state.eventFormShow });
   };
 
@@ -95,32 +95,32 @@ class Mainpage extends React.Component {
           <button
             className="button is-primary is-small"
             id="viewChange"
-            onClick={this.changeView}
+            onClick={this.togglePostEventViews}
           >
             {this.state.eventShow ? "View Posts" : "View Events"}
           </button>
           <button
             className="button is-primary is-small"
             id="formButton"
-            onClick={this.viewForm}
+            onClick={this.togglePostForm}
           >
-            {this.state.formShow ? "close" : "Make a Post"}
+            {this.state.postFormShow ? "close" : "Make a Post"}
           </button>
           <button
             className="button is-primary is-small"
             id="makeEvent"
-            onClick={this.eventForm}
+            onClick={this.toggleEventForm}
           >
             Add Event
           </button>
         </nav>
         <div>
-          {this.state.formShow ? (
+          {this.state.postFormShow ? (
             <Postform userState={this.state.user} />
           ) : null}
 
           {this.state.eventFormShow ? (
-            <EventForm userState={this.state.user} />
+            <EventForm userState={this.state.user} closeForm={this.eventForm} />
           ) : null}
         </div>
         <div className="columns">
