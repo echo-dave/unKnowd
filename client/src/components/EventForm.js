@@ -68,15 +68,15 @@ class EventForm extends Component {
             .post("/api/event", eventData)
             .then(() => {
               this.props.closeForm();
-              this.setState({
-                title: "",
-                description: "",
-                address: "",
-                lat: "",
-                lon: "",
-                start: "",
-                end: ""
-              });
+              // this.setState({
+              //   title: "",
+              //   description: "",
+              //   address: "",
+              //   lat: "",
+              //   lon: "",
+              //   start: "",
+              //   end: ""
+              // });
             })
             .catch(err => console.log(err));
 

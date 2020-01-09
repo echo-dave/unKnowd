@@ -120,7 +120,10 @@ class Mainpage extends React.Component {
           ) : null}
 
           {this.state.eventFormShow ? (
-            <EventForm userState={this.state.user} closeForm={this.eventForm} />
+            <EventForm
+              userState={this.state.user}
+              closeForm={this.toggleEventForm}
+            />
           ) : null}
         </div>
         <div className="columns">

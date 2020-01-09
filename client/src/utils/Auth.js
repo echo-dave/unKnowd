@@ -14,17 +14,13 @@ function Auth() {
       });
   }
 
-  function register(email, password, first, last, photo, cb) {
+  function register(userData, cb) {
     console.log("register");
     axios
-      .post("/api/signup", {
-        email: email,
-        password: password,
-        firstName: first,
-        lastName: last,
-        photo: photo
-      })
+      .post("/api/signup", userData)
       .then(function(data) {
+        console.log("userData", userData);
+        logIn(userData.email, userData.password);
         console.log(data);
       })
       .catch(function(err) {

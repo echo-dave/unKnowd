@@ -32,10 +32,15 @@ class SignUpForm extends Component {
     const userData = new FormData(document.querySelector("#newUserForm"));
 
     if (email && password && firstName && lastName) {
-      Auth.register(email, password, firstName, lastName, photo, response => {
+      Auth.register(userData, response => {
         this.context.setUser(response);
         this.props.history.push("/");
       });
+
+      // Auth.register(email, password, firstName, lastName, photo, response => {
+      //   this.context.setUser(response);
+      //   this.props.history.push("/");
+      // });
     }
   };
 
