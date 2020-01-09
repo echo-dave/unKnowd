@@ -45,9 +45,19 @@ h1 {
   font-size: 15px;
 }
 
+// map style
+
+.columns.main {
+  height: 100vh;
+}
+
+.column.events {
+  padding-top: 2rem;
+}
+
 div.column.events > div {
-  height: calc(100vh - 30px - 4em);
   position: relative;
+  height: calc(100vh - 30px - 5em);
 }
 
 //main
@@ -64,7 +74,15 @@ body {
 }
 
 .posts {
+  overflow: scroll;
+  position: relative;
   margin: 10px;
+}
+
+.posts .username {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
 }
 
 #postform {
