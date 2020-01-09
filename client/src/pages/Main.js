@@ -15,7 +15,8 @@ class Mainpage extends React.Component {
     user: "",
     eventShow: false,
     postFormShow: false,
-    eventFormShow: false
+    eventFormShow: false,
+    burgerActive: false
   };
 
   setUser = user => {
@@ -88,39 +89,91 @@ class Mainpage extends React.Component {
     this.setState({ eventFormShow: !this.state.eventFormShow });
   };
 
+  toggleNavbar = () => {
+    this.setState({ burgerActive: !this.state.burgerActive });
+    if (this.state.burgerActive === true) {
+      document.querySelector(".navbar-menu").className += " is-active";
+    } else {
+      document.querySelector(".navbar-menu").classList.remove("is-active");
+    }
+  };
+
   render() {
     return (
       <div className="container main">
-        <nav>
-          <button
-            className="button is-primary is-small"
-            id="viewChange"
-            onClick={this.togglePostEventViews}
-          >
-            {this.state.eventShow ? "View Posts" : "View Events"}
-          </button>
-          <button
-            className="button is-primary is-small"
-            id="formButton"
-            onClick={this.togglePostForm}
-          >
-            {this.state.postFormShow ? "close" : "Make a Post"}
-          </button>
-          <button
-            className="button is-primary is-small"
-            id="makeEvent"
-            onClick={this.toggleEventForm}
-          >
-            Add Event
-          </button>
+        <nav
+          className="navbar is-fixed-top"
+          role="navigation"
+          aria-label="main navigation"
+        >
+          <div className="navbar-brand">
+            <a className="navbar-item">
+              <h1 id="title">UnKnowd</h1>
+            </a>
+            <a
+              role="button"
+              className="navbar-burger"
+              aria-label="menu"
+              aria-expanded="false"
+              onClick={this.toggleNavbar}
+            >
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </a>
+          </div>
+
+          <div className="navbar-menu">
+            <div className="navbar-start">
+              <div className="navbar-item" id="viewChanger">
+                <p className="control">
+                  <button
+                    className="button is-primary is-small"
+                    id="viewChange"
+                    onClick={this.togglePostEventViews}
+                  >
+                    {this.state.eventShow ? "View Posts" : "View Events"}
+                  </button>
+                </p>
+              </div>
+              <div className="navbar-item" id="postMaker">
+                <p className="control">
+                  <button
+                    className="button is-primary is-small"
+                    id="formButton"
+                    onClick={this.togglePostForm}
+                  >
+                    {this.state.postFormShow ? "Close" : "Make a Post"}
+                  </button>
+                </p>
+              </div>
+              <div className="navbar-item" id="eventMaker">
+                <p className="control">
+                  <button
+                    className="button is-primary is-small"
+                    id="makeEvent"
+                    onClick={this.toggleEventForm}
+                  >
+                    {this.state.eventFormShow ? "close" : "Make an Event"}
+                  </button>
+                </p>
+              </div>
+            </div>
+          </div>
         </nav>
         <div>
           {this.state.postFormShow ? (
-            <Postform userState={this.state.user} />
+            <Postform
+              userState={this.state.user}
+              closeForm={this.state.togglePostForm}
+            />
           ) : null}
 
           {this.state.eventFormShow ? (
-            <EventForm userState={this.state.user} closeForm={this.eventForm} />
+            <EventForm
+              userState={this.state.user}
+              closeForm={this.toggleEventForm}
+            />
           ) : null}
         </div>
         <div className="columns">

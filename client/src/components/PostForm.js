@@ -68,6 +68,7 @@ class PostForm extends Component {
     })
       // .post("/api/post", postData)
       .then(() => {
+        this.props.closeForm();
         this.setState({
           msg: "",
           photos: ""
