@@ -26,7 +26,7 @@ class Event extends Component {
       _id
     } = this.props.eventData;
     return (
-      <div className="events box" data-attr={_id}>
+      <div className="event box clearfix" data-attr={_id}>
         <h2>{title}</h2>
         <div className="postPhotos">
           <img src={img} alt="" />

@@ -92,7 +92,7 @@ class Mainpage extends React.Component {
 
   toggleNavbar = () => {
     this.setState({ burgerActive: !this.state.burgerActive });
-    if (this.state.burgerActive === true) {
+    if (this.state.burgerActive === false) {
       document.querySelector(".navbar-menu").className += " is-active";
     } else {
       document.querySelector(".navbar-menu").classList.remove("is-active");
@@ -160,7 +160,9 @@ class Mainpage extends React.Component {
                 </p>
               </div>
               {this.state.user ? (
-                <h1>Welcome back {this.state.user.firstName}!</h1>
+                <div className="userNameDisplay">
+                  Welcome back {this.state.user.firstName}!
+                </div>
               ) : (
                 ""
               )}
