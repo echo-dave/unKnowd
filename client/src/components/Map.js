@@ -26,7 +26,10 @@ class MapContainer extends Component {
           lat: events.lat,
           lng: events.lon
         }}
-        onClick={() => alert(events.address)}
+        onClick={() =>
+          alert(`Title of the event: ${events.title} 
+Description: ${events.description}`)
+        }
       />
     ));
 

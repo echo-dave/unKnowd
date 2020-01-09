@@ -16,11 +16,15 @@ function Auth() {
 
   function register(userData, cb) {
     console.log("register");
+    let email = userData.get("email");
+    let password = userData.get("password");
+    console.log("login", email, password);
+
     axios
       .post("/api/signup", userData)
       .then(function(data) {
         console.log("userData", userData);
-        logIn(userData.email, userData.password);
+        logIn(email, password, cb);
         console.log(data);
       })
       .catch(function(err) {
