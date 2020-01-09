@@ -18,9 +18,9 @@ class Post extends Component {
 
   render() {
     return (
-      <div className="posts box" data-attr={this.props._id}>
-        <p>{this.props.msg}</p>
+      <div className="post box clearfix" data-attr={this.props._id}>
         <img alt="" className="postPhotos" src={this.props.photos} />
+        <p>{this.props.msg}</p>
         <div className="username">{this.props.firstName}</div>
         <img alt="" className="userphoto" src={this.props.creatorPhoto} />
       </div>

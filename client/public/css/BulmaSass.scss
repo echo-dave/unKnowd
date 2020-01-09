@@ -1,5 +1,18 @@
 @import "../../../node_modules/bulma/bulma.sass";
 
+body {
+  background: rgba(121, 160, 121, 0.945);
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  height: 100vh;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
 div #wrap {
   height: 100vh;
   background-color: aliceblue;
@@ -45,18 +58,22 @@ h1 {
   font-size: 15px;
 }
 
+// map style
+
+.column {
+  height: calc(100vh - 5.5rem);
+}
+
+.column.events {
+  padding-top: 2rem;
+}
+
 div.column.events > div {
-  height: calc(100vh - 30px - 4em);
   position: relative;
+  height: calc(100vh - 30px - 5em);
 }
 
 //main
-
-body {
-  background: rgba(121, 160, 121, 0.945);
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-}
 
 #title {
   font-size: 30px;
@@ -64,7 +81,25 @@ body {
 }
 
 .posts {
+  overflow: scroll;
+  position: relative;
   margin: 10px;
+}
+
+.post {
+  position: relative;
+}
+
+.username {
+  position: absolute;
+  right: 1.3rem;
+  bottom: 0.5rem;
+}
+
+.postPhotos {
+  float: right;
+  margin-bottom: 1.5rem;
+  padding-left: 1rem;
 }
 
 #postform {
@@ -72,4 +107,56 @@ body {
   margin: 10px;
   padding: 10px;
   background: rgb(214, 214, 214);
+}
+
+.userNameDisplay {
+  margin: 1rem;
+  font-weight: bold;
+}
+
+.navbar-menu button {
+  width: 8em;
+}
+
+@media only screen and (max-width: 768px) {
+  .column.posts {
+    height: calc(60vh - 5rem);
+  }
+  .column.events {
+    padding: 0;
+    height: calc(40vh - 1.9rem);
+  }
+  div.column.events > div {
+    height: calc(40vh + 0.75rem);
+    padding: 0;
+  }
+  .column {
+    margin-bottom: 0;
+  }
+  body {
+    height: calc(100vh - 1.85rem);
+  }
+  .navbar-menu button {
+    float: right;
+    margin: 0.5em;
+  }
+  .userNameDisplay {
+    float: right;
+    margin: 0.5em 1rem;
+    clear: right;
+  }
+
+  .postPhotos {
+    float: left;
+  }
+
+  .navbar-menu {
+    background-color: hsla(120, 32%, 66%, 0.925);
+    width: 60%;
+    position: absolute;
+    right: 0.5rem;
+    text-align: right;
+    padding: 1rem;
+    border-radius: 0 0 0.25rem 0.25rem;
+  }
 }
