@@ -10,7 +10,7 @@ function Auth() {
         localStorage.setItem("token", response.data.token);
         cb(response.data);
         alert("Welcome back! " + response.data.email);
-        window.location = "/main";
+        window.location = "/mainpage";
       });
   }
 

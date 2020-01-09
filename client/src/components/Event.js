@@ -5,9 +5,9 @@ class Event extends Component {
     events: []
   };
 
-  //   componentDidMount() {
-  //     this.getPosts();
-  //   }
+  componentDidMount() {
+    console.log(this.props.eventData);
+  }
 
   //   getPosts = () => {
   //     axios
@@ -17,16 +17,17 @@ class Event extends Component {
   //   };
 
   render() {
+    const { title, img, description, date, creator } = this.props.eventData;
     return (
       <div className="events box">
-        <h2>{this.props.title}</h2>
-        <div className="postPhotos">{this.props.img}</div>
-        <p className="description">{this.props.description}</p>
+        <h2>{title}</h2>
+        <div className="postPhotos">{img}</div>
+        <p className="description">{description}</p>
         <span className="dates">
-          {this.props.date.start} - {this.props.date.end}
+          {date.start} - {date.end}
         </span>
-        <div className="username">{this.props.creator.firstName}</div>
-        <div className="userphoto">{this.props.creator.photo}</div>
+        <div className="username">{creator.firstName}</div>
+        <div className="userphoto">photo</div>
       </div>
     );
   }

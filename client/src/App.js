@@ -7,7 +7,7 @@ import UserContext from "./context/UserContext";
 import Mainpage from "./pages/Main";
 //rename these to something more descriptive to what they are
 import EventMap from "./components/Map";
-import PostForm from "./components/EventForm";
+import EventForm from "./components/EventForm";
 
 class App extends Component {
   state = {
@@ -42,7 +42,7 @@ class App extends Component {
             <Route exact path="/" component={LoginPage} />
             <Route exact path="/mainpage" component={Mainpage} />
             <Route exact path="/map" component={EventMap} />
-            <Route exact path="/event" component={PostForm} />
+            <Route exact path="/event" component={EventForm} />
           </UserContext.Provider>
         </div>
       </Router>

@@ -6,6 +6,7 @@ import Postform from "../components/PostForm";
 import authenticatedAxios from "../utils/AuthenticatedAxios";
 
 import socketIOClient from "socket.io-client";
+import EventForm from "../components/EventForm";
 
 class Mainpage extends React.Component {
   state = {
@@ -13,7 +14,8 @@ class Mainpage extends React.Component {
     events: [],
     user: "",
     eventShow: false,
-    formShow: false
+    formShow: false,
+    eventFormShow: false
   };
 
   setUser = user => {
@@ -30,6 +32,13 @@ class Mainpage extends React.Component {
       console.log(post);
       this.setState({
         posts: [post, ...this.state.posts]
+      });
+    });
+
+    socket.on("new event", event => {
+      console.log(event);
+      this.setState({
+        events: [event, ...this.state.events]
       });
     });
 
@@ -60,7 +69,10 @@ class Mainpage extends React.Component {
   getEvents = () => {
     axios
       .get("/api/events")
-      .then(res => this.setState({ events: res.data }))
+      .then(res => {
+        this.setState({ events: res.data });
+        console.log(this.state.events);
+      })
       .catch(err => console.log(err));
   };
 
@@ -70,6 +82,10 @@ class Mainpage extends React.Component {
 
   viewForm = () => {
     this.setState({ formShow: !this.state.formShow });
+  };
+
+  eventForm = () => {
+    this.setState({ eventFormShow: !this.state.eventFormShow });
   };
 
   render() {
@@ -90,10 +106,21 @@ class Mainpage extends React.Component {
           >
             {this.state.formShow ? "close" : "Make a Post"}
           </button>
+          <button
+            className="button is-primary is-small"
+            id="makeEvent"
+            onClick={this.eventForm}
+          >
+            Add Event
+          </button>
         </nav>
         <div>
           {this.state.formShow ? (
             <Postform userState={this.state.user} />
+          ) : null}
+
+          {this.state.eventFormShow ? (
+            <EventForm userState={this.state.user} />
           ) : null}
         </div>
         <div className="columns">
@@ -108,7 +135,9 @@ class Mainpage extends React.Component {
                     creatorPhoto={post.creator.photo}
                   />
                 ))
-              : this.state.events.map(event => <Event key={event._id} />)}
+              : this.state.events.map(event => (
+                  <Event key={event._id} eventData={event} />
+                ))}
           </div>
           <div className="column events"></div>
         </div>

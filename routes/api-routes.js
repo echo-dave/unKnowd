@@ -167,17 +167,25 @@ module.exports = function(app, io) {
     let currentDate = new Date();
     console.log(currentDate);
     db.Event.find({
-      "date.end": { $gt: currentDate }
-    }).then(events => {
-      res.json(events);
-    });
+      // "date.end": { $gt: currentDate }
+    })
+      .populate("creator")
+      .then(events => {
+        res.json(events);
+      });
   });
 
   //we need to have the user _id to insert into the event as well as getting the user name and user photo from the User collection
   app.post("/api/event", function(req, res) {
-    db.Event.create()
+    db.Event.create(req.body)
       .then(function(data) {
-        res.json(data);
+        data
+          .populate("creator")
+          .execPopulate()
+          .then(populatedData => {
+            io.sockets.emit("new event", populatedData);
+            res.end();
+          });
       })
       .catch(function(err) {
         console.log(err);

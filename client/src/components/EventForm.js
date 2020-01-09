@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Auth from "../utils/Auth";
+import eventPost from "../utils/EventPost";
 import axios from "axios";
 
-class PostForm extends Component {
+class EventForm extends Component {
   constructor(props) {
     super(props);
 
@@ -11,10 +11,15 @@ class PostForm extends Component {
       description: "",
       address: "",
       lat: "",
-      lon: ""
+      lon: "",
+      start: "",
+      creator: this.props.userState.id
     };
   }
-
+  componentDidMount() {
+    console.log("post form user", this.props.userState);
+    console.log("creator state", this.state.creator);
+  }
   changeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -35,18 +40,46 @@ class PostForm extends Component {
           });
           console.log(this.state.lat);
           console.log(this.state.lon);
-          Auth.event(
-            this.state.title,
-            this.state.description,
-            this.state.address,
-            this.state.lat,
-            this.state.lon,
-            response => {
-              this.context.setUser(response);
-              console.log(response);
-              this.props.history.push("/");
-            }
-          );
+
+          let eventData = {
+            title: this.state.title,
+            description: this.state.description,
+            address: this.state.address,
+            lat: this.state.lat,
+            lon: this.state.lon,
+            date: { start: this.state.start, end: this.state.end },
+            creator: this.state.creator
+          };
+          console.log("event data", eventData);
+
+          axios
+            .post("/api/event", eventData)
+            .then(() =>
+              this.setState({
+                title: "",
+                description: "",
+                address: "",
+                lat: "",
+                lon: "",
+                start: ""
+              })
+            )
+            .catch(err => console.log(err));
+
+          // eventPost(
+          //   this.state.title,
+          //   this.state.description,
+          //   this.state.address,
+          //   this.state.lat,
+          //   this.state.lon,
+          //   this.state.start,
+          //   this.state.end,
+          //   response => {
+          //     this.context.setUser(response);
+          //     console.log(response);
+          //     this.props.history.push("/");
+          //   }
+          // );
         })
         .catch(error => {
           console.log(error);
@@ -59,61 +92,85 @@ class PostForm extends Component {
   };
 
   render() {
-    const { title, description, address } = this.state;
+    const { title, description, address, start, end } = this.state;
     return (
-      <div className="container">
-        <div className="columns is-centered is-vcentered">
-          <div className="column box">
-            <form onSubmit={this.submitHandler}>
-              <div className="field">
-                <label className="label">Name of event</label>
-                <div className="control">
-                  <input
-                    type="text"
-                    className="control"
-                    name="title"
-                    placeholder="Title of the event"
-                    value={title}
-                    onChange={this.changeHandler}
-                  />
-                </div>
-              </div>
-
-              <div className="field">
-                <label className="label">Description of event</label>
-                <div className="control">
-                  <input
-                    type="text"
-                    className="textarea"
-                    name="description"
-                    placeholder="Description of the event"
-                    value={description}
-                    onChange={this.changeHandler}
-                  />
-                </div>
-                <div className="field">
-                  <label className="label">Address of event</label>
-                  <div className="control">
-                    <input
-                      type="text"
-                      name="address"
-                      placeholder="address"
-                      value={address}
-                      onChange={this.changeHandler}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <button className="button is-primary is-small" type="submit">
-                Submit
-              </button>
-            </form>
+      <div id="eventForm">
+        <form onSubmit={this.submitHandler}>
+          <div className="field">
+            <label className="label">Name of event</label>
+            <div className="control">
+              <input
+                type="text"
+                className="control"
+                name="title"
+                placeholder="Title of the event"
+                value={title}
+                onChange={this.changeHandler}
+              />
+            </div>
           </div>
-        </div>
+
+          <div className="field">
+            <label className="label">Address of event</label>
+            <div className="control">
+              <input
+                type="text"
+                name="address"
+                placeholder="address"
+                value={address}
+                onChange={this.changeHandler}
+              />
+            </div>
+            <div className="field">
+              <label className="label" htmlFor="start">
+                Start Date
+              </label>
+              <div className="control">
+                <input
+                  type="date"
+                  name="start"
+                  value={start}
+                  onChange={this.changeHandler}
+                />
+              </div>
+            </div>
+
+            <div className="field">
+              <label className="label" htmlFor="end">
+                End Date
+              </label>
+              <div className="control">
+                <input
+                  type="date"
+                  name="end"
+                  value={end}
+                  onChange={this.changeHandler}
+                />
+              </div>
+            </div>
+
+            <div className="field">
+              <label className="label">Description of event</label>
+              <div className="control">
+                <textarea
+                  type="text"
+                  className="textarea"
+                  name="description"
+                  placeholder="Description of the event"
+                  value={description}
+                  onChange={this.changeHandler}
+                />
+              </div>
+            </div>
+          </div>
+
+          <button className="button is-primary is-small" type="submit">
+            Submit
+          </button>
+        </form>
       </div>
     );
   }
 }
 
-export default PostForm;
+export default EventForm;
