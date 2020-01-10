@@ -87,7 +87,7 @@ module.exports = function(app, io) {
           {
             data: dbUser._id
           },
-          "superSecretKey"
+          process.env.SECRET
         );
 
         res.json({

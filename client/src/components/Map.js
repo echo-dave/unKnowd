@@ -27,7 +27,7 @@ class MapContainer extends Component {
           lng: events.lon
         }}
         onClick={() =>
-          alert(`Title of the event: ${events.title} 
+          alert(`Event: ${events.title} 
 Description: ${events.description}`)
         }
       />
@@ -46,7 +46,7 @@ Description: ${events.description}`)
   }
 }
 export default GoogleApiWrapper({
-  apiKey: "AIzaSyAePGrHhmiuMqr9vOL5PxtJpvSNsYjEnDk"
+  apiKey: process.env.MAP_API
 })(MapContainer);
 
 // class Main extends React.Component {

@@ -8,6 +8,7 @@ import Mainpage from "./pages/Main";
 //rename these to something more descriptive to what they are
 import EventMap from "./components/Map";
 import EventForm from "./components/EventForm";
+import Viewer from "./pages/Viewer";
 
 class App extends Component {
   state = {
@@ -43,6 +44,7 @@ class App extends Component {
             <Route exact path="/mainpage" component={Mainpage} />
             <Route exact path="/map" component={EventMap} />
             <Route exact path="/event" component={EventForm} />
+            <Route exact path="/viewer" component={Viewer} />
           </UserContext.Provider>
         </div>
       </Router>

@@ -122,7 +122,6 @@ class EventForm extends Component {
             <div className="control">
               <input
                 type="text"
-                className="control"
                 name="title"
                 placeholder="Title of the event"
                 value={title}
@@ -156,7 +155,7 @@ class EventForm extends Component {
               />
             </div>
           </div> */}
-          <h1 className="is-title is-2">Date</h1>
+          <h1 className="label">Date</h1>
           <DatePicker
             selected={this.state.start}
             onChange={this.handleDateChange}
@@ -168,6 +167,7 @@ class EventForm extends Component {
               <textarea
                 type="text"
                 className="textarea"
+                rows="3"
                 name="description"
                 placeholder="Description of the event"
                 value={description}
@@ -180,7 +180,7 @@ class EventForm extends Component {
               Photo
             </label>
             <div className="control">
-              <span id="imageRemove">X</span>
+              {/* <span id="imageRemove">X</span> */}
               <input
                 className="input"
                 name="img"

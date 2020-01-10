@@ -40,21 +40,17 @@ class PostForm extends Component {
     e.preventDefault();
     // console.log(Auth.getToken());
     let currentDate = new Date();
-    let postData = {
-      msg: this.state.msg,
-      creator: this.state.creator,
-      dateCreated: currentDate
-    };
+
     let formPostData = new FormData();
     formPostData.set("creator", this.state.creator);
     formPostData.append("photos", this.state.photos);
     formPostData.append("msg", this.state.msg);
     formPostData.append("dateCreated", currentDate);
 
-    console.log("form data for axios");
-    for (var [key, value] of formPostData.entries()) {
-      console.log(key, value);
-    }
+    // console.log("form data for axios");
+    // for (var [key, value] of formPostData.entries()) {
+    //   console.log(key, value);
+    // }
 
     this.savePost(formPostData);
   };
@@ -66,16 +62,11 @@ class PostForm extends Component {
       data: postData,
       headers: { "Content-Type": "multipart/form-data" }
     })
-      // .post("/api/post", postData)
       .then(() => {
         this.props.closeForm();
-        this.setState({
-          msg: "",
-          photos: ""
-        });
-        // console.log(returnedData);
-        // this.socket.emit("new post", {
-        //   returnedData
+        // this.setState({
+        //   msg: "",
+        //   photos: ""
         // });
       })
       .catch(err => console.log(err));
@@ -90,7 +81,10 @@ class PostForm extends Component {
               Message
             </label>
             <textarea
+              placeholder="message to community"
               type="text"
+              rows="3"
+              className="textarea"
               name="msg"
               value={this.state.msg}
               onChange={this.changeHandler}
@@ -101,7 +95,7 @@ class PostForm extends Component {
               Photo
             </label>
             <div className="control">
-              <span id="imageRemove">X</span>
+              {/* <span id="imageRemove">X</span> */}
               <input
                 className="input"
                 name="photo"

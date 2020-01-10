@@ -19,7 +19,9 @@ const UserSchema = new Schema({
   },
   email: {
     type: String,
-    required: true
+    required: true,
+    unique: true,
+    match: [/.+@.+\..+/, "Please enter a valid e-mail address"]
   },
   photo: {
     type: String

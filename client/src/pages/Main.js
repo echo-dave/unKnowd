@@ -21,7 +21,7 @@ class Mainpage extends React.Component {
 
   setUser = user => {
     this.setState({ user });
-    setTimeout(() => console.log("****STATE", this.state), 100);
+    // setTimeout(() => console.log("****STATE", this.state), 100);
   };
 
   componentDidMount() {
@@ -40,7 +40,7 @@ class Mainpage extends React.Component {
     // socket.on("new post", data => console.log(data));
 
     socket.on("new post", post => {
-      console.log(post);
+      // console.log(post);
       this.setState({
         posts: [post, ...this.state.posts]
       });
@@ -62,7 +62,7 @@ class Mainpage extends React.Component {
     axios
       .get("/api/posts")
       .then(res => {
-        console.log(res);
+        // console.log(res);
         this.setState({ posts: res.data });
       })
       .catch(err => console.log(err));
@@ -73,21 +73,27 @@ class Mainpage extends React.Component {
       .get("/api/events")
       .then(res => {
         this.setState({ events: res.data });
-        console.log(this.state.events);
+        // console.log(this.state.events);
       })
       .catch(err => console.log(err));
   };
 
   togglePostEventViews = () => {
     this.setState({ eventShow: !this.state.eventShow });
+    this.setState({ burgerActive: false });
+    document.querySelector(".navbar-menu").classList.remove("is-active");
   };
 
   togglePostForm = () => {
     this.setState({ postFormShow: !this.state.postFormShow });
+    this.setState({ burgerActive: false });
+    document.querySelector(".navbar-menu").classList.remove("is-active");
   };
 
   toggleEventForm = () => {
     this.setState({ eventFormShow: !this.state.eventFormShow });
+    this.setState({ burgerActive: false });
+    document.querySelector(".navbar-menu").classList.remove("is-active");
   };
 
   toggleNavbar = () => {
@@ -127,31 +133,31 @@ class Mainpage extends React.Component {
           <div className="navbar-menu">
             <div className="navbar-start">
               <div className="navbar-item" id="viewChanger">
-                <button
+                <a
                   className="button is-primary is-small"
                   id="viewChange"
                   onClick={this.togglePostEventViews}
                 >
                   {this.state.eventShow ? "View Posts" : "View Events"}
-                </button>
+                </a>
               </div>
               <div className="navbar-item" id="postMaker">
-                <button
+                <a
                   className="button is-primary is-small"
                   id="formButton"
                   onClick={this.togglePostForm}
                 >
                   {this.state.postFormShow ? "Close" : "Make a Post"}
-                </button>
+                </a>
               </div>
               <div className="navbar-item" id="eventMaker">
-                <button
+                <a
                   className="button is-primary is-small"
                   id="makeEvent"
                   onClick={this.toggleEventForm}
                 >
                   {this.state.eventFormShow ? "close" : "Make an Event"}
-                </button>
+                </a>
               </div>
               {this.state.user ? (
                 <div className="userNameDisplay">
@@ -167,7 +173,7 @@ class Mainpage extends React.Component {
           {this.state.postFormShow ? (
             <Postform
               userState={this.state.user}
-              closeForm={this.state.togglePostForm}
+              closeForm={this.togglePostForm}
             />
           ) : null}
 

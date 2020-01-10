@@ -1,20 +1,13 @@
 import React, { Component } from "react";
 
 class Event extends Component {
-  state = {
-    events: []
-  };
+  // state = {
+  //   events: []
+  // };
 
   componentDidMount() {
     console.log(this.props.eventData);
   }
-
-  //   getPosts = () => {
-  //     axios
-  //       .get("/api/events")
-  //       .then(res => this.setState({ events: res.data }))
-  //       .cach(err => console.log(err));
-  //   };
 
   render() {
     const {
@@ -27,7 +20,7 @@ class Event extends Component {
     } = this.props.eventData;
     return (
       <div className="event box clearfix" data-attr={_id}>
-        <h2>{title}</h2>
+        <h2 className="is-title is-2">{title}</h2>
         <div className="postPhotos">
           <img src={img} alt="" />
         </div>
