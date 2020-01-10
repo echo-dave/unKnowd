@@ -36,7 +36,7 @@ class Mainpage extends React.Component {
 
     this.getPosts();
     this.getEvents();
-    const socket = socketIOClient("http://127.0.0.1:3001");
+    const socket = socketIOClient();
     // socket.on("new post", data => console.log(data));
 
     socket.on("new post", post => {
