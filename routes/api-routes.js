@@ -12,13 +12,57 @@ module.exports = function(app, io) {
   app.post("/api/signup", function(req, res) {
     console.log(req.body, req.files);
 
-    User.create(req.body)
-      .then(function(result) {
-        res.json({ message: "user created", user: result._id });
-      })
-      .catch(function(err) {
-        res.status(500).json({ error: err.message });
-      });
+    if (req.files != null) {
+      console.log("file--------------file");
+      console.log(req.files);
+
+      req.files.photo.namelong =
+        req.files.photo.name.slice(0, -4) +
+        "-" +
+        Date.now() +
+        req.files.photo.name.slice(-4);
+
+      req.files.photo.mv(
+        path.join(
+          __dirname,
+          "../client/public/upload",
+          req.files.photo.namelong
+        ),
+        function(err) {
+          if (err) {
+            console.log(err);
+            res.send(err);
+          } else {
+            console.log("upload success");
+            cloud(req.files.photo.namelong)
+              .then(function(imageurl) {
+                console.log("create doc next");
+                req.body.photo = imageurl;
+                console.log(req.body);
+
+                User.create(req.body)
+                  .then(function(result) {
+                    res.json({ message: "user created", user: result._id });
+                  })
+                  .catch(function(err) {
+                    res.status(500).json({ error: err.message });
+                  });
+              })
+              .catch(function(err) {
+                console.log(err);
+              });
+          }
+        }
+      );
+    } else {
+      User.create(req.body)
+        .then(function(result) {
+          res.json({ message: "user created", user: result._id });
+        })
+        .catch(function(err) {
+          res.status(500).json({ error: err.message });
+        });
+    }
   });
 
   app.post("/api/eventForm", function(req, res) {
