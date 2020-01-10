@@ -81,7 +81,10 @@ class PostForm extends Component {
               Message
             </label>
             <textarea
+              placeholder="message to community"
               type="text"
+              rows="3"
+              className="textarea"
               name="msg"
               value={this.state.msg}
               onChange={this.changeHandler}
@@ -92,7 +95,7 @@ class PostForm extends Component {
               Photo
             </label>
             <div className="control">
-              <span id="imageRemove">X</span>
+              {/* <span id="imageRemove">X</span> */}
               <input
                 className="input"
                 name="photo"
