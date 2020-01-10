@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import authenticatedAxios from "./utils/AuthenticatedAxios";
 import LoginPage from "./pages/LoginPage";
@@ -41,9 +42,9 @@ class App extends Component {
             }}
           >
             <Route exact path="/" component={LoginPage} />
-            <Route exact path="/mainpage" component={Mainpage} />
-            <Route exact path="/map" component={EventMap} />
-            <Route exact path="/event" component={EventForm} />
+            <ProtectedRoute exact path="/mainpage" component={Mainpage} />
+            {/* <Route exact path="/map" component={EventMap} /> */}
+            {/* <Route exact path="/event" component={EventForm} /> */}
             <Route exact path="/viewer" component={Viewer} />
           </UserContext.Provider>
         </div>
