@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import eventPost from "../utils/EventPost";
 import axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 class EventForm extends Component {
   constructor(props) {
@@ -12,8 +14,7 @@ class EventForm extends Component {
       address: "",
       lat: "",
       lon: "",
-      start: "",
-      end: "",
+      start: new Date(),
       img: "",
       creator: this.props.userState.id
     };
@@ -24,6 +25,12 @@ class EventForm extends Component {
   }
   changeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleDateChange = date => {
+    this.setState({
+      start: date
+    });
   };
 
   fileChangeHandler = event => {
@@ -58,7 +65,6 @@ class EventForm extends Component {
           eventData.append("lat", this.state.lat);
           eventData.append("lon", this.state.lon);
           eventData.append("date.start", this.state.start);
-          eventData.append("date.end", this.state.end);
           eventData.append("creator", this.state.creator);
           eventData.append("img", this.state.img);
 
@@ -137,7 +143,7 @@ class EventForm extends Component {
               />
             </div>
           </div>
-          <div className="field">
+          {/* <div className="field">
             <label className="label" htmlFor="start">
               Start Date
             </label>
@@ -149,21 +155,12 @@ class EventForm extends Component {
                 onChange={this.changeHandler}
               />
             </div>
-          </div>
-
-          <div className="field">
-            <label className="label" htmlFor="end">
-              End Date
-            </label>
-            <div className="control">
-              <input
-                type="date"
-                name="end"
-                value={end}
-                onChange={this.changeHandler}
-              />
-            </div>
-          </div>
+          </div> */}
+          <h1 className="is-title is-2">Date</h1>
+          <DatePicker
+            selected={this.state.start}
+            onChange={this.handleDateChange}
+          />
 
           <div className="field">
             <label className="label">Description of event</label>

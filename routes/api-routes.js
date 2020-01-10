@@ -213,7 +213,7 @@ module.exports = function(app, io) {
     let currentDate = new Date();
     console.log(currentDate);
     db.Event.find({
-      // "date.end": { $gt: currentDate }
+      "date.start": { $gt: new Date(currentDate) }
     })
       .populate("creator")
       .then(events => {

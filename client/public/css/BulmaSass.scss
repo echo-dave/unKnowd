@@ -87,7 +87,8 @@ div.column.events > div {
   margin: 10px;
 }
 
-.post {
+.post,
+.event {
   position: relative;
 }
 
@@ -123,6 +124,7 @@ div.column.events > div {
   width: 75px;
   float: right;
   margin-bottom: 0.25rem;
+  clear: right;
 }
 
 @media only screen and (max-width: 768px) {

@@ -32,11 +32,11 @@ class Event extends Component {
           <img src={img} alt="" />
         </div>
         <p className="description">{description}</p>
-        <span className="dates">
-          {date.start} - {date.end}
-        </span>
+        <span className="dates">{date.start}</span>
         <div className="username">{creator.firstName}</div>
-        <div className="userphoto">user photo</div>
+        <div className="userphoto">
+          <img src={creator.photo} alt="" />
+        </div>
       </div>
     );
   }
