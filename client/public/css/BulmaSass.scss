@@ -8,6 +8,11 @@ body {
   overflow: hidden;
 }
 
+h2 {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
 .clearfix::after {
   content: "";
   clear: both;
@@ -116,7 +121,7 @@ div.column.events > div {
   font-weight: bold;
 }
 
-.navbar-menu button {
+.navbar-menu a {
   width: 8em;
 }
 

@@ -127,31 +127,31 @@ class Mainpage extends React.Component {
           <div className="navbar-menu">
             <div className="navbar-start">
               <div className="navbar-item" id="viewChanger">
-                <button
+                <a
                   className="button is-primary is-small"
                   id="viewChange"
                   onClick={this.togglePostEventViews}
                 >
                   {this.state.eventShow ? "View Posts" : "View Events"}
-                </button>
+                </a>
               </div>
               <div className="navbar-item" id="postMaker">
-                <button
+                <a
                   className="button is-primary is-small"
                   id="formButton"
                   onClick={this.togglePostForm}
                 >
                   {this.state.postFormShow ? "Close" : "Make a Post"}
-                </button>
+                </a>
               </div>
               <div className="navbar-item" id="eventMaker">
-                <button
+                <a
                   className="button is-primary is-small"
                   id="makeEvent"
                   onClick={this.toggleEventForm}
                 >
                   {this.state.eventFormShow ? "close" : "Make an Event"}
-                </button>
+                </a>
               </div>
               {this.state.user ? (
                 <div className="userNameDisplay">
