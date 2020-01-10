@@ -5,6 +5,7 @@ body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   height: 100vh;
+  overflow: hidden;
 }
 
 .clearfix::after {
@@ -60,7 +61,7 @@ h1 {
 
 // map style
 
-.column {
+.main .column {
   height: calc(100vh - 5.5rem);
 }
 
@@ -81,18 +82,19 @@ div.column.events > div {
 }
 
 .posts {
-  overflow: scroll;
+  overflow-y: scroll;
   position: relative;
   margin: 10px;
 }
 
-.post {
+.post,
+.event {
   position: relative;
 }
 
 .username {
   position: absolute;
-  right: 1.3rem;
+  right: 2.2rem;
   bottom: 0.5rem;
 }
 
@@ -118,6 +120,13 @@ div.column.events > div {
   width: 8em;
 }
 
+.posts .userphoto {
+  width: 75px;
+  float: right;
+  margin-bottom: 0.25rem;
+  clear: right;
+}
+
 @media only screen and (max-width: 768px) {
   .column.posts {
     height: calc(60vh - 5rem);
@@ -134,7 +143,8 @@ div.column.events > div {
     margin-bottom: 0;
   }
   body {
-    height: calc(100vh - 1.85rem);
+    overflow: hidden;
+    // height: calc(100vh - 1.85rem);
   }
   .navbar-menu button {
     float: right;
@@ -147,7 +157,9 @@ div.column.events > div {
   }
 
   .postPhotos {
-    float: left;
+    float: none;
+    clear: both;
+    display: block;
   }
 
   .navbar-menu {
