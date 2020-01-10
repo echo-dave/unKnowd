@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 
 class Event extends Component {
-  // state = {
-  //   events: []
-  // };
-
   componentDidMount() {
     console.log(this.props.eventData);
   }
