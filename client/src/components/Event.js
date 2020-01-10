@@ -1,20 +1,13 @@
 import React, { Component } from "react";
 
 class Event extends Component {
-  state = {
-    events: []
-  };
+  // state = {
+  //   events: []
+  // };
 
   componentDidMount() {
     console.log(this.props.eventData);
   }
-
-  //   getPosts = () => {
-  //     axios
-  //       .get("/api/events")
-  //       .then(res => this.setState({ events: res.data }))
-  //       .cach(err => console.log(err));
-  //   };
 
   render() {
     const {

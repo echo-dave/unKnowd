@@ -1,12 +1,8 @@
 import React from "react";
 import axios from "axios";
-import Post from "../components/Post";
 import Event from "../components/Event";
-import Postform from "../components/PostForm";
-import authenticatedAxios from "../utils/AuthenticatedAxios";
 import EventMap from "../components/Map";
 import socketIOClient from "socket.io-client";
-import EventForm from "../components/EventForm";
 
 class Viewer extends React.Component {
   state = {

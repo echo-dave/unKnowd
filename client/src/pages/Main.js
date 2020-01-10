@@ -21,7 +21,7 @@ class Mainpage extends React.Component {
 
   setUser = user => {
     this.setState({ user });
-    setTimeout(() => console.log("****STATE", this.state), 100);
+    // setTimeout(() => console.log("****STATE", this.state), 100);
   };
 
   componentDidMount() {
@@ -40,7 +40,7 @@ class Mainpage extends React.Component {
     // socket.on("new post", data => console.log(data));
 
     socket.on("new post", post => {
-      console.log(post);
+      // console.log(post);
       this.setState({
         posts: [post, ...this.state.posts]
       });
@@ -62,7 +62,7 @@ class Mainpage extends React.Component {
     axios
       .get("/api/posts")
       .then(res => {
-        console.log(res);
+        // console.log(res);
         this.setState({ posts: res.data });
       })
       .catch(err => console.log(err));
@@ -73,7 +73,7 @@ class Mainpage extends React.Component {
       .get("/api/events")
       .then(res => {
         this.setState({ events: res.data });
-        console.log(this.state.events);
+        // console.log(this.state.events);
       })
       .catch(err => console.log(err));
   };
