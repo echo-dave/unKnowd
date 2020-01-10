@@ -1,9 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import UserContext from "../context/UserContext";
-import Auth from "../utils/Auth";
 import axios from "axios";
-import socketIOClient from "socket.io-client";
 
 class PostForm extends Component {
   //settting compoent forms initial structure
