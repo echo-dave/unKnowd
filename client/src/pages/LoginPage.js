@@ -18,7 +18,7 @@ class LoginPage extends React.Component {
         </nav>
         <h5 id="quote">Putting community back in community</h5>
         <div className="container" id="signup-container">
-          <div className="columns is-centered is-vcentered">
+          <div className="columns is-centered is-vcentered is-mobile">
             <div className="column is-narrow box">
               {isRegister ? <SignUpForm /> : <LoginForm />}
               <a className="" id="login" onClick={this.changeForm}>

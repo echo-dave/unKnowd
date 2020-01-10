@@ -80,14 +80,20 @@ class Mainpage extends React.Component {
 
   togglePostEventViews = () => {
     this.setState({ eventShow: !this.state.eventShow });
+    this.setState({ burgerActive: false });
+    document.querySelector(".navbar-menu").classList.remove("is-active");
   };
 
   togglePostForm = () => {
     this.setState({ postFormShow: !this.state.postFormShow });
+    this.setState({ burgerActive: false });
+    document.querySelector(".navbar-menu").classList.remove("is-active");
   };
 
   toggleEventForm = () => {
     this.setState({ eventFormShow: !this.state.eventFormShow });
+    this.setState({ burgerActive: false });
+    document.querySelector(".navbar-menu").classList.remove("is-active");
   };
 
   toggleNavbar = () => {
@@ -167,7 +173,7 @@ class Mainpage extends React.Component {
           {this.state.postFormShow ? (
             <Postform
               userState={this.state.user}
-              closeForm={this.state.togglePostForm}
+              closeForm={this.togglePostForm}
             />
           ) : null}
 
