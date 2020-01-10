@@ -140,6 +140,9 @@ div.column.events > div {
 }
 
 @media only screen and (max-width: 768px) {
+  #newUserForm {
+    max-width: 80vw;
+  }
   .column.posts {
     height: calc(60vh - 5rem);
   }
