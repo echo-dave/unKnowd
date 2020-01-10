@@ -111,10 +111,14 @@ div.column.events > div {
 
 #postform,
 #eventForm {
-  border: 2px solid white;
+  // border: 2px solid white;
   margin: 10px;
   padding: 10px;
   background: rgb(214, 214, 214);
+  position: absolute;
+  top: 1.3rem;
+  width: 270px;
+  z-index: 10;
 }
 
 .userNameDisplay {
