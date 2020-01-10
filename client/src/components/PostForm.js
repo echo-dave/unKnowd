@@ -64,10 +64,6 @@ class PostForm extends Component {
     })
       .then(() => {
         this.props.closeForm();
-        // this.setState({
-        //   msg: "",
-        //   photos: ""
-        // });
       })
       .catch(err => console.log(err));
   };

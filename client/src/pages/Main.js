@@ -28,7 +28,7 @@ class Mainpage extends React.Component {
     const token = localStorage.getItem("token");
     if (token) {
       authenticatedAxios.get("/api/me").then(response => {
-        console.log(response);
+        // console.log(response);
         this.setUser(response.data);
         // console.log(this.state.user);
       });
@@ -47,7 +47,7 @@ class Mainpage extends React.Component {
     });
 
     socket.on("new event", event => {
-      console.log(event);
+      // console.log(event);
       this.setState({
         events: [event, ...this.state.events]
       });
