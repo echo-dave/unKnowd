@@ -127,37 +127,31 @@ class Mainpage extends React.Component {
           <div className="navbar-menu">
             <div className="navbar-start">
               <div className="navbar-item" id="viewChanger">
-                <p className="control">
-                  <button
-                    className="button is-primary is-small"
-                    id="viewChange"
-                    onClick={this.togglePostEventViews}
-                  >
-                    {this.state.eventShow ? "View Posts" : "View Events"}
-                  </button>
-                </p>
+                <button
+                  className="button is-primary is-small"
+                  id="viewChange"
+                  onClick={this.togglePostEventViews}
+                >
+                  {this.state.eventShow ? "View Posts" : "View Events"}
+                </button>
               </div>
               <div className="navbar-item" id="postMaker">
-                <p className="control">
-                  <button
-                    className="button is-primary is-small"
-                    id="formButton"
-                    onClick={this.togglePostForm}
-                  >
-                    {this.state.postFormShow ? "Close" : "Make a Post"}
-                  </button>
-                </p>
+                <button
+                  className="button is-primary is-small"
+                  id="formButton"
+                  onClick={this.togglePostForm}
+                >
+                  {this.state.postFormShow ? "Close" : "Make a Post"}
+                </button>
               </div>
               <div className="navbar-item" id="eventMaker">
-                <p className="control">
-                  <button
-                    className="button is-primary is-small"
-                    id="makeEvent"
-                    onClick={this.toggleEventForm}
-                  >
-                    {this.state.eventFormShow ? "close" : "Make an Event"}
-                  </button>
-                </p>
+                <button
+                  className="button is-primary is-small"
+                  id="makeEvent"
+                  onClick={this.toggleEventForm}
+                >
+                  {this.state.eventFormShow ? "close" : "Make an Event"}
+                </button>
               </div>
               {this.state.user ? (
                 <div className="userNameDisplay">
