@@ -112,6 +112,16 @@ module.exports = function(app, io) {
       });
   });
 
+  app.get("/api/findupdate", function(req, res) {
+    Event.find({})
+      .then(function(result) {
+        res.json(result);
+      })
+      .catch(function(err) {
+        res.status(500).json({ error: err.message });
+      });
+  });
+
   app.get("/api/protected", authWare, function(req, res) {
     const user = req.user;
     res.json({

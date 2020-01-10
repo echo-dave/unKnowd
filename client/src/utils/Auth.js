@@ -52,6 +52,24 @@ function Auth() {
       });
   }
 
+  function update(title, firstName, lastName, cb) {
+    console.log("Event Created");
+    axios
+      .get("/api/EventForm", {
+        title: title,
+        firstName: firstName,
+        lastName: lastName
+      })
+      .then(function(data) {
+        console.log(data);
+        alert("Success!");
+        window.location = "/mainpage";
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+  }
+
   function logOut(cb) {
     localStorage.removeItem("token");
     cb();
@@ -76,6 +94,8 @@ function Auth() {
     logOut,
     getToken,
     register,
+    update,
+
     event
   };
 }
