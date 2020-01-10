@@ -9,7 +9,7 @@ function Auth() {
         console.log(response);
         localStorage.setItem("token", response.data.token);
         cb(response.data);
-        alert("Welcome back! " + response.data.email);
+        // alert("Welcome back! " + response.data.email);
         window.location = "/mainpage";
       });
   }
