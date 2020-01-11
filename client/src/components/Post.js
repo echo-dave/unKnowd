@@ -7,7 +7,10 @@ class Post extends Component {
         <img alt="" className="postPhotos" src={this.props.photos} />
         <p>{this.props.msg}</p>
         <div className="username">{this.props.firstName}</div>
-        <img alt="" className="userphoto" src={this.props.creatorPhoto} />
+        <div
+          className="userphoto"
+          style={{ backgroundImage: `url(${this.props.creatorPhoto})` }}
+        ></div>
       </div>
     );
   }
