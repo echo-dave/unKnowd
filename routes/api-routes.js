@@ -213,7 +213,7 @@ module.exports = function(app, io) {
     let currentDate = new Date();
     console.log(currentDate);
     db.Event.find({
-      "date.start": { $gt: new Date(currentDate) }
+      "date.start": { $gte: new Date(currentDate) }
     })
       .populate("creator")
       .then(events => {
@@ -223,7 +223,7 @@ module.exports = function(app, io) {
 
   //we need to have the user _id to insert into the event as well as getting the user name and user photo from the User collection
   app.post("/api/event", function(req, res) {
-    console.log(req);
+    console.log(req.body);
 
     if (req.files != null) {
       console.log("file--------------file");

@@ -23,9 +23,10 @@ class Event extends Component {
         <p className="description">{description}</p>
         <span className="dates">{date.start}</span>
         <div className="username">{creator.firstName}</div>
-        <div className="userphoto">
-          <img src={creator.photo} alt="" />
-        </div>
+        <div
+          className="userphoto"
+          style={{ backgroundImage: `url(${creator.photo})` }}
+        ></div>
       </div>
     );
   }
