@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
+// import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
 
-import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
+import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
 
 class MapContainer extends Component {
   constructor(props) {

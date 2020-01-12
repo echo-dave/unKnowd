@@ -13,11 +13,12 @@ const EventSchema = new Schema({
   description: String,
   address: String,
   img: String,
-  private: Boolean,
+  private: { type: Boolean, default: false },
   creator: {
     type: Schema.Types.ObjectId,
     ref: "User"
-  }
+  },
+  replies: Array
 });
 
 const Event = mongoose.model("Event", EventSchema);

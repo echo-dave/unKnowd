@@ -213,7 +213,7 @@ module.exports = function(app, io) {
     let currentDate = new Date();
     console.log(currentDate);
     db.Event.find({
-      "date.start": { $gt: new Date(currentDate) }
+      "date.start": { $gte: new Date(currentDate) }
     })
       .populate("creator")
       .then(events => {
@@ -223,7 +223,7 @@ module.exports = function(app, io) {
 
   //we need to have the user _id to insert into the event as well as getting the user name and user photo from the User collection
   app.post("/api/event", function(req, res) {
-    console.log(req);
+    console.log(req.body);
 
     if (req.files != null) {
       console.log("file--------------file");
@@ -281,5 +281,51 @@ module.exports = function(app, io) {
           console.log(err);
         });
     }
+  });
+
+  app.get("/api/getComments", function(req, res) {
+    console.log("query", req.query);
+    db.Post.find({ _id: req.query._id }).then(function(comments) {
+      console.log(comments);
+      // console.log("arrayReplies", comments[0].replies);
+
+      res.json(comments[0].replies);
+    });
+  });
+
+  app.post("/api/replyComment", function(req, res) {
+    console.log(req.body);
+    db.Post.findOneAndUpdate(
+      { _id: req.body.commentId },
+      { $push: { replies: req.body } }
+    ).then(function(newReply) {
+      console.log("newReply", newReply);
+
+      // io.sockets.emit("new post reply", newReply);
+      res.json(newReply);
+    });
+  });
+
+  app.get("/api/getEventComments", function(req, res) {
+    console.log("query", req.query);
+    db.Event.find({ _id: req.query._id }).then(function(comments) {
+      console.log(comments);
+      // console.log("arrayReplies", comments[0].replies);
+
+      res.json(comments[0].replies);
+    });
+  });
+
+  app.post("/api/replyEventComment", function(req, res) {
+    console.log("event req", req.body);
+    db.Event.findOneAndUpdate(
+      { _id: req.body.commentId },
+      { $push: { replies: req.body } }
+    ).then(function(newReply) {
+      console.log("newReply", newReply);
+
+      // io.sockets.emit("new post reply", newReply);
+      res.json(newReply);
+    });
   });
 };

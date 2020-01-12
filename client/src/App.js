@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+// import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import authenticatedAxios from "./utils/AuthenticatedAxios";
@@ -7,8 +9,7 @@ import LoginPage from "./pages/LoginPage";
 import UserContext from "./context/UserContext";
 import Mainpage from "./pages/Main";
 //rename these to something more descriptive to what they are
-import EventMap from "./components/Map";
-import EventForm from "./components/EventForm";
+
 import Viewer from "./pages/Viewer";
 
 class App extends Component {
