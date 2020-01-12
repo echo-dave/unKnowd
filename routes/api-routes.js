@@ -287,6 +287,8 @@ module.exports = function(app, io) {
     console.log("query", req.query);
     db.Post.find({ _id: req.query._id }).then(function(comments) {
       console.log(comments);
+      // console.log("arrayReplies", comments[0].replies);
+
       res.json(comments[0].replies);
     });
   });
