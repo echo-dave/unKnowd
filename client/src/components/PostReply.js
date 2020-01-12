@@ -15,15 +15,7 @@ class PostForm extends Component {
     this.setState({
       parrentComment: this.props.postId
     });
-
-    // socket.on("new post reply", reply => {
-    //   // console.log(post);
-    //   this.setState({
-    //     posts: [post, ...this.state.posts]
-    //   });
-    // });
   }
-  // socket = socketIOClient();
 
   //this gets the value and name of the inputs that triggered the change
   changeHandler = e => {
@@ -58,11 +50,29 @@ class PostForm extends Component {
     // for (var [key, value] of formPostData.entries()) {
     //   console.log(key, value);
     // }
+    this.props.eventShow
+      ? this.saveEvent(formPostData)
+      : this.savePost(formPostData);
+  };
 
-    this.savePost(formPostData);
+  saveEvent = postData => {
+    console.log("save event reply");
+
+    axios({
+      method: "post",
+      url: "/api/replyEventComment",
+      data: postData,
+      headers: { "Content-Type": "multipart/form-data" }
+    })
+      .then(() => {
+        this.props.closeForm();
+      })
+      .catch(err => console.log(err));
   };
 
   savePost = postData => {
+    console.log("save post reply");
+
     axios({
       method: "post",
       url: "/api/replyComment",

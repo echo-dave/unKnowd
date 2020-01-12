@@ -18,7 +18,7 @@ class Post extends Component {
 
   getComments = () => {
     // let id = this.getAttribute("data-id");
-    console.log("id", this.props._id);
+    // setTimeout(() => console.log("id", this.props._id), 200);
 
     axios
       .get("/api/getComments", { params: { _id: this.props._id } })

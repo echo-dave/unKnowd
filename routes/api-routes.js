@@ -305,4 +305,27 @@ module.exports = function(app, io) {
       res.json(newReply);
     });
   });
+
+  app.get("/api/getEventComments", function(req, res) {
+    console.log("query", req.query);
+    db.Event.find({ _id: req.query._id }).then(function(comments) {
+      console.log(comments);
+      // console.log("arrayReplies", comments[0].replies);
+
+      res.json(comments[0].replies);
+    });
+  });
+
+  app.post("/api/replyEventComment", function(req, res) {
+    console.log("event req", req.body);
+    db.Event.findOneAndUpdate(
+      { _id: req.body.commentId },
+      { $push: { replies: req.body } }
+    ).then(function(newReply) {
+      console.log("newReply", newReply);
+
+      // io.sockets.emit("new post reply", newReply);
+      res.json(newReply);
+    });
+  });
 };

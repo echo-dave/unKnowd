@@ -202,7 +202,12 @@ class Mainpage extends React.Component {
                   />
                 ))
               : this.state.events.map(event => (
-                  <Event key={event._id} eventData={event} />
+                  <Event
+                    key={event._id}
+                    eventData={event}
+                    eventShow={this.state.eventShow}
+                    userState={this.state.user}
+                  />
                 ))}
           </div>
           <div className="column events">
