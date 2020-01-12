@@ -20,9 +20,12 @@ class Post extends Component {
     console.log("id", this.props._id);
 
     axios
-      .get("/api/getComments", this.props._id)
-      .then(comments => this.setState({ comments: comments.data }));
-    console.log(this.state.comments);
+      .get("/api/getComments", { params: { _id: this.props._id } })
+      .then(comments => {
+        console.log("comment", comments.data);
+        this.setState({ comments: comments.data });
+        console.log(this.state.comments);
+      });
   };
 
   toggleComments = () => {
@@ -48,7 +51,12 @@ class Post extends Component {
         </div>
         <p>{this.props.msg}</p>
         <button onClick={this.toggleReply}>Reply</button>
-        <button onClick={this.toggleComments}>Comments</button>
+        <button
+          data-id={this.props._id}
+          onClick={this.toggleComments.bind(this)}
+        >
+          Comments
+        </button>
 
         {this.state.toggleReply ? (
           <PostReply

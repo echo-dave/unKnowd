@@ -284,10 +284,10 @@ module.exports = function(app, io) {
   });
 
   app.get("/api/getComments", function(req, res) {
-    console.log(req.body);
-    db.Post.find(req.body).then(function(comments) {
+    console.log("query", req.query);
+    db.Post.find({ _id: req.query._id }).then(function(comments) {
       console.log(comments);
-      res.json(comments.replies);
+      res.json(comments[0].replies);
     });
   });
 
