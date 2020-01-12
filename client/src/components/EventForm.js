@@ -89,7 +89,7 @@ class EventForm extends Component {
   };
 
   render() {
-    const { title, description, address, start, end } = this.state;
+    const { title, description, address } = this.state;
     return (
       <div id="eventForm">
         <form onSubmit={this.submitHandler}>
@@ -118,19 +118,6 @@ class EventForm extends Component {
               />
             </div>
           </div>
-          {/* <div className="field">
-            <label className="label" htmlFor="start">
-              Start Date
-            </label>
-            <div className="control">
-              <input
-                type="date"
-                name="start"
-                value={start}
-                onChange={this.changeHandler}
-              />
-            </div>
-          </div> */}
           <h1 className="label">Date</h1>
           <DatePicker
             selected={this.state.start}

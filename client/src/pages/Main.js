@@ -114,11 +114,12 @@ class Mainpage extends React.Component {
           aria-label="main navigation"
         >
           <div className="navbar-brand">
-            <a className="navbar-item">
+            <a className="navbar-item" href="#">
               <h1 id="title">UnKnowd</h1>
             </a>
             <a
               role="button"
+              href="#"
               className="navbar-burger"
               aria-label="menu"
               aria-expanded="false"
@@ -134,6 +135,7 @@ class Mainpage extends React.Component {
             <div className="navbar-start">
               <div className="navbar-item" id="viewChanger">
                 <a
+                  href="#"
                   className="button is-primary is-small"
                   id="viewChange"
                   onClick={this.togglePostEventViews}
@@ -143,6 +145,7 @@ class Mainpage extends React.Component {
               </div>
               <div className="navbar-item" id="postMaker">
                 <a
+                  href="#"
                   className="button is-primary is-small"
                   id="formButton"
                   onClick={this.togglePostForm}
@@ -195,6 +198,7 @@ class Mainpage extends React.Component {
                     photos={post.photos[0]}
                     firstName={post.creator.firstName}
                     creatorPhoto={post.creator.photo}
+                    userState={this.state.user}
                   />
                 ))
               : this.state.events.map(event => (

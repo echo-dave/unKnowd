@@ -282,4 +282,25 @@ module.exports = function(app, io) {
         });
     }
   });
+
+  app.get("/api/getComments", function(req, res) {
+    console.log(req.body);
+    db.Post.find(req.body).then(function(comments) {
+      console.log(comments);
+      res.json(comments.replies);
+    });
+  });
+
+  app.post("/api/replyComment", function(req, res) {
+    console.log(req.body);
+    db.Post.findOneAndUpdate(
+      { _id: req.body.commentId },
+      { $push: { replies: req.body } }
+    ).then(function(newReply) {
+      console.log("newReply", newReply);
+
+      // io.sockets.emit("new post reply", newReply);
+      res.json(newReply);
+    });
+  });
 };
