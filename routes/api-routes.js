@@ -101,7 +101,7 @@ module.exports = function(app, io) {
       }
     });
   });
-
+  //maps related api call
   app.get("/api/all", function(req, res) {
     Event.find({})
       .then(function(result) {
@@ -120,11 +120,11 @@ module.exports = function(app, io) {
     });
   });
 
-  app.get("/api/public", function(req, res) {
-    res.json({
-      message: "this is available for everyone"
-    });
-  });
+  // app.get("/api/public", function(req, res) {
+  //   res.json({
+  //     message: "this is available for everyone"
+  //   });
+  // });
 
   app.get("/api/me", authWare, function(req, res) {
     User.findById(req.user._id).then(dbUser => {
@@ -283,46 +283,52 @@ module.exports = function(app, io) {
     }
   });
 
+  //get post comments
   app.get("/api/getComments", function(req, res) {
     console.log("query", req.query);
-    db.Post.find({ _id: req.query._id }).then(function(comments) {
-      console.log(comments);
-      // console.log("arrayReplies", comments[0].replies);
+    db.Post.find({ _id: req.query._id })
+      .populate("replies.creator")
+      .then(function(comments) {
+        console.log(comments);
+        // console.log("arrayReplies", comments[0].replies);
 
-      res.json(comments[0].replies);
-    });
+        res.json(comments[0].replies);
+      });
   });
-
+  //make post comment
   app.post("/api/replyComment", function(req, res) {
     console.log(req.body);
     db.Post.findOneAndUpdate(
       { _id: req.body.commentId },
       { $push: { replies: req.body } }
     ).then(function(newReply) {
-      console.log("newReply", newReply);
+      console.log("newPostReply", newReply);
+      console.log("arrayReply", newReply[0].replies);
 
       // io.sockets.emit("new post reply", newReply);
       res.json(newReply);
     });
   });
-
+  // get event comments
   app.get("/api/getEventComments", function(req, res) {
     console.log("query", req.query);
-    db.Event.find({ _id: req.query._id }).then(function(comments) {
-      console.log(comments);
-      // console.log("arrayReplies", comments[0].replies);
+    db.Event.find({ _id: req.query._id })
+      .populate("replies.creator")
+      .then(function(comments) {
+        // console.log(comments);
+        // console.log("arrayReplies", comments[0].replies);
 
-      res.json(comments[0].replies);
-    });
+        res.json(comments[0].replies);
+      });
   });
-
+  //make event comment
   app.post("/api/replyEventComment", function(req, res) {
     console.log("event req", req.body);
     db.Event.findOneAndUpdate(
       { _id: req.body.commentId },
       { $push: { replies: req.body } }
     ).then(function(newReply) {
-      console.log("newReply", newReply);
+      console.log("newEventReply", newReply);
 
       // io.sockets.emit("new post reply", newReply);
       res.json(newReply);

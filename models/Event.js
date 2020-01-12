@@ -18,7 +18,18 @@ const EventSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User"
   },
-  replies: Array
+  replies: [
+    {
+      creator: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+      },
+      photos: String,
+      msg: String,
+      dateCreated: Date,
+      commentId: String
+    }
+  ]
 });
 
 const Event = mongoose.model("Event", EventSchema);

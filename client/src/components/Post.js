@@ -78,7 +78,9 @@ class Post extends Component {
         ) : null}
         {this.state.readComments
           ? this.state.comments.map(comment => (
-              <CommentDisplay key={comment.dateCreated} comments={comment} />
+              <div className="commentWrap">
+                <CommentDisplay key={comment.dateCreated} comments={comment} />
+              </div>
             ))
           : null}
       </div>
