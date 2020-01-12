@@ -180,6 +180,14 @@ div.column.events > div {
   clear: left;
 }
 
+.comments {
+  background-color: hsl(0, 0%, 95%);
+}
+
+.commentWrap {
+  margin-top: 1.5rem;
+}
+
 @media only screen and (max-width: 768px) {
   #newUserForm {
     max-width: 80vw;

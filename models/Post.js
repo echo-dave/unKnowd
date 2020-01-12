@@ -10,7 +10,18 @@ const PostSchema = new Schema({
   },
   dateCreated: Date,
   photos: Array,
-  replies: Array
+  replies: [
+    {
+      creator: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+      },
+      photos: String,
+      msg: String,
+      dateCreated: Date,
+      commentId: String
+    }
+  ]
 });
 
 const Post = mongoose.model("Post", PostSchema);
