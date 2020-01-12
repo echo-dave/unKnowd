@@ -27,7 +27,7 @@ class SignUpForm extends Component {
   };
   submitHandler = e => {
     e.preventDefault();
-    const { email, password, firstName, lastName, photo } = this.state;
+    const { email, password, firstName, lastName } = this.state;
 
     const userData = new FormData(document.querySelector("#newUserForm"));
 

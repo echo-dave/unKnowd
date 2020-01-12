@@ -4,15 +4,23 @@ $primary: rgb(240, 240, 240);
 
 body {
   background: rgba(25, 34, 25, 0.945);
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-family: "Montserrat", sans-serif;
   height: 100vh;
   overflow: hidden;
 }
 
 h2 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
   font-size: 1.2em;
-  font-weight: bold;
+  color: rgb(87, 1, 1);
+  margin-bottom: 0.5em;
+}
+
+.posts p {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 0.85em;
 }
 .button.is-small {
   font-size: 1em;
@@ -103,12 +111,6 @@ div.column.events > div {
   position: relative;
 }
 
-.postPhotos {
-  float: right;
-  margin-bottom: 1.5rem;
-  padding-left: 1rem;
-}
-
 #postform,
 #eventForm {
   // border: 2px solid white;
@@ -131,20 +133,45 @@ div.column.events > div {
 .navbar-menu a {
   width: 8em;
 }
+
+.userInfoDisplay {
+  margin-bottom: 0.25rem;
+  position: relative;
+  clear: right;
+  float: left;
+  border: solid rgb(80, 80, 80);
+  border-width: 0 1px 1px 0;
+  border-radius: 0 0 0.25rem 0;
+  padding: 0 0.5rem 0.25rem 0;
+  width: calc(0.8em * 10);
+  margin-bottom: 0.5rem;
+}
+.imageGroup {
+  float: left;
+  clear: right;
+  padding-right: 1rem;
+}
+
 .username {
-  position: absolute;
-  right: 2.2rem;
-  bottom: 0.5rem;
+  font-family: "Indie Flower", cursive;
+  position: relative;
+  text-align: center;
 }
 .posts .userphoto {
   width: 50px;
   height: 50px;
-  float: right;
-  margin-bottom: 0.25rem;
   clear: right;
   border-radius: 10rem;
   background-position: center;
   background-size: cover;
+  margin: auto;
+}
+
+.postPhotos {
+  // margin-bottom: 1.5rem;
+  // padding-right: 1rem;
+  float: left;
+  clear: left;
 }
 
 @media only screen and (max-width: 768px) {
