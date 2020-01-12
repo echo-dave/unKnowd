@@ -228,3 +228,9 @@ div.column.events > div {
     border-radius: 0 0 0.25rem 0.25rem;
   }
 }
+
+@media only screen and (max-width: 530px) {
+  .commentingButtons {
+    clear: left;
+  }
+}
