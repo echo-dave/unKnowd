@@ -1,9 +1,26 @@
 $primary: rgb(240, 240, 240);
-
+$secondary: #003621;
+//smaller size for commenting buttons
+$smaller: 2.5em;
+$commentGrey: #f2f2f2;
 @import "../../../node_modules/bulma/bulma.sass";
+// commenting buttons smaller size and style
+.is-smaller {
+  font-size: 0.8em;
+  height: $smaller;
+  max-height: $smaller;
+  min-height: $smaller;
+  background-color: $secondary;
+  color: $light;
+  border-radius: 0.4rem;
+}
+button.is-smaller:hover {
+  background-color: lighten($secondary, 5.686274509803921);
+  color: white;
+}
 
 body {
-  background: rgb(54, 0, 0);
+  background: $secondary;
   font-family: "Montserrat", sans-serif;
   height: 100vh;
   overflow: hidden;
@@ -35,7 +52,7 @@ h2 {
 
 div #wrap {
   height: 100vh;
-  background-color: aliceblue;
+  // background-color: aliceblue;
   background-image: url("../img/placeholder_background.jpg");
   background-size: cover;
   background-position: center;
@@ -123,11 +140,23 @@ div.column.events > div {
   z-index: 10;
 }
 
-.commentingButtons {
-  // clear: both;
-  padding: 1rem 1rem 1rem 0;
-  text-align: right;
-}
+// .commentingButtons {
+//   // clear: both;
+//   padding: 1rem 0rem 1rem 0;
+//   text-align: right;
+//   position: relative;
+// }
+
+// .commentingButtons button:nth-child(2) {
+//   position: absolute;
+//   top: 0.5rem;
+//   right: 0;
+// }
+// .commentingButtons button:nth-child(1) {
+//   position: absolute;
+//   top: 0.5rem;
+//   right: 6rem;
+// }
 
 .userNameDisplay {
   margin: 1rem;
@@ -140,49 +169,54 @@ div.column.events > div {
   width: 8em;
 }
 
-.userInfoDisplay {
-  margin-bottom: 0.25rem;
-  position: relative;
-  clear: right;
-  float: left;
-  // border: solid rgb(80, 80, 80);
-  // border-width: 0 1px 1px 0;
-  border-radius: 0 0 0.25rem 0;
-  padding: 0 0.5rem 0.25rem 0;
-  width: calc(0.8em * 10);
-  margin-bottom: 0.5rem;
-}
+// .userInfoDisplay {
+//   margin-bottom: 0.25rem;
+//   position: relative;
+//   clear: right;
+//   float: left;
+//   // border: solid rgb(80, 80, 80);
+//   // border-width: 0 1px 1px 0;
+//   border-radius: 0 0 0.25rem 0;
+//   padding: 0 0.5rem 0.25rem 0;
+//   width: calc(0.8em * 10);
+//   margin-bottom: 0.5rem;
+// }
 .imageGroup {
   float: left;
   clear: right;
   padding-right: 1rem;
 }
 
-.username {
-  font-family: "Indie Flower", cursive;
-  position: relative;
-  text-align: center;
-}
-.posts .userphoto {
-  width: 50px;
-  height: 50px;
-  clear: right;
-  border-radius: 10rem;
-  border: solid 1px black;
-  background-position: center;
-  background-size: cover;
-  margin: auto;
-}
+// .username {
+//   font-family: "Indie Flower", cursive;
+//   position: relative;
+//   text-align: center;
+// }
+// .posts .userphoto {
+//   width: 50px;
+//   height: 50px;
+//   clear: right;
+//   border-radius: 10rem;
+//   border: solid 1px black;
+//   background-position: center;
+//   background-size: cover;
+//   margin: auto;
+// }
 
 .postPhotos {
   // margin-bottom: 1.5rem;
   // padding-right: 1rem;
-  float: left;
-  clear: left;
+  float: right;
+  width: calc(100% - 50px - 0.5rem);
+  min-height: 78px;
+  img {
+    border-radius: 0 0.4rem 0 0;
+    width: 100%;
+  }
 }
 
 .comments {
-  background-color: hsl(0, 0%, 95%);
+  background-color: $commentGrey;
 }
 
 .commentWrap {
@@ -221,14 +255,16 @@ div.column.events > div {
     clear: right;
   }
 
-  .postPhotos {
-    float: none;
-    clear: both;
-    display: block;
-  }
+  // .postPhotos {
+  //   float: none;
+  //   clear: both;
+  //   display: block;
+  // }
 
   .navbar-menu {
-    background-color: hsla(0, 0%, 75%, 1);
+    // background-color: #bfbfbf;
+    background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
+    // background-color: adjust($secondary, $lightness: 50%);
     width: 60%;
     position: absolute;
     right: 0.5rem;
@@ -238,8 +274,8 @@ div.column.events > div {
   }
 }
 
-@media only screen and (max-width: 530px) {
-  .commentingButtons {
-    clear: left;
-  }
-}
+// @media only screen and (max-width: 530px) {
+//   .commentingButtons {
+//     clear: left;
+//   }
+// }

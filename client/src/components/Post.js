@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import UserDisplay from "./UserDisplay";
+import UserDisplay from "./UserDisplay/UserDisplay";
 import axios from "axios";
 import PostReply from "./PostReply";
-import CommentDisplay from "./CommentDisplay";
+import CommentDisplay from "./CommentDisplay/CommentDisplay";
+import CommentingButtons from "./CommentingButtons";
 
 class Post extends Component {
   state = {
@@ -43,31 +44,26 @@ class Post extends Component {
   render() {
     return (
       <div className="post box clearfix" data-id={this.props._id}>
-        <div className="clearfix">
-          <div className="imageGroup">
-            <UserDisplay
-              firstName={this.props.firstName}
-              creatorPhoto={this.props.creatorPhoto}
-            />
-            <img alt="" className="postPhotos" src={this.props.photos} />
+        <div>
+          <div className="clearfix">
+            <div className={this.props.photos ? "clearfix" : null}>
+              <UserDisplay
+                firstName={this.props.firstName}
+                creatorPhoto={this.props.creatorPhoto}
+              />
+              {this.props.photos ? (
+                <div className="postPhotos">
+                  <img alt="" src={this.props.photos} />
+                </div>
+              ) : null}
+            </div>
+            <p>{this.props.msg}</p>
           </div>
-          <p>{this.props.msg}</p>
-          <div className="commentingButtons">
-            <button
-              className="button is-small"
-              style={{ marginRight: ".5rem" }}
-              onClick={this.toggleReply}
-            >
-              Reply
-            </button>
-            <button
-              className="button is-small"
-              data-id={this.props._id}
-              onClick={this.toggleComments.bind(this)}
-            >
-              Comments
-            </button>
-          </div>
+          <CommentingButtons
+            dataId={this.props._id}
+            toggleComments={this.toggleComments}
+            toggleReply={this.toggleReply}
+          />
         </div>
         {this.state.toggleReply ? (
           <PostReply
@@ -78,9 +74,7 @@ class Post extends Component {
         ) : null}
         {this.state.readComments
           ? this.state.comments.map(comment => (
-              <div className="commentWrap">
-                <CommentDisplay key={comment.dateCreated} comments={comment} />
-              </div>
+              <CommentDisplay key={comment.dateCreated} comments={comment} />
             ))
           : null}
       </div>
