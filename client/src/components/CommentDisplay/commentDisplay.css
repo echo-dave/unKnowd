@@ -1,0 +1,17 @@
+.commentingButtons {
+  /* clear: both; */
+  padding: 1rem 0rem 1rem 0;
+  text-align: right;
+  position: relative;
+}
+
+.commentingButtons button:nth-child(2) {
+  position: absolute;
+  top: 0.5rem;
+  right: 0;
+}
+.commentingButtons button:nth-child(1) {
+  position: absolute;
+  top: 0.5rem;
+  right: 6rem;
+}

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import UserDisplay from "./UserDisplay";
+import UserDisplay from "./UserDisplay/UserDisplay";
 import axios from "axios";
 import PostReply from "./PostReply";
-import CommentDisplay from "./CommentDisplay";
+import CommentDisplay from "./CommentDisplay/CommentDisplay";
 
 class Post extends Component {
   state = {
@@ -43,25 +43,29 @@ class Post extends Component {
   render() {
     return (
       <div className="post box clearfix" data-id={this.props._id}>
-        <div className="clearfix">
-          <div className="imageGroup">
-            <UserDisplay
-              firstName={this.props.firstName}
-              creatorPhoto={this.props.creatorPhoto}
-            />
-            <img alt="" className="postPhotos" src={this.props.photos} />
+        <div>
+          <div className="clearfix">
+            <div className="clearfix">
+              <UserDisplay
+                firstName={this.props.firstName}
+                creatorPhoto={this.props.creatorPhoto}
+              />
+              <div className="postPhotos">
+                <img alt="" src={this.props.photos} />
+              </div>
+            </div>
+            <p>{this.props.msg}</p>
           </div>
-          <p>{this.props.msg}</p>
           <div className="commentingButtons">
             <button
-              className="button is-small"
+              className="button is-smaller"
               style={{ marginRight: ".5rem" }}
               onClick={this.toggleReply}
             >
               Reply
             </button>
             <button
-              className="button is-small"
+              className="button is-smaller"
               data-id={this.props._id}
               onClick={this.toggleComments.bind(this)}
             >

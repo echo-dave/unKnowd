@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import UserDisplay from "./UserDisplay";
+import UserDisplay from "./UserDisplay/UserDisplay";
 import axios from "axios";
 import PostReply from "./PostReply";
-import CommentDisplay from "./CommentDisplay";
+import CommentDisplay from "./CommentDisplay/CommentDisplay";
 
 class Event extends Component {
   state = {

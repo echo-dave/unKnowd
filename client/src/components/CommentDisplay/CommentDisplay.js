@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import UserDisplay from "./UserDisplay";
-
+import UserDisplay from "../UserDisplay/UserDisplay";
+import "./commentDisplay.css";
 class CommentDisplay extends Component {
   state = {
     comments: []
