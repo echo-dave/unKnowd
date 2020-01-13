@@ -285,12 +285,18 @@ module.exports = function(app, io) {
 
   //get post comments
   app.get("/api/getComments", function(req, res) {
-    console.log("query", req.query);
+    console.log("query post comments", req.query);
     db.Post.find({ _id: req.query._id })
       .populate("replies.creator")
       .then(function(comments) {
-        console.log(comments);
-        // console.log("arrayReplies", comments[0].replies);
+        // console.log("returned comments", comments);
+        console.log("array post Replies", comments[0].replies);
+        for (let i = 0; i < comments[0].replies.length; i++) {
+          comments[0].replies[i].creator.email = "";
+          comments[0].replies[i].creator.password = "";
+          comments[0].replies[i].creator.lastName = "";
+        }
+        console.log("trimmed creator", comments[0].replies[0]);
 
         res.json(comments[0].replies);
       });
@@ -303,7 +309,7 @@ module.exports = function(app, io) {
       { $push: { replies: req.body } }
     ).then(function(newReply) {
       console.log("newPostReply", newReply);
-      console.log("arrayReply", newReply[0].replies);
+      console.log("array post Reply", newReply[0].replies);
 
       // io.sockets.emit("new post reply", newReply);
       res.json(newReply);
@@ -311,13 +317,17 @@ module.exports = function(app, io) {
   });
   // get event comments
   app.get("/api/getEventComments", function(req, res) {
-    console.log("query", req.query);
+    console.log("query event comments", req.query);
     db.Event.find({ _id: req.query._id })
       .populate("replies.creator")
       .then(function(comments) {
         // console.log(comments);
-        // console.log("arrayReplies", comments[0].replies);
-
+        console.log("array Replies", comments[0].replies);
+        for (let i = 0; i < comments[0].replies.length; i++) {
+          comments[0].replies[i].creator.email;
+          comments[0].replies[i].creator.password = "";
+          comments[0].replies[i].creator.lastName = "";
+        }
         res.json(comments[0].replies);
       });
   });

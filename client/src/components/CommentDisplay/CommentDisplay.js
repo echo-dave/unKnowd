@@ -14,13 +14,11 @@ class CommentDisplay extends Component {
     const { _id, creator, photos, msg } = this.props.comments;
     return (
       <div className="post comments box clearfix" data-id={_id}>
-        <div className="imageGroup">
-          <UserDisplay
-            firstName={creator.firstName}
-            creatorPhoto={creator.photo}
-          />
-          <img alt="" className="postPhotos" src={photos} />
-        </div>
+        <UserDisplay
+          firstName={creator.firstName}
+          creatorPhoto={creator.photo}
+        />
+        {photos ? <img alt="" className="postPhotos" src={photos} /> : null}
         <p>{msg}</p>
       </div>
     );

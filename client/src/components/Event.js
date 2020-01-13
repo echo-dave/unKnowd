@@ -94,9 +94,7 @@ class Event extends Component {
         ) : null}
         {this.state.readComments
           ? this.state.comments.map(comment => (
-              <div className="commentWrap">
-                <CommentDisplay key={comment.dateCreated} comments={comment} />
-              </div>
+              <CommentDisplay key={comment.dateCreated} comments={comment} />
             ))
           : null}
       </div>

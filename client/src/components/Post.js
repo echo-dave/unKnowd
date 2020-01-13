@@ -45,14 +45,16 @@ class Post extends Component {
       <div className="post box clearfix" data-id={this.props._id}>
         <div>
           <div className="clearfix">
-            <div className="clearfix">
+            <div className={this.props.photos ? "clearfix" : null}>
               <UserDisplay
                 firstName={this.props.firstName}
                 creatorPhoto={this.props.creatorPhoto}
               />
-              <div className="postPhotos">
-                <img alt="" src={this.props.photos} />
-              </div>
+              {this.props.photos ? (
+                <div className="postPhotos">
+                  <img alt="" src={this.props.photos} />
+                </div>
+              ) : null}
             </div>
             <p>{this.props.msg}</p>
           </div>
@@ -82,9 +84,7 @@ class Post extends Component {
         ) : null}
         {this.state.readComments
           ? this.state.comments.map(comment => (
-              <div className="commentWrap">
-                <CommentDisplay key={comment.dateCreated} comments={comment} />
-              </div>
+              <CommentDisplay key={comment.dateCreated} comments={comment} />
             ))
           : null}
       </div>
