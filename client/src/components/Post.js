@@ -3,6 +3,7 @@ import UserDisplay from "./UserDisplay/UserDisplay";
 import axios from "axios";
 import PostReply from "./PostReply";
 import CommentDisplay from "./CommentDisplay/CommentDisplay";
+import CommentingButtons from "./CommentingButtons";
 
 class Post extends Component {
   state = {
@@ -58,22 +59,11 @@ class Post extends Component {
             </div>
             <p>{this.props.msg}</p>
           </div>
-          <div className="commentingButtons">
-            <button
-              className="button is-smaller"
-              style={{ marginRight: ".5rem" }}
-              onClick={this.toggleReply}
-            >
-              Reply
-            </button>
-            <button
-              className="button is-smaller"
-              data-id={this.props._id}
-              onClick={this.toggleComments.bind(this)}
-            >
-              Comments
-            </button>
-          </div>
+          <CommentingButtons
+            dataId={this.props._id}
+            toggleComments={this.toggleComments}
+            toggleReply={this.toggleReply}
+          />
         </div>
         {this.state.toggleReply ? (
           <PostReply

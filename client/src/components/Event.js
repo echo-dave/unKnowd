@@ -3,6 +3,7 @@ import UserDisplay from "./UserDisplay/UserDisplay";
 import axios from "axios";
 import PostReply from "./PostReply";
 import CommentDisplay from "./CommentDisplay/CommentDisplay";
+import CommentingButtons from "./CommentingButtons";
 
 class Event extends Component {
   state = {
@@ -54,35 +55,24 @@ class Event extends Component {
     } = this.props.eventData;
     return (
       <div className="event box clearfix" data-attr={_id}>
-        <div className="clearfix">
+        <div className={this.props.photos ? "clearfix" : null}>
           <h2>{title}</h2>
-          <div className="imageGroup">
-            <UserDisplay
-              firstName={creator.firstName}
-              creatorPhoto={creator.photo}
-            />
-          </div>
-          <div className="postPhotos">
-            <img src={img} alt="" />
-          </div>
+          <UserDisplay
+            firstName={creator.firstName}
+            creatorPhoto={creator.photo}
+          />
+          {img ? (
+            <div className="postPhotos">
+              <img src={img} alt="" />
+            </div>
+          ) : null}
           <p className="description">{description}</p>
           <span className="dates">{date.start}</span>
-          <div className="commentingButtons">
-            <button
-              className="button is-small"
-              style={{ marginRight: ".5rem" }}
-              onClick={this.toggleReply}
-            >
-              Reply
-            </button>
-            <button
-              className="button is-small"
-              data-id={_id}
-              onClick={this.toggleComments.bind(this)}
-            >
-              Comments
-            </button>
-          </div>
+          <CommentingButtons
+            dataId={_id}
+            toggleComments={this.toggleComments}
+            toggleReply={this.toggleReply}
+          />
         </div>
         {this.state.toggleReply ? (
           <PostReply
