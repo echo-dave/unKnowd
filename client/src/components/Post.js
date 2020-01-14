@@ -3,18 +3,22 @@ import UserDisplay from "./UserDisplay/UserDisplay";
 import axios from "axios";
 import PostReply from "./PostReply";
 import CommentDisplay from "./CommentDisplay/CommentDisplay";
-import CommentingButtons from "./CommentingButtons";
+import CommentingButtons from "./CommentingButtons/CommentingButtons";
 
 class Post extends Component {
   state = {
     readComments: false,
     comments: [],
     toggleReply: false,
-    user: ""
+    user: "",
+    replyCount: ""
   };
 
   componentDidMount = () => {
-    this.setState({ user: this.props.userState });
+    this.setState({
+      user: this.props.userState,
+      replyCount: this.props.replyCount
+    });
   };
 
   getComments = () => {
@@ -63,6 +67,7 @@ class Post extends Component {
             dataId={this.props._id}
             toggleComments={this.toggleComments}
             toggleReply={this.toggleReply}
+            replyCount={this.state.replyCount}
           />
         </div>
         {this.state.toggleReply ? (

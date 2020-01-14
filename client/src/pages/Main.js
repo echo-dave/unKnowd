@@ -137,7 +137,7 @@ class Mainpage extends React.Component {
           </div>
 
           <div className="navbar-menu">
-            <div className="navbar-start">
+            <div className="navbar-end">
               <div className="navbar-item" id="viewChanger">
                 <a
                   href="#"
@@ -215,6 +215,7 @@ class Mainpage extends React.Component {
                     firstName={post.creator.firstName}
                     creatorPhoto={post.creator.photo}
                     userState={this.state.user}
+                    replyCount={post.replies.length}
                   />
                 ))
               : this.state.events.map(event => (

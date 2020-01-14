@@ -1,15 +1,24 @@
 import React, { Component } from "react";
-import Auth from "../utils/Auth";
+import Auth from "../../utils/Auth";
+import "./CommentingButtons.scss";
 class CommentingButtons extends Component {
   state = {
-    loggedIn: false
+    loggedIn: false,
+    replyCount: 0
   };
 
   componentDidMount() {
     this.setState({
       loggedIn: Auth.isLoggedIn()
     });
-    setTimeout(() => console.log("login State", this.state.loggedIn), 500);
+    setTimeout(
+      () =>
+        this.setState({
+          replyCount: this.props.replyCount
+        }),
+      100
+    );
+    // setTimeout(() => console.log("login State", this.state.loggedIn), 500);
   }
 
   render() {
@@ -30,6 +39,9 @@ class CommentingButtons extends Component {
               onClick={this.props.toggleComments}
             >
               Comments
+              <div className="commentCount">
+                <span> {this.state.replyCount} </span>
+              </div>
             </button>
           </div>
         ) : null}

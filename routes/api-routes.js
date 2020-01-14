@@ -143,6 +143,14 @@ module.exports = function(app, io) {
       .limit(20)
       .populate("creator")
       .then(posts => {
+        console.log("get posts", posts);
+        for (let i = 0; i < posts.length; i++) {
+          posts[i].creator.email = "";
+          posts[i].creator.password = "";
+          posts[i].creator.lastName = "";
+        }
+        console.log("trimmed", posts[0]);
+
         res.json(posts);
       })
       .catch(err => console.log(err));
@@ -211,12 +219,17 @@ module.exports = function(app, io) {
 
   app.get("/api/events", function(req, res) {
     let currentDate = new Date();
-    console.log(currentDate);
+    // console.log(currentDate);
     db.Event.find({
       "date.start": { $gte: new Date(currentDate) }
     })
       .populate("creator")
       .then(events => {
+        for (let i = 0; i < events.length; i++) {
+          events[i].creator.email = "";
+          events[i].creator.password = "";
+          events[i].creator.lastName = "";
+        }
         res.json(events);
       });
   });
