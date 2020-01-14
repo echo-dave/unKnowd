@@ -4,6 +4,7 @@ import axios from "axios";
 import PostReply from "./PostReply";
 import CommentDisplay from "./CommentDisplay/CommentDisplay";
 import CommentingButtons from "./CommentingButtons/CommentingButtons";
+import socketIOClient from "socket.io-client";
 
 class Post extends Component {
   state = {
@@ -15,10 +16,13 @@ class Post extends Component {
   };
 
   componentDidMount = () => {
-    this.setState({
-      user: this.props.userState,
-      replyCount: this.props.replyCount
-    });
+    setTimeout(() => {
+      this.setState({
+        user: this.props.userState,
+        comments: this.props.postData.replies,
+        replyCount: this.props.replyCount
+      });
+    }, 50);
   };
 
   getComments = () => {
@@ -26,11 +30,14 @@ class Post extends Component {
     // setTimeout(() => console.log("id", this.props._id), 200);
 
     axios
-      .get("/api/getComments", { params: { _id: this.props._id } })
+      .get("/api/getComments", { params: { _id: this.props.postData._id } })
       .then(comments => {
-        // console.log("comment", comments.data);
-        this.setState({ comments: comments.data });
-        // console.log(this.state.comments);
+        console.log("comment.data", comments.data);
+        this.setState({
+          comments: comments.data,
+          replyCount: comments.data.length
+        });
+        // console.log("comment data", this.state.comments);
       });
   };
 
@@ -45,26 +52,30 @@ class Post extends Component {
     this.setState({ toggleReply: !this.state.toggleReply });
   };
 
+  refreshComments = () => {
+    this.getComments();
+  };
+
   render() {
     return (
-      <div className="post box clearfix" data-id={this.props._id}>
+      <div className="post box clearfix" data-id={this.props.postData._id}>
         <div>
           <div className="clearfix">
-            <div className={this.props.photos ? "clearfix" : null}>
+            <div className={this.props.postData.photos ? "clearfix" : null}>
               <UserDisplay
-                firstName={this.props.firstName}
-                creatorPhoto={this.props.creatorPhoto}
+                firstName={this.props.postData.creator.firstName}
+                creatorPhoto={this.props.postData.creator.photo}
               />
-              {this.props.photos ? (
+              {this.props.postData.photos ? (
                 <div className="postPhotos">
-                  <img alt="" src={this.props.photos} />
+                  <img alt="" src={this.props.postData.photos} />
                 </div>
               ) : null}
             </div>
-            <p>{this.props.msg}</p>
+            <p>{this.props.postData.msg}</p>
           </div>
           <CommentingButtons
-            dataId={this.props._id}
+            dataId={this.props.postData._id}
             toggleComments={this.toggleComments}
             toggleReply={this.toggleReply}
             replyCount={this.state.replyCount}
@@ -73,8 +84,9 @@ class Post extends Component {
         {this.state.toggleReply ? (
           <PostReply
             userState={this.state.user}
-            postId={this.props._id}
+            postId={this.props.postData._id}
             closeForm={this.toggleReply}
+            refreshComments={this.refreshComments}
           />
         ) : null}
         {this.state.readComments

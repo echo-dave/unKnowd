@@ -143,13 +143,13 @@ module.exports = function(app, io) {
       .limit(20)
       .populate("creator")
       .then(posts => {
-        console.log("get posts", posts);
+        // console.log("get posts", posts);
         for (let i = 0; i < posts.length; i++) {
           posts[i].creator.email = "";
           posts[i].creator.password = "";
           posts[i].creator.lastName = "";
         }
-        console.log("trimmed", posts[0]);
+        // console.log("trimmed", posts[0]);
 
         res.json(posts);
       })
@@ -303,29 +303,33 @@ module.exports = function(app, io) {
       .populate("replies.creator")
       .then(function(comments) {
         // console.log("returned comments", comments);
-        console.log("array post Replies", comments[0].replies);
+        // console.log("array post Replies", comments[0].replies);
         for (let i = 0; i < comments[0].replies.length; i++) {
           comments[0].replies[i].creator.email = "";
           comments[0].replies[i].creator.password = "";
           comments[0].replies[i].creator.lastName = "";
         }
-        console.log("trimmed creator", comments[0].replies[0]);
+        // console.log("trimmed creator", comments[0].replies[0]);
 
         res.json(comments[0].replies);
+      })
+      .catch(function(err) {
+        console.log(err);
       });
   });
   //make post comment
   app.post("/api/replyComment", function(req, res) {
-    console.log(req.body);
+    // console.log(req.body);
     db.Post.findOneAndUpdate(
       { _id: req.body.commentId },
-      { $push: { replies: req.body } }
+      { $push: { replies: req.body } },
+      { new: true }
     ).then(function(newReply) {
-      console.log("newPostReply", newReply);
-      console.log("array post Reply", newReply[0].replies);
+      // console.log("newPostReply", newReply.replies);
+      io.sockets.emit("new post reply", newReply.replies);
+      console.log("done");
 
-      // io.sockets.emit("new post reply", newReply);
-      res.json(newReply);
+      res.end();
     });
   });
   // get event comments

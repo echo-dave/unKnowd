@@ -20,9 +20,9 @@ class Event extends Component {
       () =>
         this.setState({
           comments: this.props.eventData.replies,
-          replyCount: this.props.eventData.replies.length
+          replyCount: this.props.replyCount
         }),
-      50
+      100
     );
     // setTimeout(() => console.log("props.eventData", this.props.eventData), 500);
   }

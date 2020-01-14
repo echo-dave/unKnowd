@@ -209,11 +209,7 @@ class Mainpage extends React.Component {
               ? this.state.posts.map(post => (
                   <Post
                     key={post._id}
-                    _id={post._id}
-                    msg={post.msg}
-                    photos={post.photos[0]}
-                    firstName={post.creator.firstName}
-                    creatorPhoto={post.creator.photo}
+                    postData={post}
                     userState={this.state.user}
                     replyCount={post.replies.length}
                   />
@@ -224,6 +220,7 @@ class Mainpage extends React.Component {
                     eventData={event}
                     eventShow={this.state.eventShow}
                     userState={this.state.user}
+                    replyCount={event.replies.length}
                   />
                 ))}
           </div>
