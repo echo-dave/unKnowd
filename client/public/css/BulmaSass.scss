@@ -5,20 +5,6 @@
 // $commentGrey: #f2f2f2;
 @import "../../src/app.scss";
 @import "../../../node_modules/bulma/bulma.sass";
-// commenting buttons smaller size and style
-// .is-smaller {
-//   font-size: 0.8em;
-//   height: $smaller;
-//   max-height: $smaller;
-//   min-height: $smaller;
-//   background-color: $secondary;
-//   color: $light;
-//   border-radius: 0.4rem;
-// }
-button.is-smaller:hover {
-  background-color: lighten($secondary, 5.686274509803921);
-  color: white;
-}
 
 body {
   background: $secondary;
