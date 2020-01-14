@@ -42,6 +42,10 @@ class Event extends Component {
       });
   };
 
+  refreshComments = () => {
+    this.getComments();
+  };
+
   toggleComments = () => {
     this.setState({ readComments: !this.state.readComments });
     this.state.readComments
@@ -90,6 +94,7 @@ class Event extends Component {
             postId={_id}
             closeForm={this.toggleReply}
             eventShow={this.props.eventShow}
+            refreshComments={this.refreshComments}
           />
         ) : null}
         {this.state.readComments
