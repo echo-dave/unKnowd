@@ -18,12 +18,12 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-io.on("connection", function(socket) {
-  console.log("a user connected");
-  // Define API routes here
+// io.on("connection", function(socket) {
+//   console.log("a user connected");
+//   // Define API routes here
 
-  socket.on("disconnect", () => console.log("user disconnected"));
-});
+//   socket.on("disconnect", () => console.log("user disconnected"));
+// });
 
 require("./routes/api-routes.js")(app, io);
 

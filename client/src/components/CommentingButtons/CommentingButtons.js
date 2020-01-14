@@ -3,8 +3,7 @@ import Auth from "../../utils/Auth";
 import "./CommentingButtons.scss";
 class CommentingButtons extends Component {
   state = {
-    loggedIn: false,
-    replyCount: 0
+    loggedIn: false
   };
 
   componentDidMount() {
@@ -40,7 +39,7 @@ class CommentingButtons extends Component {
             >
               Comments
               <div className="commentCount">
-                <span> {this.state.replyCount} </span>
+                <span> {this.props.replyCount} </span>
               </div>
             </button>
           </div>
