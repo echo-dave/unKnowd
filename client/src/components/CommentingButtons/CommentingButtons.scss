@@ -1,0 +1,52 @@
+@import "../../app.scss";
+
+.commentingButtons {
+  /* clear: both; */
+  padding: 1rem 0rem 1rem 0;
+  text-align: right;
+  position: relative;
+}
+
+.commentingButtons button:nth-child(2) {
+  position: absolute;
+  top: 0.5rem;
+  right: 0;
+}
+.commentingButtons button:nth-child(1) {
+  position: absolute;
+  top: 0.5rem;
+  right: 7rem;
+}
+
+.commentCount {
+  font-style: inherit;
+  font-weight: inherit;
+  border-radius: 50%;
+  background-color: white;
+  width: 1rem;
+  height: 1rem;
+  // padding: 0 0.8rem 1.15rem 0.25rem;
+  margin-left: 0.4em;
+  color: $secondary;
+  vertical-align: middle;
+  text-align: center;
+  span {
+    position: relative;
+    bottom: 0.11em;
+  }
+}
+.is-smaller,
+button.is-smaller:focus {
+  font-size: 0.8em;
+  height: $smaller;
+  max-height: $smaller;
+  min-height: $smaller;
+  background-color: $secondary;
+  color: $light;
+  border-radius: 0.4rem;
+}
+button.is-smaller:hover,
+button.is-smaller:active {
+  background-color: lighten($secondary, 5.686274509803921);
+  color: white;
+}

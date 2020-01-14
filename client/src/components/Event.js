@@ -3,7 +3,7 @@ import UserDisplay from "./UserDisplay/UserDisplay";
 import axios from "axios";
 import PostReply from "./PostReply";
 import CommentDisplay from "./CommentDisplay/CommentDisplay";
-import CommentingButtons from "./CommentingButtons";
+import CommentingButtons from "./CommentingButtons/CommentingButtons";
 
 class Event extends Component {
   state = {

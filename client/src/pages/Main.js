@@ -7,6 +7,7 @@ import authenticatedAxios from "../utils/AuthenticatedAxios";
 import EventMap from "../components/Map";
 import socketIOClient from "socket.io-client";
 import EventForm from "../components/EventForm";
+import Auth from "../utils/Auth";
 
 class Mainpage extends React.Component {
   state = {
@@ -105,6 +106,10 @@ class Mainpage extends React.Component {
     }
   };
 
+  logout = () => {
+    Auth.logOut(() => (window.location = "/"));
+  };
+
   render() {
     return (
       <div className="container main">
@@ -132,7 +137,7 @@ class Mainpage extends React.Component {
           </div>
 
           <div className="navbar-menu">
-            <div className="navbar-start">
+            <div className="navbar-end">
               <div className="navbar-item" id="viewChanger">
                 <a
                   href="#"
@@ -155,11 +160,22 @@ class Mainpage extends React.Component {
               </div>
               <div className="navbar-item" id="eventMaker">
                 <a
+                  href="#"
                   className="button is-primary is-small"
                   id="makeEvent"
                   onClick={this.toggleEventForm}
                 >
                   {this.state.eventFormShow ? "close" : "Make an Event"}
+                </a>
+              </div>
+              <div className="navbar-item" id="eventMaker">
+                <a
+                  href="#"
+                  className="button is-primary is-small"
+                  id="makeEvent"
+                  onClick={this.logout}
+                >
+                  Logout
                 </a>
               </div>
               {this.state.user ? (
@@ -199,6 +215,7 @@ class Mainpage extends React.Component {
                     firstName={post.creator.firstName}
                     creatorPhoto={post.creator.photo}
                     userState={this.state.user}
+                    replyCount={post.replies.length}
                   />
                 ))
               : this.state.events.map(event => (
