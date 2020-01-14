@@ -10,11 +10,20 @@ class Event extends Component {
     readComments: false,
     comments: [],
     toggleReply: false,
-    user: ""
+    user: "",
+    replyCount: 0
   };
   componentDidMount() {
     // console.log("eventUser", this.props.eventData);
     this.setState({ user: this.props.userState });
+    setTimeout(
+      () =>
+        this.setState({
+          comments: this.props.eventData.replies,
+          replyCount: this.props.eventData.replies.length
+        }),
+      50
+    );
     // setTimeout(() => console.log("props.eventData", this.props.eventData), 500);
   }
 
@@ -72,6 +81,7 @@ class Event extends Component {
             dataId={_id}
             toggleComments={this.toggleComments}
             toggleReply={this.toggleReply}
+            replyCount={this.state.replyCount}
           />
         </div>
         {this.state.toggleReply ? (

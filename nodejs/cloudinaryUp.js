@@ -5,7 +5,7 @@ const path = require("path");
 module.exports = function(filename) {
   const eager_options = [
     {
-      width: 200,
+      width: 800,
       //height: 150,
       crop: "scale",
       format: "jpg"
