@@ -61,12 +61,16 @@ class Post extends Component {
       <div className="post box clearfix" data-id={this.props.postData._id}>
         <div>
           <div className="clearfix">
-            <div className={this.props.postData.photos ? "clearfix" : null}>
+            <div
+              className={
+                !this.props.postData.photos[0] == "" ? "clearfix" : null
+              }
+            >
               <UserDisplay
                 firstName={this.props.postData.creator.firstName}
                 creatorPhoto={this.props.postData.creator.photo}
               />
-              {this.props.postData.photos ? (
+              {!this.props.postData.photos[0] == "" ? (
                 <div className="postPhotos">
                   <img alt="" src={this.props.postData.photos} />
                 </div>
