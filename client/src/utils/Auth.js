@@ -18,7 +18,7 @@ function Auth() {
     console.log("register");
     let email = userData.get("email");
     let password = userData.get("password");
-    console.log("login", email, password);
+    // console.log("login", email, password);
 
     axios
       .post("/api/signup", userData)
