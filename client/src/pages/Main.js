@@ -8,6 +8,7 @@ import EventMap from "../components/Map";
 import socketIOClient from "socket.io-client";
 import EventForm from "../components/EventForm";
 import Auth from "../utils/Auth";
+import Nav from "../components/Nav/Nav";
 
 class Mainpage extends React.Component {
   state = {
@@ -113,7 +114,18 @@ class Mainpage extends React.Component {
   render() {
     return (
       <div className="container main">
-        <nav
+        <Nav
+          toggleNavbar={this.toggleNavbar}
+          togglePostEventViews={this.togglePostEventViews}
+          eventShow={this.state.eventShow}
+          togglePostForm={this.togglePostForm}
+          toggleEventForm={this.toggleEventForm}
+          logout={this.logout}
+          firstName={this.state.user.firstName}
+          user={this.state.user}
+        />
+
+        {/* <nav
           className="navbar is-fixed-top"
           role="navigation"
           aria-label="main navigation"
@@ -187,7 +199,7 @@ class Mainpage extends React.Component {
               )}
             </div>
           </div>
-        </nav>
+        </nav> */}
         <div>
           {this.state.postFormShow ? (
             <Postform

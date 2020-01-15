@@ -3,6 +3,7 @@ import axios from "axios";
 import Event from "../components/Event";
 import EventMap from "../components/Map";
 import socketIOClient from "socket.io-client";
+import Nav from "../components/Nav/Nav";
 
 class Viewer extends React.Component {
   state = {
@@ -58,32 +59,7 @@ class Viewer extends React.Component {
   render() {
     return (
       <div className="container main">
-        <nav
-          className="navbar is-fixed-top"
-          role="navigation"
-          aria-label="main navigation"
-        >
-          <div className="navbar-brand">
-            <a className="navbar-item">
-              <h1 id="title">UnKnowd</h1>
-            </a>
-            <a
-              role="button"
-              className="navbar-burger"
-              aria-label="menu"
-              aria-expanded="false"
-              onClick={this.toggleNavbar}
-            >
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-            </a>
-          </div>
-
-          <div className="navbar-menu">
-            <div className="navbar-start"></div>
-          </div>
-        </nav>
+        <Nav />
         <div className="columns">
           <div className="column posts">
             {this.state.events.map(event => (
