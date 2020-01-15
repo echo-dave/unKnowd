@@ -123,6 +123,8 @@ class Mainpage extends React.Component {
           logout={this.logout}
           firstName={this.state.user.firstName}
           user={this.state.user}
+          postFormShow={this.state.postFormShow}
+          eventFormShow={this.state.eventFormShow}
         />
 
         <div>
