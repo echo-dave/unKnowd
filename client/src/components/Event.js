@@ -79,7 +79,7 @@ class Event extends Component {
               <img src={img} alt="" />
             </div>
           ) : null}
-          <p className={img ? "clearRight description" : "description"}>
+          <p className={!img == "" ? "clearRight description" : "description"}>
             {description}
           </p>
           <span className="dates">{date.start}</span>

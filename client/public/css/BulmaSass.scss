@@ -149,7 +149,7 @@ h1#title {
 }
 
 #submitPost,
-#submitForm {
+#submitEvent {
   margin-top: 0.5rem;
 }
 
@@ -177,7 +177,9 @@ h1#title {
 // .navbar-menu a {
 //   width: 8em;
 // }
-
+.clearRight {
+  clear: right;
+}
 .imageGroup {
   float: left;
   clear: right;
