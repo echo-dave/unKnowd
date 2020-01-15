@@ -28,7 +28,26 @@
 }
 
 .navbar-menu a {
-  width: 8em;
+  width: 8.5em;
+}
+
+// .navbar-item .button {
+//   margin-top: 0.5rem;
+//   background-color: darken(desaturate($color: $tertiary, $amount: 100), 10);
+//   color: $light;
+// }
+
+.navbar-item .button {
+  height: 100%;
+}
+.navbar-item .button:hover,
+.navbar-item .button:focus,
+.navbar-item .button:active {
+  background-color: darken(
+    desaturate($color: $primary, $amount: 100),
+    $amount: 25
+  );
+  color: $light;
 }
 
 @media only screen and (min-width: 1024px) {

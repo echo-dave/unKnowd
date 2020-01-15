@@ -1,5 +1,6 @@
 $secondary: rgb(56, 0, 17);
-$primary: lighten(desaturate($secondary, 80%), 70);
+$tertiary: lighten(desaturate($secondary, 80%), 70);
+$primary: rgba(242, 242, 242, 0.95);
 //smaller size for commenting buttons
 $smaller: 2.5em;
 //comments box color
@@ -11,6 +12,3 @@ $family-sans-serif: "Montserrat", sans-serif;
 $family-secondary: "Indie Flower", cursive;
 @import "../../node_modules/bulma/sass/utilities/_all.sass";
 @import "../../node_modules/bulma/sass/base/_all.sass";
-.is-secondary {
-  background-color: $secondary;
-}

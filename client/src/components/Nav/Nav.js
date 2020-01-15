@@ -46,7 +46,7 @@ class Nav extends Component {
                   id="formButton"
                   onClick={this.props.togglePostForm}
                 >
-                  {this.props.postFormShow ? "Close" : "Make a Post"}
+                  {this.props.postFormShow ? "Close" : "Add Post"}
                 </a>
               </div>
               <div className="navbar-item" id="eventMaker">
@@ -56,7 +56,7 @@ class Nav extends Component {
                   id="makeEvent"
                   onClick={this.props.toggleEventForm}
                 >
-                  {this.props.eventFormShow ? "close" : "Make an Event"}
+                  {this.props.eventFormShow ? "close" : "Add Event"}
                 </a>
               </div>
               <div className="navbar-item" id="eventMaker">
