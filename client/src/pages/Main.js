@@ -87,13 +87,19 @@ class Mainpage extends React.Component {
   };
 
   togglePostForm = () => {
-    this.setState({ postFormShow: !this.state.postFormShow });
+    this.setState({
+      postFormShow: !this.state.postFormShow,
+      eventFormShow: false
+    });
     this.setState({ burgerActive: false });
     document.querySelector(".navbar-menu").classList.remove("is-active");
   };
 
   toggleEventForm = () => {
-    this.setState({ eventFormShow: !this.state.eventFormShow });
+    this.setState({
+      eventFormShow: !this.state.eventFormShow,
+      postFormShow: false
+    });
     this.setState({ burgerActive: false });
     document.querySelector(".navbar-menu").classList.remove("is-active");
   };
@@ -123,6 +129,8 @@ class Mainpage extends React.Component {
           logout={this.logout}
           firstName={this.state.user.firstName}
           user={this.state.user}
+          postFormShow={this.state.postFormShow}
+          eventFormShow={this.state.eventFormShow}
         />
 
         <div>
