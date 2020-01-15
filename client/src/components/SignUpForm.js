@@ -50,6 +50,7 @@ class SignUpForm extends Component {
         <div className="field">
           <h1>First Name</h1>
           <input
+            className="input"
             type="text"
             name="firstName"
             value={this.state.first}
@@ -59,24 +60,18 @@ class SignUpForm extends Component {
         <div className="field">
           <h1>Last Name</h1>
           <input
+            className="input"
             type="text"
             name="lastName"
             value={this.state.last}
             onChange={this.changeHandler}
           />
         </div>
-        <div className="field">
-          <h1>Password (min of 8 characters)</h1>
-          <input
-            type="password"
-            name="password"
-            value={this.state.password}
-            onChange={this.changeHandler}
-          />
-        </div>
+
         <div className="field">
           <h1>Email</h1>
           <input
+            className="input"
             type="text"
             name="email"
             value={this.state.email}
@@ -99,8 +94,22 @@ class SignUpForm extends Component {
             />
           </div>
         </div>
+        <div className="field">
+          <h1>Password (min of 8 characters)</h1>
+          <input
+            className="input"
+            type="password"
+            name="password"
+            value={this.state.password}
+            onChange={this.changeHandler}
+          />
+        </div>
 
-        <button className="button is-primary is-small" type="submit">
+        <button
+          id="signupButton"
+          className="button is-primary is-small"
+          type="submit"
+        >
           Sign up
         </button>
       </form>

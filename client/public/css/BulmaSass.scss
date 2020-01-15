@@ -3,6 +3,7 @@
 // //smaller size for commenting buttons
 // $smaller: 2.5em;
 // $commentGrey: #f2f2f2;
+
 @import "../../src/app.scss";
 @import "../../../node_modules/bulma/sass/elements/container.sass";
 @import "../../../node_modules/bulma/sass/grid/columns.sass";
@@ -22,10 +23,10 @@
 //   color: $light;
 //   border-radius: 0.4rem;
 // }
-button.is-smaller:hover {
-  background-color: lighten($secondary, 5.686274509803921);
-  color: white;
-}
+// button.is-smaller:hover {
+//   background-color: lighten($secondary, 5.686274509803921);
+//   color: white;
+// }
 
 body {
   background: $secondary;
@@ -61,7 +62,7 @@ h2 {
 }
 .button.is-small {
   font-size: 1em;
-  border-radius: 0.4rem;
+  border-radius: 0.25rem;
 }
 
 .clearfix::after {
@@ -148,6 +149,23 @@ h1#title {
   position: relative;
 }
 
+#loginButton,
+#signupButton {
+  margin-top: 0.5rem;
+  background-color: darken(desaturate($color: $primary, $amount: 100), 10);
+  color: $light;
+}
+#loginButton:hover,
+#loginButton:focus,
+#signupButton:hover,
+#signupButton:focus {
+  background-color: lighten(
+    desaturate($color: $primary, $amount: 100),
+    $amount: 5
+  );
+  color: $dark;
+}
+
 #submitPost,
 #submitEvent {
   margin-top: 0.5rem;
@@ -204,6 +222,16 @@ h1#title {
 
 .commentWrap {
   margin-top: 1.5rem;
+}
+
+.newPost {
+  background-color: $secondary;
+  color: $light;
+}
+.newPost:hover,
+.newPost:focus {
+  background-color: lighten($secondary, 5.686274509803921);
+  color: white;
 }
 
 @media only screen and (max-width: 768px) {
