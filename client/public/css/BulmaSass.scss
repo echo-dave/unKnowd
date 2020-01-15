@@ -148,19 +148,19 @@ h1#title {
 .event {
   position: relative;
 }
-
 #loginButton,
 #signupButton {
   margin-top: 0.5rem;
-  background-color: darken(desaturate($color: $primary, $amount: 100), 10);
+  background-color: darken(desaturate($color: $tertiary, $amount: 100), 10);
   color: $light;
 }
+
 #loginButton:hover,
 #loginButton:focus,
 #signupButton:hover,
 #signupButton:focus {
   background-color: lighten(
-    desaturate($color: $primary, $amount: 100),
+    desaturate($color: $tertiary, $amount: 100),
     $amount: 5
   );
   color: $dark;
