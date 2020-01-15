@@ -1,12 +1,82 @@
-@import "../../../node_modules/bulma/bulma.sass";
+// $primary: rgb(240, 240, 240);
+// $secondary: #003621;
+// //smaller size for commenting buttons
+// $smaller: 2.5em;
+// $commentGrey: #f2f2f2;
+@import "../../src/app.scss";
+@import "../../../node_modules/bulma/sass/elements/container.sass";
+@import "../../../node_modules/bulma/sass/grid/columns.sass";
+@import "../../../node_modules/bulma/sass/elements/button.sass";
+@import "../../../node_modules/bulma/sass/elements/box.sass";
+@import "../../../node_modules/bulma/sass/form/shared.sass";
+@import "../../../node_modules/bulma/sass/form/input-textarea.sass";
+@import "../../../node_modules/bulma/sass/form/file.sass";
+// @import "../../../node_modules/bulma/bulma.sass";
+// commenting buttons smaller size and style
+// .is-smaller {
+//   font-size: 0.8em;
+//   height: $smaller;
+//   max-height: $smaller;
+//   min-height: $smaller;
+//   background-color: $secondary;
+//   color: $light;
+//   border-radius: 0.4rem;
+// }
+button.is-smaller:hover {
+  background-color: lighten($secondary, 5.686274509803921);
+  color: white;
+}
+
+body {
+  background: $secondary;
+  font-family: "Montserrat", sans-serif;
+  height: 100vh;
+  overflow: hidden;
+}
+
+h2 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 1.2em;
+  color: rgb(87, 1, 1);
+  margin-bottom: 0.5em;
+}
+
+// .navbar-burger {
+//   background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
+//   :hover,
+//   :active,
+//   :checked {
+//     background-color: lighten(
+//       desaturate(lighten($secondary, 64.31372549019608), 85%),
+//       5.6
+//     );
+//   }
+// }
+
+.posts p {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 0.85em;
+}
+.button.is-small {
+  font-size: 1em;
+  border-radius: 0.4rem;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
 
 div #wrap {
   height: 100vh;
-  background-color: aliceblue;
-  background-image: url("./placeholder_background.jpg");
+  // background-color: aliceblue;
+  background-image: url("../img/placeholder_background.jpg");
   background-size: cover;
   background-position: center;
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  // font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 #main-name {
@@ -25,9 +95,9 @@ div #wrap {
 }
 
 .container {
-  height: 200px;
   position: relative;
   margin-top: 30px;
+  padding-top: 40px;
 }
 
 #signup-container .box {
@@ -43,4 +113,143 @@ div #wrap {
 
 h1 {
   font-size: 15px;
+}
+
+// map style
+
+.main .column {
+  height: calc(100vh - 5.5rem);
+}
+
+.column.events {
+  padding-top: 2rem;
+}
+
+div.column.events > div {
+  position: relative;
+  height: calc(100vh - 30px - 5em);
+}
+
+//main
+
+h1#title {
+  font-size: 24px !important;
+  padding-left: 10px;
+}
+
+.posts {
+  overflow-y: scroll;
+  position: relative;
+  margin: 10px;
+}
+
+.post,
+.event {
+  position: relative;
+}
+
+#submitPost,
+#submitEvent {
+  margin-top: 0.5rem;
+}
+
+#postform,
+#eventForm {
+  // border: 2px solid white;
+  margin: 10px;
+  padding: 10px;
+  background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
+  // background: rgb(214, 214, 214);
+  position: absolute;
+  // top: 1.3rem;
+  width: 270px;
+  z-index: 10;
+  border-radius: 0 0 0.5rem 0;
+}
+
+// .userNameDisplay {
+//   margin: 1rem;
+//   font-weight: bold;
+// }
+// .navbar {
+//   background-color: rgba(255, 255, 255, 0.95);
+// }
+// .navbar-menu a {
+//   width: 8em;
+// }
+.clearRight {
+  clear: right;
+}
+.imageGroup {
+  float: left;
+  clear: right;
+  padding-right: 1rem;
+}
+
+.postPhotos {
+  // margin-bottom: 1.5rem;
+  // padding-right: 1rem;
+  float: right;
+  width: calc(100% - 50px - 0.5rem);
+  min-height: 78px;
+  img {
+    border-radius: 0 0.4rem 0 0;
+    width: 100%;
+  }
+}
+
+.comments {
+  background-color: $commentGrey;
+}
+
+.commentWrap {
+  margin-top: 1.5rem;
+}
+
+@media only screen and (max-width: 768px) {
+  #newUserForm {
+    max-width: 80vw;
+  }
+  .column.posts {
+    height: calc(60vh - 5rem);
+  }
+  .column.events {
+    padding: 0;
+    height: calc(40vh - 1.9rem);
+  }
+  div.column.events > div {
+    height: calc(40vh + 0.75rem);
+    padding: 0;
+  }
+  .column {
+    margin-bottom: 0;
+  }
+  body {
+    overflow: hidden;
+    // height: calc(100vh - 1.85rem);
+  }
+  // .navbar-menu button {
+  //   float: right;
+  //   margin: 0.5em;
+  // }
+  // .userNameDisplay {
+  //   float: right;
+  //   margin: 0.5em 1rem;
+  //   clear: right;
+  // }
+
+  // .navbar-menu {
+  //   // background-color: #bfbfbf;
+  //   background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
+  //   // background-color: adjust($secondary, $lightness: 50%);
+  //   width: 15rem;
+  //   position: absolute;
+  //   right: 0.5rem;
+  //   text-align: right;
+  //   padding: 1rem;
+  //   border-radius: 0 0 0.25rem 0.25rem;
+  // }
+  // .navbar-item {
+  //   text-align: center;
+  // }
 }
