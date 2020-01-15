@@ -89,7 +89,9 @@ class PostForm extends Component {
   render() {
     return (
       <div id="postform">
-        <button onClick={this.props.closeForm}>X</button>
+        <button className="button is-smaller" onClick={this.props.closeForm}>
+          X
+        </button>
         <form className="event" onSubmit={this.submitHandler}>
           <div className="field">
             <label className="label" htmlFor="msg">
@@ -120,7 +122,11 @@ class PostForm extends Component {
               />
             </div>
           </div>
-          <button className="button is-primary is-small" type="submit">
+          <button
+            id="replyButton"
+            className="button is-primary is-small"
+            type="submit"
+          >
             Post!
           </button>
         </form>
