@@ -7,6 +7,11 @@
   position: relative;
 }
 
+.commentingButtons button {
+  background-color: $secondary;
+  color: $light;
+}
+
 .commentingButtons button:nth-child(2) {
   position: absolute;
   top: 0.5rem;
@@ -35,18 +40,21 @@
     bottom: 0.11em;
   }
 }
-.is-smaller,
-button.is-smaller:focus {
+.is-smaller {
   font-size: 0.8em;
   height: $smaller;
   max-height: $smaller;
   min-height: $smaller;
-  background-color: $secondary;
-  color: $light;
   border-radius: 0.25rem;
 }
-button.is-smaller:hover,
-button.is-smaller:active {
+
+.commentingButtons button:hover,
+.commentingButtons button:active,
+.commentingButtons button:focus {
   background-color: lighten($secondary, 5.686274509803921);
   color: white;
+}
+
+#postform > .is-smaller {
+  font-size: 0.7em;
 }
