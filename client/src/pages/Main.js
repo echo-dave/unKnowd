@@ -8,6 +8,7 @@ import EventMap from "../components/Map";
 import socketIOClient from "socket.io-client";
 import EventForm from "../components/EventForm";
 import Auth from "../utils/Auth";
+import Nav from "../components/Nav/Nav";
 
 class Mainpage extends React.Component {
   state = {
@@ -113,81 +114,17 @@ class Mainpage extends React.Component {
   render() {
     return (
       <div className="container main">
-        <nav
-          className="navbar is-fixed-top"
-          role="navigation"
-          aria-label="main navigation"
-        >
-          <div className="navbar-brand">
-            <a className="navbar-item" href="#">
-              <h1 id="title">UnKnowd</h1>
-            </a>
-            <a
-              role="button"
-              href="#"
-              className="navbar-burger"
-              aria-label="menu"
-              aria-expanded="false"
-              onClick={this.toggleNavbar}
-            >
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-            </a>
-          </div>
+        <Nav
+          toggleNavbar={this.toggleNavbar}
+          togglePostEventViews={this.togglePostEventViews}
+          eventShow={this.state.eventShow}
+          togglePostForm={this.togglePostForm}
+          toggleEventForm={this.toggleEventForm}
+          logout={this.logout}
+          firstName={this.state.user.firstName}
+          user={this.state.user}
+        />
 
-          <div className="navbar-menu">
-            <div className="navbar-end">
-              <div className="navbar-item" id="viewChanger">
-                <a
-                  href="#"
-                  className="button is-primary is-small"
-                  id="viewChange"
-                  onClick={this.togglePostEventViews}
-                >
-                  {this.state.eventShow ? "View Posts" : "View Events"}
-                </a>
-              </div>
-              <div className="navbar-item" id="postMaker">
-                <a
-                  href="#"
-                  className="button is-primary is-small"
-                  id="formButton"
-                  onClick={this.togglePostForm}
-                >
-                  {this.state.postFormShow ? "Close" : "Make a Post"}
-                </a>
-              </div>
-              <div className="navbar-item" id="eventMaker">
-                <a
-                  href="#"
-                  className="button is-primary is-small"
-                  id="makeEvent"
-                  onClick={this.toggleEventForm}
-                >
-                  {this.state.eventFormShow ? "close" : "Make an Event"}
-                </a>
-              </div>
-              <div className="navbar-item" id="eventMaker">
-                <a
-                  href="#"
-                  className="button is-primary is-small"
-                  id="makeEvent"
-                  onClick={this.logout}
-                >
-                  Logout
-                </a>
-              </div>
-              {this.state.user ? (
-                <div className="userNameDisplay">
-                  Welcome back {this.state.user.firstName}!
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
-          </div>
-        </nav>
         <div>
           {this.state.postFormShow ? (
             <Postform

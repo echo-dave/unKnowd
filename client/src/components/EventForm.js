@@ -97,6 +97,7 @@ class EventForm extends Component {
             <label className="label">Name of event</label>
             <div className="control">
               <input
+                className="input"
                 type="text"
                 name="title"
                 placeholder="Title of the event"
@@ -110,6 +111,7 @@ class EventForm extends Component {
             <label className="label">Address of event</label>
             <div className="control">
               <input
+                className="input"
                 type="text"
                 name="address"
                 placeholder="address"
@@ -154,7 +156,11 @@ class EventForm extends Component {
             </div>
           </div>
 
-          <button className="button is-primary is-small" type="submit">
+          <button
+            id="submitEvent"
+            className="button is-primary is-small"
+            type="submit"
+          >
             Submit
           </button>
         </form>

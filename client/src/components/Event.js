@@ -68,7 +68,7 @@ class Event extends Component {
     } = this.props.eventData;
     return (
       <div className="event box clearfix" data-attr={_id}>
-        <div className={this.props.photos ? "clearfix" : null}>
+        <div>
           <h2>{title}</h2>
           <UserDisplay
             firstName={creator.firstName}
@@ -79,7 +79,9 @@ class Event extends Component {
               <img src={img} alt="" />
             </div>
           ) : null}
-          <p className="description">{description}</p>
+          <p className={!img == "" ? "clearRight description" : "description"}>
+            {description}
+          </p>
           <span className="dates">{date.start}</span>
           <CommentingButtons
             dataId={_id}

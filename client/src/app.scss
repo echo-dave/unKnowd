@@ -3,5 +3,5 @@ $secondary: #003621;
 //smaller size for commenting buttons
 $smaller: 2.5em;
 $commentGrey: #f2f2f2;
-@import "../../node_modules/bulma/sass/utilities/initial-variables.sass";
-@import "../../node_modules/bulma/sass/utilities/derived-variables.sass";
+@import "../../node_modules/bulma/sass/utilities/_all.sass";
+@import "../../node_modules/bulma/sass/base/_all.sass";
