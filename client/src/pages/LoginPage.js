@@ -14,7 +14,7 @@ class LoginPage extends React.Component {
     return (
       <div id="wrap">
         <nav>
-          <h1 id="main-name">UnKnowed</h1>
+          <h1 id="main-name">UnKnowd</h1>
         </nav>
         <h5 id="quote">Putting community back in community</h5>
         <div className="container" id="signup-container">

@@ -99,7 +99,7 @@ class PostForm extends Component {
           </div>
           <button
             id="submitPost"
-            className="button is-primary is-small"
+            className="button newPost is-small"
             type="submit"
           >
             Post!

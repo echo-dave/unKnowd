@@ -4,7 +4,7 @@ import axios from "axios";
 import PostReply from "./PostReply";
 import CommentDisplay from "./CommentDisplay/CommentDisplay";
 import CommentingButtons from "./CommentingButtons/CommentingButtons";
-import socketIOClient from "socket.io-client";
+// import socketIOClient from "socket.io-client";
 
 class Post extends Component {
   state = {

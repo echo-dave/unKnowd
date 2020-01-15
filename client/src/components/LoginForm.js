@@ -40,6 +40,7 @@ class LoginForm extends Component {
           <div className="field">
             <h1>Email</h1>
             <input
+              className="input"
               type="text"
               name="email"
               value={this.state.email}
@@ -49,13 +50,18 @@ class LoginForm extends Component {
           <div className="field">
             <h1>Password</h1>
             <input
+              className="input"
               type="password"
               name="password"
               value={this.state.password}
               onChange={this.changeHandler}
             />
           </div>
-          <button className="button is-primary is-small" type="submit">
+          <button
+            id="loginButton"
+            className="button is-primary is-small"
+            type="submit"
+          >
             Login
           </button>
         </form>

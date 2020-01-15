@@ -15,7 +15,7 @@
 .commentingButtons button:nth-child(1) {
   position: absolute;
   top: 0.5rem;
-  right: 7rem;
+  right: 8rem;
 }
 
 .commentCount {
@@ -43,7 +43,7 @@ button.is-smaller:focus {
   min-height: $smaller;
   background-color: $secondary;
   color: $light;
-  border-radius: 0.4rem;
+  border-radius: 0.25rem;
 }
 button.is-smaller:hover,
 button.is-smaller:active {

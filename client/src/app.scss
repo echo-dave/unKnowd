@@ -1,7 +1,16 @@
-$primary: rgb(240, 240, 240);
-$secondary: #003621;
+$secondary: rgb(56, 0, 17);
+$primary: lighten(desaturate($secondary, 80%), 70);
 //smaller size for commenting buttons
 $smaller: 2.5em;
+//comments box color
 $commentGrey: #f2f2f2;
+@import url("https://fonts.googleapis.com/css?family=Indie+Flower&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400&display=swap");
+$family-primary: "Montserrat", sans-serif;
+$family-sans-serif: "Montserrat", sans-serif;
+$family-secondary: "Indie Flower", cursive;
 @import "../../node_modules/bulma/sass/utilities/_all.sass";
 @import "../../node_modules/bulma/sass/base/_all.sass";
+.is-secondary {
+  background-color: $secondary;
+}
