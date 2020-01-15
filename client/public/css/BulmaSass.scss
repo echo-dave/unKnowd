@@ -4,7 +4,28 @@
 // $smaller: 2.5em;
 // $commentGrey: #f2f2f2;
 @import "../../src/app.scss";
-@import "../../../node_modules/bulma/bulma.sass";
+@import "../../../node_modules/bulma/sass/elements/container.sass";
+@import "../../../node_modules/bulma/sass/grid/columns.sass";
+@import "../../../node_modules/bulma/sass/elements/button.sass";
+@import "../../../node_modules/bulma/sass/elements/box.sass";
+@import "../../../node_modules/bulma/sass/form/shared.sass";
+@import "../../../node_modules/bulma/sass/form/input-textarea.sass";
+@import "../../../node_modules/bulma/sass/form/file.sass";
+// @import "../../../node_modules/bulma/bulma.sass";
+// commenting buttons smaller size and style
+// .is-smaller {
+//   font-size: 0.8em;
+//   height: $smaller;
+//   max-height: $smaller;
+//   min-height: $smaller;
+//   background-color: $secondary;
+//   color: $light;
+//   border-radius: 0.4rem;
+// }
+button.is-smaller:hover {
+  background-color: lighten($secondary, 5.686274509803921);
+  color: white;
+}
 
 body {
   background: $secondary;
@@ -21,21 +42,17 @@ h2 {
   margin-bottom: 0.5em;
 }
 
-.navbar-burger {
-  background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
-  :hover,
-  :active,
-  :checked {
-    background-color: lighten(
-      desaturate(lighten($secondary, 64.31372549019608), 85%),
-      5.6
-    );
-  }
-}
-
-.clearRight {
-  clear: right;
-}
+// .navbar-burger {
+//   background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
+//   :hover,
+//   :active,
+//   :checked {
+//     background-color: lighten(
+//       desaturate(lighten($secondary, 64.31372549019608), 85%),
+//       5.6
+//     );
+//   }
+// }
 
 .posts p {
   font-family: "Montserrat", sans-serif;
@@ -131,28 +148,35 @@ h1#title {
   position: relative;
 }
 
+#submitPost,
+#submitForm {
+  margin-top: 0.5rem;
+}
+
 #postform,
 #eventForm {
   // border: 2px solid white;
   margin: 10px;
   padding: 10px;
-  background: rgb(214, 214, 214);
+  background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
+  // background: rgb(214, 214, 214);
   position: absolute;
-  top: 1.3rem;
+  // top: 1.3rem;
   width: 270px;
   z-index: 10;
+  border-radius: 0 0 0.5rem 0;
 }
 
-.userNameDisplay {
-  margin: 1rem;
-  font-weight: bold;
-}
-.navbar {
-  background-color: rgba(255, 255, 255, 0.95);
-}
-.navbar-menu a {
-  width: 8em;
-}
+// .userNameDisplay {
+//   margin: 1rem;
+//   font-weight: bold;
+// }
+// .navbar {
+//   background-color: rgba(255, 255, 255, 0.95);
+// }
+// .navbar-menu a {
+//   width: 8em;
+// }
 
 .imageGroup {
   float: left;
@@ -202,40 +226,28 @@ h1#title {
     overflow: hidden;
     // height: calc(100vh - 1.85rem);
   }
-  .navbar-menu button {
-    float: right;
-    margin: 0.5em;
-  }
-  .userNameDisplay {
-    float: right;
-    margin: 0.5em 1rem;
-    clear: right;
-  }
-
-  // .postPhotos {
-  //   float: none;
-  //   clear: both;
-  //   display: block;
+  // .navbar-menu button {
+  //   float: right;
+  //   margin: 0.5em;
+  // }
+  // .userNameDisplay {
+  //   float: right;
+  //   margin: 0.5em 1rem;
+  //   clear: right;
   // }
 
-  .navbar-menu {
-    // background-color: #bfbfbf;
-    background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
-    // background-color: adjust($secondary, $lightness: 50%);
-    width: 15rem;
-    position: absolute;
-    right: 0.5rem;
-    text-align: right;
-    padding: 1rem;
-    border-radius: 0 0 0.25rem 0.25rem;
-  }
-  .navbar-item {
-    text-align: center;
-  }
+  // .navbar-menu {
+  //   // background-color: #bfbfbf;
+  //   background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
+  //   // background-color: adjust($secondary, $lightness: 50%);
+  //   width: 15rem;
+  //   position: absolute;
+  //   right: 0.5rem;
+  //   text-align: right;
+  //   padding: 1rem;
+  //   border-radius: 0 0 0.25rem 0.25rem;
+  // }
+  // .navbar-item {
+  //   text-align: center;
+  // }
 }
-
-// @media only screen and (max-width: 530px) {
-//   .commentingButtons {
-//     clear: left;
-//   }
-// }

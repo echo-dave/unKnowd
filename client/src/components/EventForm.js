@@ -154,7 +154,11 @@ class EventForm extends Component {
             </div>
           </div>
 
-          <button className="button is-primary is-small" type="submit">
+          <button
+            id="submitEvent"
+            className="button is-primary is-small"
+            type="submit"
+          >
             Submit
           </button>
         </form>

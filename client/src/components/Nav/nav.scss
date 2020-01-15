@@ -1,0 +1,66 @@
+@import "../../app.scss";
+@import "../../../../node_modules/bulma/sass/components/navbar.sass";
+@import "../../../../node_modules/bulma/sass/components/menu.sass";
+.navbar {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+.navbar-end {
+  margin-right: 2rem;
+}
+
+.navbar-burger {
+  background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
+  :hover,
+  :active,
+  :checked,
+  :focus {
+    background-color: lighten(
+      desaturate(lighten($secondary, 64.31372549019608), 85%),
+      5.6
+    );
+  }
+}
+
+.userNameDisplay {
+  margin: 1rem;
+  font-weight: bold;
+}
+
+.navbar-menu a {
+  width: 8em;
+}
+
+@media only screen and (min-width: 1024px) {
+  .navbar-brand {
+    margin-left: 1rem;
+  }
+}
+@media only screen and (max-width: 1023px) {
+  .navbar-end {
+    margin-right: 0rem;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .navbar-menu {
+    background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
+    width: 15rem;
+    position: absolute;
+    right: 0.5rem;
+    text-align: right;
+    padding: 1rem;
+    border-radius: 0 0 0.25rem 0.25rem;
+  }
+  .navbar-item {
+    text-align: center;
+  }
+  .navbar-menu button {
+    float: right;
+    margin: 0.5em;
+  }
+  .userNameDisplay {
+    float: right;
+    margin: 0.5em 1rem;
+    clear: right;
+  }
+}

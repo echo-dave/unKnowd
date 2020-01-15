@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./nav.scss";
 
 class Nav extends Component {
   render() {
@@ -69,7 +70,7 @@ class Nav extends Component {
                 </a>
               </div>
 
-              <div className="userNameDisplay">
+              <div className="navbar-item userNameDisplay">
                 Welcome back {this.props.firstName}!
               </div>
             </div>
