@@ -18,6 +18,12 @@ class SignUpForm extends Component {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
+
+  emailChangeHandler = e => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value.toLowerCase() });
+  };
+
   fileChangeHandler = event => {
     var file = event.target.files[0];
     // console.log(file);
@@ -27,9 +33,11 @@ class SignUpForm extends Component {
   };
   submitHandler = e => {
     e.preventDefault();
+    this.setState({ email: this.state.email.toLowerCase() });
     const { email, password, firstName, lastName } = this.state;
 
     const userData = new FormData(document.querySelector("#newUserForm"));
+    userData.set("email", this.state.email.toLowerCase());
 
     if (email && password && firstName && lastName) {
       Auth.register(userData, response => {

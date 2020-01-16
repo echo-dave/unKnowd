@@ -78,10 +78,9 @@ module.exports = function(app, io) {
   app.post("/api/authenticate", function(req, res) {
     const { email, password } = req.body;
     User.findOne({ email: email }).then(function(dbUser) {
-      if (!dbUser)
-        return res
-          .status(401)
-          .json({ message: "email or password is incorrect" });
+      if (!dbUser) {
+        res.status(401).json({ msg: "email or password is incorrect" });
+      }
       if (dbUser.comparePassword(password)) {
         const token = jwt.sign(
           {
@@ -97,7 +96,7 @@ module.exports = function(app, io) {
         });
         console.log(email);
       } else {
-        res.status(401).json({ message: "email or password incorrect" });
+        res.status(401).json({ msg: "email or password incorrect" });
       }
     });
   });
