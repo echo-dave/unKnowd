@@ -63,6 +63,7 @@ class SignUpForm extends Component {
             name="firstName"
             value={this.state.first}
             onChange={this.changeHandler}
+            required
           />
         </div>
         <div className="field">
@@ -84,6 +85,8 @@ class SignUpForm extends Component {
             name="email"
             value={this.state.email}
             onChange={this.changeHandler}
+            required
+            pattern=".+@.+\..+"
           />
         </div>
 
@@ -110,6 +113,8 @@ class SignUpForm extends Component {
             name="password"
             value={this.state.password}
             onChange={this.changeHandler}
+            required
+            pattern=".{8,}"
           />
         </div>
 
