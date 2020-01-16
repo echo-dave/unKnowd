@@ -9,7 +9,8 @@ class LoginForm extends Component {
   state = {
     email: "",
     password: "",
-    user: ""
+    user: "",
+    badlogin: ""
   };
 
   setUser = user => {
@@ -21,14 +22,25 @@ class LoginForm extends Component {
     this.setState({ [name]: value });
   };
 
+  badlogin = msg => {
+    this.setState({ badlogin: msg });
+  };
+
   submitHandler = e => {
     e.preventDefault();
+    this.setState({ badlogin: "" });
     const { email, password } = this.state;
     if (email && password) {
       Auth.logIn(email, password, response => {
-        this.context.setUser(response);
-        this.props.history.push("/");
-        console.log(this.state.user);
+        if (response.status === 200) {
+          console.log("submit", response);
+          this.context.setUser(response);
+          this.props.history.push("/");
+          console.log(this.state.user);
+        }
+        if (response.status === 401) {
+          this.badlogin(response.data.msg);
+        }
       });
     }
   };
@@ -65,6 +77,9 @@ class LoginForm extends Component {
             Login
           </button>
         </form>
+        {!this.state.badlogin == "" ? (
+          <p className="badlogin">{this.state.badlogin}</p>
+        ) : null}
       </>
     );
   }

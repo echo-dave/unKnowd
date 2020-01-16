@@ -6,11 +6,14 @@ function Auth() {
     axios
       .post("/api/authenticate", { email: email, password: password })
       .then(response => {
-        console.log(response);
         localStorage.setItem("token", response.data.token);
         cb(response.data);
         // alert("Welcome back! " + response.data.email);
-        window.location = "/mainpage";
+        // window.location = "/mainpage";
+      })
+      .catch(function(err) {
+        console.log(err.response);
+        if (err.response.status === 401) cb(err.response);
       });
   }
 
@@ -23,12 +26,12 @@ function Auth() {
     axios
       .post("/api/signup", userData)
       .then(function(data) {
-        console.log("userData", userData);
+        // console.log("userData", userData);
         logIn(email, password, cb);
         console.log(data);
       })
       .catch(function(err) {
-        console.log(err);
+        console.log(err.response);
       });
   }
 
