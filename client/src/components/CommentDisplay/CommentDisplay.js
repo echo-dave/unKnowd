@@ -15,7 +15,9 @@ class CommentDisplay extends Component {
           creatorPhoto={creator.photo}
         />
         {photos ? <img alt="" className="postPhotos" src={photos} /> : null}
-        <p>{msg}</p>
+        <p className={!photos == "" ? "clearRight description" : "description"}>
+          {msg}
+        </p>
       </div>
     );
   }
