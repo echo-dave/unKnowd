@@ -323,12 +323,12 @@ module.exports = function(app, io) {
     if (req.files != null) {
       console.log("file--------------file");
       console.log(req.files);
-      upload(req, "photos", dbfunction);
+      upload(req, "photos", postComment);
     } else {
       dbfunction(req);
     }
 
-    function dbfunction(req) {
+    function postComment(req) {
       db.Post.findOneAndUpdate(
         { _id: req.body.commentId },
         { $push: { replies: req.body } },
@@ -362,14 +362,24 @@ module.exports = function(app, io) {
   //make event comment
   app.post("/api/replyEventComment", function(req, res) {
     console.log("event req", req.body);
-    db.Event.findOneAndUpdate(
-      { _id: req.body.commentId },
-      { $push: { replies: req.body } }
-    ).then(function(newReply) {
-      console.log("newEventReply", newReply);
+    if (req.files != null) {
+      console.log("file--------------file");
+      console.log(req.files);
+      upload(req, "photos", eventComment);
+    } else {
+      eventComment(req);
+    }
 
-      // io.sockets.emit("new post reply", newReply);
-      res.json(newReply);
-    });
+    function eventComment(req) {
+      db.Event.findOneAndUpdate(
+        { _id: req.body.commentId },
+        { $push: { replies: req.body } }
+      ).then(function(newReply) {
+        console.log("newEventReply", newReply);
+
+        // io.sockets.emit("new post reply", newReply);
+        res.json(newReply);
+      });
+    }
   });
 };
