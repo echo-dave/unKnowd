@@ -7,6 +7,7 @@ const authWare = require("../middleware/authware");
 // const socketIOClient = require("socket.io-client");
 // const socket = socketIOClient("http://127.0.0.1:3001");
 const cloud = require("../nodejs/cloudinaryUp");
+const upload = require("../nodejs/upload");
 
 module.exports = function(app, io) {
   app.post("/api/signup", function(req, res) {
@@ -319,18 +320,29 @@ module.exports = function(app, io) {
   //make post comment
   app.post("/api/replyComment", function(req, res) {
     // console.log(req.body);
-    db.Post.findOneAndUpdate(
-      { _id: req.body.commentId },
-      { $push: { replies: req.body } },
-      { new: true }
-    ).then(function(newReply) {
-      // console.log("newPostReply", newReply.replies);
-      io.sockets.emit("new post reply", newReply.replies);
-      console.log("done");
+    if (req.files != null) {
+      console.log("file--------------file");
+      console.log(req.files);
+      upload(req, "photos", dbfunction);
+    } else {
+      dbfunction(req);
+    }
 
-      res.end();
-    });
+    function dbfunction(req) {
+      db.Post.findOneAndUpdate(
+        { _id: req.body.commentId },
+        { $push: { replies: req.body } },
+        { new: true }
+      ).then(function(newReply) {
+        // console.log("newPostReply", newReply.replies);
+        io.sockets.emit("new post reply", newReply.replies);
+        console.log("done");
+
+        res.end();
+      });
+    }
   });
+
   // get event comments
   app.get("/api/getEventComments", function(req, res) {
     console.log("query event comments", req.query);
