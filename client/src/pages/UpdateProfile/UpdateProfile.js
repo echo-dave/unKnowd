@@ -4,6 +4,7 @@ import axios from "axios";
 import authenticatedAxios from "../../utils/AuthenticatedAxios";
 import UserDisplay from "../../components/UserDisplay/UserDisplay";
 import Auth from "../../utils/Auth";
+import clearImageSelect from "../../utils/ClearImageSelect";
 import "./UpdateProfile.scss";
 // import Auth from "../utils/Auth";
 
@@ -47,7 +48,13 @@ class UpdateProfile extends Component {
       .catch(function(error) {
         console.log(error.response);
       });
+
+    this.clearImageSelect = clearImageSelect.bind(this);
   }
+
+  removeImage = () => {
+    this.clearImageSelect("photo");
+  };
 
   changeHandler = e => {
     const { name, value } = e.target;
@@ -170,9 +177,12 @@ class UpdateProfile extends Component {
                     Photo
                   </label>
                   <div className="control">
-                    <span id="imageRemove">x</span>
+                    <span id="imageRemove" onClick={this.removeImage}>
+                      x
+                    </span>
                     <input
-                      id="userPhoto"
+                      id="imageSelect"
+                      // id="userPhoto"
                       className="input"
                       name="photo"
                       type="file"
