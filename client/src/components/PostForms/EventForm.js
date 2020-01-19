@@ -2,7 +2,9 @@ import React, { Component } from "react";
 // import eventPost from "../utils/EventPost";
 import axios from "axios";
 import DatePicker from "react-datepicker";
+import clearImageSelect from "../../utils/ClearImageSelect";
 import "react-datepicker/dist/react-datepicker.css";
+import "./styles.scss";
 
 class EventForm extends Component {
   constructor(props) {
@@ -22,7 +24,13 @@ class EventForm extends Component {
   componentDidMount() {
     console.log("post form user", this.props.userState);
     console.log("creator state", this.state.creator);
+    this.clearImageSelect = clearImageSelect.bind(this);
   }
+
+  removeImage = () => {
+    this.clearImageSelect("img");
+  };
+
   changeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -41,6 +49,13 @@ class EventForm extends Component {
     });
   };
 
+  // removeImage = () => {
+  //   this.setState({
+  //     img: ""
+  //   });
+  //   document.querySelector("#imageSelect").value = "";
+  // };
+
   submitHandler = e => {
     e.preventDefault();
 
@@ -55,8 +70,8 @@ class EventForm extends Component {
             lat: data.data.results[0].geometry.lat,
             lon: data.data.results[0].geometry.lng
           });
-          console.log(this.state.lat);
-          console.log(this.state.lon);
+          // console.log(this.state.lat);
+          // console.log(this.state.lon);
 
           let eventData = new FormData();
           eventData.append("title", this.state.title);
@@ -68,14 +83,13 @@ class EventForm extends Component {
           eventData.append("creator", this.state.creator);
           eventData.append("img", this.state.img);
 
-          console.log("event data", eventData);
-
           axios
             .post("/api/event", eventData)
             .then(() => {
+              if (!this.props.eventShow) this.props.togglePostEventViews();
               this.props.closeForm();
             })
-            .catch(err => console.log(err));
+            .catch(err => console.log(err.response));
         })
         .catch(error => {
           console.log(error);
@@ -92,6 +106,9 @@ class EventForm extends Component {
     const { title, description, address } = this.state;
     return (
       <div id="eventForm">
+        <button className="button is-smaller" onClick={this.props.closeForm}>
+          X
+        </button>
         <form onSubmit={this.submitHandler}>
           <div className="field">
             <label className="label">Name of event</label>
@@ -145,8 +162,17 @@ class EventForm extends Component {
               Photo
             </label>
             <div className="control">
-              {/* <span id="imageRemove">X</span> */}
+              {!this.state.img == "" ? (
+                <span
+                  id="imageRemove"
+                  className="imageRemovePopupForms"
+                  onClick={this.removeImage}
+                >
+                  x
+                </span>
+              ) : null}
               <input
+                id="imageSelect"
                 className="input"
                 name="img"
                 type="file"

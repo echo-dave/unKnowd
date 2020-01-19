@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import UserDisplay from "./UserDisplay/UserDisplay";
 import axios from "axios";
-import PostReply from "./PostReply";
+import PostReply from "./PostForms/PostReply";
 import CommentDisplay from "./CommentDisplay/CommentDisplay";
 import CommentingButtons from "./CommentingButtons/CommentingButtons";
 // import socketIOClient from "socket.io-client";

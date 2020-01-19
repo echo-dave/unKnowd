@@ -3,6 +3,8 @@ import Nav from "../../components/Nav/Nav";
 import axios from "axios";
 import authenticatedAxios from "../../utils/AuthenticatedAxios";
 import UserDisplay from "../../components/UserDisplay/UserDisplay";
+import Auth from "../../utils/Auth";
+import clearImageSelect from "../../utils/ClearImageSelect";
 import "./UpdateProfile.scss";
 // import Auth from "../utils/Auth";
 
@@ -46,7 +48,13 @@ class UpdateProfile extends Component {
       .catch(function(error) {
         console.log(error.response);
       });
+
+    this.clearImageSelect = clearImageSelect.bind(this);
   }
+
+  removeImage = () => {
+    this.clearImageSelect("photo");
+  };
 
   changeHandler = e => {
     const { name, value } = e.target;
@@ -59,6 +67,10 @@ class UpdateProfile extends Component {
     this.setState({
       photo: file
     });
+  };
+
+  logout = () => {
+    Auth.logOut(() => (window.location = "/"));
   };
 
   submitHandler = e => {
@@ -95,7 +107,7 @@ class UpdateProfile extends Component {
   render() {
     return (
       <>
-        <Nav />
+        <Nav logout={this.logout} />
         <div id="profile" className="container">
           <div className="columns">
             <div className="column">
@@ -165,9 +177,12 @@ class UpdateProfile extends Component {
                     Photo
                   </label>
                   <div className="control">
-                    <span id="imageRemove">X</span>
+                    <span id="imageRemove" onClick={this.removeImage}>
+                      x
+                    </span>
                     <input
-                      id="userPhoto"
+                      id="imageSelect"
+                      // id="userPhoto"
                       className="input"
                       name="photo"
                       type="file"
