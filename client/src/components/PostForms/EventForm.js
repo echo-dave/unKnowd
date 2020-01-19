@@ -70,8 +70,8 @@ class EventForm extends Component {
             lat: data.data.results[0].geometry.lat,
             lon: data.data.results[0].geometry.lng
           });
-          console.log(this.state.lat);
-          console.log(this.state.lon);
+          // console.log(this.state.lat);
+          // console.log(this.state.lon);
 
           let eventData = new FormData();
           eventData.append("title", this.state.title);
@@ -83,14 +83,13 @@ class EventForm extends Component {
           eventData.append("creator", this.state.creator);
           eventData.append("img", this.state.img);
 
-          console.log("event data", eventData);
-
           axios
             .post("/api/event", eventData)
             .then(() => {
+              if (!this.props.eventShow) this.props.togglePostEventViews();
               this.props.closeForm();
             })
-            .catch(err => console.log(err));
+            .catch(err => console.log(err.response));
         })
         .catch(error => {
           console.log(error);

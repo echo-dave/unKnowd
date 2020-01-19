@@ -145,6 +145,8 @@ class Mainpage extends React.Component {
             <EventForm
               userState={this.state.user}
               closeForm={this.toggleEventForm}
+              eventShow={this.state.eventShow}
+              togglePostEventViews={this.togglePostEventViews}
             />
           ) : null}
         </div>
