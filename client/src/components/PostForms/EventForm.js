@@ -2,7 +2,9 @@ import React, { Component } from "react";
 // import eventPost from "../utils/EventPost";
 import axios from "axios";
 import DatePicker from "react-datepicker";
+import clearImageSelect from "../../utils/ClearImageSelect";
 import "react-datepicker/dist/react-datepicker.css";
+import "./styles.scss";
 
 class EventForm extends Component {
   constructor(props) {
@@ -22,7 +24,13 @@ class EventForm extends Component {
   componentDidMount() {
     console.log("post form user", this.props.userState);
     console.log("creator state", this.state.creator);
+    this.clearImageSelect = clearImageSelect.bind(this);
   }
+
+  removeImage = () => {
+    this.clearImageSelect("img");
+  };
+
   changeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -40,6 +48,13 @@ class EventForm extends Component {
       img: file
     });
   };
+
+  // removeImage = () => {
+  //   this.setState({
+  //     img: ""
+  //   });
+  //   document.querySelector("#imageSelect").value = "";
+  // };
 
   submitHandler = e => {
     e.preventDefault();
@@ -92,6 +107,9 @@ class EventForm extends Component {
     const { title, description, address } = this.state;
     return (
       <div id="eventForm">
+        <button className="button is-smaller" onClick={this.props.closeForm}>
+          X
+        </button>
         <form onSubmit={this.submitHandler}>
           <div className="field">
             <label className="label">Name of event</label>
@@ -145,8 +163,11 @@ class EventForm extends Component {
               Photo
             </label>
             <div className="control">
-              {/* <span id="imageRemove">X</span> */}
+              <span id="imageRemove" onClick={this.removeImage}>
+                x
+              </span>
               <input
+                id="imageSelect"
                 className="input"
                 name="img"
                 type="file"

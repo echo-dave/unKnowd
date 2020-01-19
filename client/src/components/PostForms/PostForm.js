@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import clearImageSelect from "../../utils/ClearImageSelect";
+import "./styles.scss";
 
 class PostForm extends Component {
   //settting compoent forms initial structure
@@ -12,8 +14,13 @@ class PostForm extends Component {
 
   componentDidMount() {
     console.log("post form user", this.props.userState);
+    this.clearImageSelect = clearImageSelect.bind(this);
   }
   // socket = socketIOClient();
+
+  removeImage = () => {
+    this.clearImageSelect("photos");
+  };
 
   //this gets the value and name of the inputs that triggered the change
   changeHandler = e => {
@@ -67,6 +74,9 @@ class PostForm extends Component {
   render() {
     return (
       <div id="postform">
+        <button className="button is-smaller" onClick={this.props.closeForm}>
+          X
+        </button>
         <form className="event" onSubmit={this.submitHandler}>
           <div className="field">
             <label className="label" htmlFor="msg">
@@ -87,8 +97,11 @@ class PostForm extends Component {
               Photo
             </label>
             <div className="control">
-              {/* <span id="imageRemove">X</span> */}
+              <span id="imageRemove" onClick={this.removeImage}>
+                x
+              </span>
               <input
+                id="imageSelect"
                 className="input"
                 name="photo"
                 type="file"

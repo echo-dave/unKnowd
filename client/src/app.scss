@@ -12,3 +12,22 @@ $family-sans-serif: "Montserrat", sans-serif;
 $family-secondary: "Indie Flower", cursive;
 @import "../../node_modules/bulma/sass/utilities/_all.sass";
 @import "../../node_modules/bulma/sass/base/_all.sass";
+
+#imageRemove {
+  font-weight: bold;
+  color: red;
+  position: absolute;
+  right: 1rem;
+  top: 0.35rem;
+  z-index: 2;
+  padding: 0.1rem 0.7rem;
+  //   border: 1px solid grey;
+  border: none;
+  border-radius: 0.25rem;
+  background: #ffffff;
+}
+#imageRemove:hover {
+  cursor: pointer;
+  border: 1px solid grey;
+  background-color: $primary;
+}

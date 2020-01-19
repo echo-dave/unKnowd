@@ -3,6 +3,7 @@ import Nav from "../../components/Nav/Nav";
 import axios from "axios";
 import authenticatedAxios from "../../utils/AuthenticatedAxios";
 import UserDisplay from "../../components/UserDisplay/UserDisplay";
+import Auth from "../../utils/Auth";
 import "./UpdateProfile.scss";
 // import Auth from "../utils/Auth";
 
@@ -61,6 +62,10 @@ class UpdateProfile extends Component {
     });
   };
 
+  logout = () => {
+    Auth.logOut(() => (window.location = "/"));
+  };
+
   submitHandler = e => {
     e.preventDefault();
 
@@ -95,7 +100,7 @@ class UpdateProfile extends Component {
   render() {
     return (
       <>
-        <Nav />
+        <Nav logout={this.logout} />
         <div id="profile" className="container">
           <div className="columns">
             <div className="column">
@@ -165,7 +170,7 @@ class UpdateProfile extends Component {
                     Photo
                   </label>
                   <div className="control">
-                    <span id="imageRemove">X</span>
+                    <span id="imageRemove">x</span>
                     <input
                       id="userPhoto"
                       className="input"

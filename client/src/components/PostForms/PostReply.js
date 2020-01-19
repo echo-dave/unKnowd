@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import "./styles.scss";
 
 class PostForm extends Component {
   //settting compoent forms initial structure
@@ -112,7 +113,7 @@ class PostForm extends Component {
               Photo
             </label>
             <div className="control">
-              {/* <span id="imageRemove">X</span> */}
+              <span id="imageRemove">x</span>
               <input
                 className="input"
                 name="photo"

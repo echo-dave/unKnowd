@@ -95,7 +95,7 @@ class SignUpForm extends Component {
             Photo
           </label>
           <div className="control">
-            <span id="imageRemove">X</span>
+            <span id="imageRemove">x</span>
             <input
               className="input"
               name="photo"

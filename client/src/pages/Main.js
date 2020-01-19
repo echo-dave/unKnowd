@@ -2,11 +2,11 @@ import React from "react";
 import axios from "axios";
 import Post from "../components/Post";
 import Event from "../components/Event";
-import Postform from "../components/PostForm";
+import Postform from "../components/PostForms/PostForm";
 import authenticatedAxios from "../utils/AuthenticatedAxios";
 import EventMap from "../components/Map";
 import socketIOClient from "socket.io-client";
-import EventForm from "../components/EventForm";
+import EventForm from "../components/PostForms/EventForm";
 import Auth from "../utils/Auth";
 import Nav from "../components/Nav/Nav";
 
