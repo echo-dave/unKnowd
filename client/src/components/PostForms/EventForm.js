@@ -163,13 +163,15 @@ class EventForm extends Component {
               Photo
             </label>
             <div className="control">
-              <span
-                id="imageRemove"
-                className="imageRemovePopupForms"
-                onClick={this.removeImage}
-              >
-                x
-              </span>
+              {!this.state.img == "" ? (
+                <span
+                  id="imageRemove"
+                  className="imageRemovePopupForms"
+                  onClick={this.removeImage}
+                >
+                  x
+                </span>
+              ) : null}
               <input
                 id="imageSelect"
                 className="input"

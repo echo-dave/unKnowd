@@ -117,9 +117,15 @@ class PostForm extends Component {
               Photo
             </label>
             <div className="control">
-              <span id="imageRemove" onClick={this.removeImage}>
-                x
-              </span>
+              {!this.state.photos == "" ? (
+                <span
+                  id="imageRemove"
+                  className="imageRemovePopupForms"
+                  onClick={this.removeImage}
+                >
+                  x
+                </span>
+              ) : null}
               <input
                 id="imageSelect"
                 className="input"
