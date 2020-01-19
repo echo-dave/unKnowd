@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import Auth from "../utils/Auth";
+import clearImageSelect from "../utils/ClearImageSelect";
 
 class SignUpForm extends Component {
   static contextType = UserContext;
@@ -13,6 +14,12 @@ class SignUpForm extends Component {
     lastName: "",
     photo: ""
   };
+
+  componentDidMount() {
+    this.clearImageSelect = clearImageSelect.bind(this);
+  }
+
+  removeImage = () => this.clearImageSelect("photo");
 
   changeHandler = e => {
     const { name, value } = e.target;
@@ -95,8 +102,11 @@ class SignUpForm extends Component {
             Photo
           </label>
           <div className="control">
-            <span id="imageRemove">x</span>
+            <span id="imageRemove" onClick={this.removeImage}>
+              x
+            </span>
             <input
+              id="imageSelect"
               className="input"
               name="photo"
               type="file"

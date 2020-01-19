@@ -20,9 +20,7 @@ class PostForm extends Component {
     this.clearImageSelect = clearImageSelect.bind(this);
   }
 
-  removeImage = () => {
-    this.clearImageSelect("photos");
-  };
+  removeImage = () => this.clearImageSelect("photos");
 
   //this gets the value and name of the inputs that triggered the change
   changeHandler = e => {
