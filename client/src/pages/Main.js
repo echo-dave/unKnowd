@@ -18,7 +18,8 @@ class Mainpage extends React.Component {
     eventShow: false,
     postFormShow: false,
     eventFormShow: false,
-    burgerActive: false
+    burgerActive: false,
+    mapShow: true
   };
 
   setUser = user => {
@@ -81,36 +82,49 @@ class Mainpage extends React.Component {
   };
 
   togglePostEventViews = () => {
-    this.setState({ eventShow: !this.state.eventShow });
-    this.setState({ burgerActive: false });
+    this.setState({ eventShow: !this.state.eventShow, burgerActive: false });
     document.querySelector(".navbar-menu").classList.remove("is-active");
   };
 
   togglePostForm = () => {
     this.setState({
       postFormShow: !this.state.postFormShow,
-      eventFormShow: false
+      eventFormShow: false,
+      burgerActive: false
     });
-    this.setState({ burgerActive: false });
     document.querySelector(".navbar-menu").classList.remove("is-active");
   };
 
   toggleEventForm = () => {
     this.setState({
       eventFormShow: !this.state.eventFormShow,
-      postFormShow: false
+      postFormShow: false,
+      burgerActive: false
     });
-    this.setState({ burgerActive: false });
     document.querySelector(".navbar-menu").classList.remove("is-active");
   };
 
   toggleNavbar = () => {
-    this.setState({ burgerActive: !this.state.burgerActive });
     if (this.state.burgerActive === false) {
       document.querySelector(".navbar-menu").className += " is-active";
     } else {
       document.querySelector(".navbar-menu").classList.remove("is-active");
     }
+    this.setState({ burgerActive: !this.state.burgerActive });
+  };
+
+  toggleMapMobile = () => {
+    if (window.innerWidth < 769 && this.state.mapShow == true) {
+      document
+        .querySelector(".column.posts")
+        .setAttribute("style", `height:calc(100vh - 4.3rem)`);
+    } else {
+      document
+        .querySelector(".column.posts")
+        .setAttribute("style", `height:calc(60vh - 5rem)`);
+    }
+    this.setState({ mapShow: !this.state.mapShow });
+    this.toggleNavbar();
   };
 
   logout = () => {
@@ -131,6 +145,7 @@ class Mainpage extends React.Component {
           postFormShow={this.state.postFormShow}
           eventFormShow={this.state.eventFormShow}
           toggleNavbar={this.toggleNavbar}
+          toggleMapMobile={this.toggleMapMobile}
         />
 
         <div>
@@ -171,9 +186,11 @@ class Mainpage extends React.Component {
                   />
                 ))}
           </div>
-          <div className="column events">
-            <EventMap />
-          </div>
+          {window.innerWidth <= 768 && !this.state.mapShow ? null : (
+            <div className="column events">
+              <EventMap />
+            </div>
+          )}
         </div>
       </div>
     );

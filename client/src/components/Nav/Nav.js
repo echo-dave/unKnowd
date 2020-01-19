@@ -54,9 +54,11 @@ class Nav extends Component {
               <span aria-hidden="true"></span>
             </a>
           </div>
+          {/* if logged in render navigation */}
           {this.context.user ? (
             <div className="navbar-menu">
               <div className="navbar-end">
+                {/* render if on main page only */}
                 {window.location.pathname === "/mainpage" ? (
                   <>
                     <div className="navbar-item" id="viewChanger">
@@ -89,8 +91,21 @@ class Nav extends Component {
                         {this.props.eventFormShow ? "close" : "Add Event"}
                       </a>
                     </div>
+                    {/* render if mobile */}
+                    {window.innerWidth <= 768 ? (
+                      <div className="navbar-item" id="mapHide">
+                        <a
+                          href="#"
+                          className="button is-primary is-small"
+                          onClick={this.props.toggleMapMobile}
+                        >
+                          Hide Map
+                        </a>
+                      </div>
+                    ) : null}
                   </>
                 ) : null}
+                {/* always render if logged in */}
                 <div className="navbar-item" id="eventMaker">
                   <a
                     href="#"
