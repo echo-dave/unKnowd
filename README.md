@@ -7,6 +7,11 @@ A community platform to help bring the community back into community. Some commu
 - Users can upload photos so it’s easier to recognize people you don’t see as often in the community and applies that photo to posts and events
 - Community members can post events like a simple gathering for food or a gallery opening across town
 
+![GitHub issues by-label](https://img.shields.io/github/issues-raw/echo-dave/unKnowd/enhancement?color=green)
+![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/echo-dave/unKowd)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/w/echo-dave/unKnowd)
+![GitHub contributors](https://img.shields.io/github/contributors/echo-dave/unKowd)
+
 ## Technology
 
 - Socketio websockets real time updating to our view display and connected users
@@ -27,9 +32,12 @@ Working around React really slowed us down on this project along with working th
 As a work in progress here’s what what’s been added:
 
 - lots of styling work for better readability
-- replies to posts and comments - no photo uploads yet
+- replies to posts and comments
+- photo uploads for comments
 - add close button to reply without submitting reply
 - broke out some components in an effort to start code cleanup
+- added a user profile page for updating info - click name / photo top right
+- added signup form validations that were missing
 
 ![mobile login and posts](readmeImages/loginMobile_posts.jpg)
 ![mobile menu and events](readmeImages/mobileMenu_events.jpg)
