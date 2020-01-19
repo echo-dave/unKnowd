@@ -121,16 +121,16 @@ class Mainpage extends React.Component {
     return (
       <div className="container main">
         <Nav
-          toggleNavbar={this.toggleNavbar}
           togglePostEventViews={this.togglePostEventViews}
           eventShow={this.state.eventShow}
           togglePostForm={this.togglePostForm}
           toggleEventForm={this.toggleEventForm}
           logout={this.logout}
-          firstName={this.state.user.firstName}
-          user={this.state.user}
+          // firstName={this.state.user.firstName}
+          // user={this.state.user}
           postFormShow={this.state.postFormShow}
           eventFormShow={this.state.eventFormShow}
+          toggleNavbar={this.toggleNavbar}
         />
 
         <div>

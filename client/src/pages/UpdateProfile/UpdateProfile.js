@@ -97,94 +97,103 @@ class UpdateProfile extends Component {
       <>
         <Nav />
         <div id="profile" className="container">
-          <div className="box">
-            <header>
-              <h2>Current Info:</h2>
-            </header>
-            <div className="">
-              <div className="">
-                <UserDisplay creatorPhoto={this.state.info.photo} />
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>First Name:</td>
-                      <td>{this.state.info.firstName}</td>
-                    </tr>
-                    <tr>
-                      <td>Last Name:</td>
-                      <td>{this.state.info.lastName}</td>
-                    </tr>
-                    <tr>
-                      <td>Email:</td>
-                      <td>{this.state.info.email}</td>
-                    </tr>
-                  </tbody>
-                </table>
-                {/* <p>First Name: {this.state.info.firstName}</p>
+          <div className="columns is-centered is-mobile">
+            <div className="column">
+              <div className="box">
+                <header>
+                  <h2>Current Info:</h2>
+                </header>
+                <div className="">
+                  <div className="">
+                    <UserDisplay creatorPhoto={this.state.info.photo} />
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td>First Name:</td>
+                          <td>{this.state.info.firstName}</td>
+                        </tr>
+                        <tr>
+                          <td>Last Name:</td>
+                          <td>{this.state.info.lastName}</td>
+                        </tr>
+                        <tr>
+                          <td>Email:</td>
+                          <td>{this.state.info.email}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    {/* <p>First Name: {this.state.info.firstName}</p>
                 <p>Last Name: {this.state.info.lastName}</p>
                 <p>Email: {this.state.info.email}</p> */}
+                  </div>
+                </div>
               </div>
+
+              <form
+                id="newUserForm"
+                className="box"
+                onSubmit={this.submitHandler}
+              >
+                <div className="field">
+                  <h2>Update your info:</h2>
+                  <br />
+                  <h1>First Name</h1>
+                  <input
+                    className="input"
+                    type="text"
+                    name="firstName"
+                    value={this.state.firstName}
+                    onChange={this.changeHandler}
+                  />
+                </div>
+                <div className="field">
+                  <h1>Last Name</h1>
+                  <input
+                    className="input"
+                    type="text"
+                    name="lastName"
+                    value={this.state.lastName}
+                    onChange={this.changeHandler}
+                  />
+                </div>
+                <div className="field">
+                  <h1>Email</h1>
+                  <input
+                    className="input"
+                    type="text"
+                    name="email"
+                    value={this.state.email}
+                    onChange={this.changeHandler}
+                  />
+                </div>
+
+                <div className="field">
+                  <label className="label" htmlFor="photo">
+                    Photo
+                  </label>
+                  <div className="control">
+                    <span id="imageRemove">X</span>
+                    <input
+                      id="userPhoto"
+                      className="input"
+                      name="photo"
+                      type="file"
+                      // value={this.state.photo}
+                      onChange={this.fileChangeHandler}
+                    />
+                  </div>
+                </div>
+
+                <button
+                  id="updateInfo"
+                  className="button is-primary is-small"
+                  type="submit"
+                >
+                  Update
+                </button>
+              </form>
             </div>
           </div>
-          <form id="newUserForm" className="box" onSubmit={this.submitHandler}>
-            <div className="field">
-              <h2>Update your info:</h2>
-              <br />
-              <h1>First Name</h1>
-              <input
-                className="input"
-                type="text"
-                name="firstName"
-                value={this.state.firstName}
-                onChange={this.changeHandler}
-              />
-            </div>
-            <div className="field">
-              <h1>Last Name</h1>
-              <input
-                className="input"
-                type="text"
-                name="lastName"
-                value={this.state.lastName}
-                onChange={this.changeHandler}
-              />
-            </div>
-            <div className="field">
-              <h1>Email</h1>
-              <input
-                className="input"
-                type="text"
-                name="email"
-                value={this.state.email}
-                onChange={this.changeHandler}
-              />
-            </div>
-
-            <div className="field">
-              <label className="label" htmlFor="photo">
-                Photo
-              </label>
-              <div className="control">
-                <span id="imageRemove">X</span>
-                <input
-                  id="userPhoto"
-                  className="input"
-                  name="photo"
-                  type="file"
-                  // value={this.state.photo}
-                  onChange={this.fileChangeHandler}
-                />
-              </div>
-            </div>
-
-            <button
-              id="updateInfo"
-              className="button is-primary is-small"
-              type="submit"
-            >
-              Update
-            </button>
-          </form>
         </div>
       </>
     );

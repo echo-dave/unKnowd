@@ -7,6 +7,28 @@ import "./nav.scss";
 
 //this.context accesses the conextType (UserContext) referenced bottom
 class Nav extends Component {
+  state = {
+    burgerActive: false
+  };
+
+  toggleNavbar = () => {
+    this.setState({ burgerActive: !this.state.burgerActive });
+    if (this.state.burgerActive === false) {
+      document.querySelector(".navbar-menu").className += " is-active";
+    } else {
+      document.querySelector(".navbar-menu").classList.remove("is-active");
+    }
+  };
+
+  toggleConditional = () => {
+    if (window.location.pathname === "/mainpage") {
+      this.props.toggleNavbar();
+    }
+    if (window.location.pathname === "/profile") {
+      this.toggleNavbar();
+    }
+  };
+
   render() {
     return (
       <>
@@ -25,7 +47,7 @@ class Nav extends Component {
               className="navbar-burger"
               aria-label="menu"
               aria-expanded="false"
-              onClick={this.props.toggleNavbar}
+              onClick={this.toggleConditional}
             >
               <span aria-hidden="true"></span>
               <span aria-hidden="true"></span>
