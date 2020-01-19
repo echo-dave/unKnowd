@@ -56,9 +56,9 @@ class Mainpage extends React.Component {
     });
   }
 
-  componentWillUnmount() {
-    this.socket.close();
-  }
+  // componentWillUnmount() {
+  //   this.socket.close();
+  // }
 
   getPosts = () => {
     axios

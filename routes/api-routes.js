@@ -130,7 +130,8 @@ module.exports = function(app, io) {
     User.findById(req.user._id).then(dbUser => {
       dbUser = {
         id: dbUser._id,
-        firstName: dbUser.firstName
+        firstName: dbUser.firstName,
+        photo: dbUser.photo
       };
       console.log(dbUser);
       res.json(dbUser);
@@ -380,6 +381,45 @@ module.exports = function(app, io) {
         // io.sockets.emit("new post reply", newReply);
         res.json(newReply);
       });
+    }
+  });
+
+  //get user info for profile page
+  app.get("/api/userInfo", authWare, function(req, res) {
+    console.log("request", req.user._id);
+
+    User.findById(req.user._id)
+      .then(function(data) {
+        let userData = data;
+        delete userData.password;
+
+        console.log("userData", userData);
+        res.json(userData);
+      })
+      .catch(function(err) {
+        console.log("err", err.response);
+      });
+  });
+
+  //post updates to user info via profile page
+  app.post("/api/userInfoUpdate", authWare, function(req, res) {
+    if (req.files != null) {
+      console.log("file--------------file");
+      console.log(req.files);
+      upload(req, "photo", userInfoUpdating);
+    } else {
+      userInfoUpdating(req);
+    }
+
+    function userInfoUpdating(req) {
+      User.findByIdAndUpdate(req.body.id, req.body, { new: true })
+        .then(function(response) {
+          console.log("newResponse", response);
+          res.json(response);
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
     }
   });
 };
