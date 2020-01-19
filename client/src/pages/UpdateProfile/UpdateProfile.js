@@ -97,40 +97,33 @@ class UpdateProfile extends Component {
       <>
         <Nav />
         <div id="profile" className="container">
-          <div className="columns is-centered is-mobile">
+          <div className="columns">
             <div className="column">
               <div className="box">
-                <header>
-                  <h2>Current Info:</h2>
-                </header>
-                <div className="">
-                  <div className="">
-                    <UserDisplay creatorPhoto={this.state.info.photo} />
-                    <table>
-                      <tbody>
-                        <tr>
-                          <td>First Name:</td>
-                          <td>{this.state.info.firstName}</td>
-                        </tr>
-                        <tr>
-                          <td>Last Name:</td>
-                          <td>{this.state.info.lastName}</td>
-                        </tr>
-                        <tr>
-                          <td>Email:</td>
-                          <td>{this.state.info.email}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    {/* <p>First Name: {this.state.info.firstName}</p>
+                <h2>Current Info:</h2>
+                <UserDisplay creatorPhoto={this.state.info.photo} />
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>First Name:</td>
+                      <td>{this.state.info.firstName}</td>
+                    </tr>
+                    <tr>
+                      <td>Last Name:</td>
+                      <td>{this.state.info.lastName}</td>
+                    </tr>
+                    <tr>
+                      <td>Email:</td>
+                      <td>{this.state.info.email}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                {/* <p>First Name: {this.state.info.firstName}</p>
                 <p>Last Name: {this.state.info.lastName}</p>
                 <p>Email: {this.state.info.email}</p> */}
-                  </div>
-                </div>
               </div>
-
               <form
-                id="newUserForm"
+                id="updateUserForm"
                 className="box"
                 onSubmit={this.submitHandler}
               >
