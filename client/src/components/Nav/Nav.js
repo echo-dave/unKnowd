@@ -86,7 +86,13 @@ class Nav extends Component {
                   {this.props.firstName}!
                 </Link> */}
                   <Link to="/profile">
-                    <UserDisplay creatorPhoto={this.context.user.photo} />
+                    {this.context.user.photo ? (
+                      <UserDisplay creatorPhoto={this.context.user.photo} />
+                    ) : (
+                      <span className="navUserName">
+                        {this.context.user.firstName}
+                      </span>
+                    )}
                   </Link>
                 </div>
               </div>
