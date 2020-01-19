@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import clearImageSelect from "../../utils/ClearImageSelect";
 import "./styles.scss";
 
 class PostForm extends Component {
@@ -16,7 +17,12 @@ class PostForm extends Component {
     this.setState({
       parrentComment: this.props.postId
     });
+    this.clearImageSelect = clearImageSelect.bind(this);
   }
+
+  removeImage = () => {
+    this.clearImageSelect("photos");
+  };
 
   //this gets the value and name of the inputs that triggered the change
   changeHandler = e => {
@@ -113,8 +119,11 @@ class PostForm extends Component {
               Photo
             </label>
             <div className="control">
-              <span id="imageRemove">x</span>
+              <span id="imageRemove" onClick={this.removeImage}>
+                x
+              </span>
               <input
+                id="imageSelect"
                 className="input"
                 name="photo"
                 type="file"
