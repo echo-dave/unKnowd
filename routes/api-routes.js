@@ -326,7 +326,7 @@ module.exports = function(app, io) {
       console.log(req.files);
       upload(req, "photos", postComment);
     } else {
-      dbfunction(req);
+      postComment(req);
     }
 
     function postComment(req) {
