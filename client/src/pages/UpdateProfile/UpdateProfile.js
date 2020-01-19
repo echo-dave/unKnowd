@@ -105,18 +105,20 @@ class UpdateProfile extends Component {
               <div className="">
                 <UserDisplay creatorPhoto={this.state.info.photo} />
                 <table>
-                  <tr>
-                    <td>First Name:</td>
-                    <td>{this.state.info.firstName}</td>
-                  </tr>
-                  <tr>
-                    <td>Last Name:</td>
-                    <td>{this.state.info.lastName}</td>
-                  </tr>
-                  <tr>
-                    <td>Email:</td>
-                    <td>{this.state.info.email}</td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <td>First Name:</td>
+                      <td>{this.state.info.firstName}</td>
+                    </tr>
+                    <tr>
+                      <td>Last Name:</td>
+                      <td>{this.state.info.lastName}</td>
+                    </tr>
+                    <tr>
+                      <td>Email:</td>
+                      <td>{this.state.info.email}</td>
+                    </tr>
+                  </tbody>
                 </table>
                 {/* <p>First Name: {this.state.info.firstName}</p>
                 <p>Last Name: {this.state.info.lastName}</p>

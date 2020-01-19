@@ -130,7 +130,8 @@ module.exports = function(app, io) {
     User.findById(req.user._id).then(dbUser => {
       dbUser = {
         id: dbUser._id,
-        firstName: dbUser.firstName
+        firstName: dbUser.firstName,
+        photo: dbUser.photo
       };
       console.log(dbUser);
       res.json(dbUser);
