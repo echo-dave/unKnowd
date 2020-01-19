@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+// import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 import "./nav.scss";
 
 class Nav extends Component {
@@ -10,7 +12,7 @@ class Nav extends Component {
         aria-label="main navigation"
       >
         <div className="navbar-brand">
-          <a className="navbar-item" href="#">
+          <a className="navbar-item" href="/mainpage">
             <h1 id="title">UnKnowd</h1>
           </a>
           <a
@@ -71,7 +73,11 @@ class Nav extends Component {
               </div>
 
               <div className="navbar-item userNameDisplay">
-                Welcome back {this.props.firstName}!
+                Welcome back
+                {/* <Link to={{ pathname: "/", state: { user } }}>
+                  {this.props.firstName}!
+                </Link> */}
+                <a href="/profile">{this.props.firstName}!</a>
               </div>
             </div>
           </div>

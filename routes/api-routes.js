@@ -382,4 +382,36 @@ module.exports = function(app, io) {
       });
     }
   });
+
+  app.get("/api/userInfo", authWare, function(req, res) {
+    console.log("request", req.user._id);
+
+    User.findById(req.user._id)
+      .then(function(data) {
+        let userData = data;
+        delete userData.password;
+
+        console.log("userData", userData);
+        res.json(userData);
+      })
+      .catch(function(err) {
+        console.log("err", err.response);
+      });
+  });
+
+  app.post("/api/userInfoUpdate", authWare, function(req, res) {
+    let userId = req.body.id;
+    let newInfo = delete req.body.user;
+    console.log("info", newInfo);
+    console.log("id", userId);
+
+    User.findByIdAndUpdate(req.body.id, req.body, { new: true })
+      .then(function(response) {
+        console.log("newResponse", response);
+        res.json(response);
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+  });
 };
