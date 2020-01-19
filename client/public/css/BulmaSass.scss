@@ -34,6 +34,12 @@ body {
   height: 100vh;
   overflow: hidden;
 }
+
+h2 {
+  font-size: 1.2em !important;
+  font-weight: 500 !important;
+}
+
 //used for event titles
 h2 {
   font-family: "Montserrat", sans-serif;
@@ -55,7 +61,19 @@ h2 {
 //   }
 // }
 
-.posts p {
+#profile table {
+  font-size: 0.85em;
+
+  tr td:first-child {
+    font-weight: bold;
+    text-align: right;
+  }
+  tr td:nth-child(2) {
+    padding-left: 0.5em;
+  }
+}
+.posts p,
+#profile p {
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
   font-size: 0.85em;

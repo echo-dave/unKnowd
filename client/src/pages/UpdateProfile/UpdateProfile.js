@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import Nav from "./Nav/Nav";
+import Nav from "../../components/Nav/Nav";
 import axios from "axios";
-import authenticatedAxios from "../utils/AuthenticatedAxios";
+import authenticatedAxios from "../../utils/AuthenticatedAxios";
+import UserDisplay from "../../components/UserDisplay/UserDisplay";
+import "./UpdateProfile.scss";
 // import Auth from "../utils/Auth";
 
-class UpdateForm extends Component {
+class UpdateProfile extends Component {
   constructor(props) {
     super(props);
 
@@ -12,7 +14,7 @@ class UpdateForm extends Component {
       email: "",
       firstName: "",
       lastName: "",
-      img: "",
+      photo: "",
       info: "",
       user: ""
     };
@@ -51,6 +53,14 @@ class UpdateForm extends Component {
     this.setState({ [name]: value });
   };
 
+  fileChangeHandler = event => {
+    var file = event.target.files[0];
+    // console.log(file);
+    this.setState({
+      photo: file
+    });
+  };
+
   submitHandler = e => {
     e.preventDefault();
 
@@ -61,60 +71,62 @@ class UpdateForm extends Component {
       updatingUser.append("firstName", this.state.firstName);
     if (this.state.lastName)
       updatingUser.append("lastName", this.state.lastName);
-    updatingUser.append("photo", document.querySelector("#userPhoto").value);
+    if (this.state.photo) updatingUser.append("photo", this.state.photo);
     updatingUser.append("id", this.state.user.id);
 
+    //authenticated posting of user updates
     authenticatedAxios
       .post("/api/userInfoUpdate", updatingUser)
       .then(updatedInfo => {
         console.log(updatedInfo.data);
         this.setState({ info: updatedInfo.data });
+        this.setState({
+          email: "",
+          firstName: "",
+          lastName: "",
+          photo: ""
+        });
       })
       .catch(function(err) {
-        console.log(err);
+        console.log(err.response);
       });
-
-    // if (this.state.email) {
-    //   Auth.update(
-    //     this.state.email,
-    //     this.state.firstName,
-    //     this.state.lastName,
-
-    //     response => {
-    //       this.context.setUser(response);
-    //       this.props.history.push("/");
-    //       console.log(this.state.user);
-    // alert("You updated your profile");
-    // window.location.reload();
-    //     }
-    //   );
-    // } else {
-    //   console.log("no");
-    // }
   };
 
   render() {
     return (
       <>
         <Nav />
-        <div className="container">
+        <div id="profile" className="container">
           <div className="box">
-            <header className="">
-              <p className="">Information</p>
+            <header>
+              <h2>Current Info:</h2>
             </header>
             <div className="">
-              <div className="content">
-                Your email is: {this.state.info.email} <br />
-                Your first name is: {this.state.info.firstName}
-                <br />
-                Your last name is: {this.state.info.lastName}
+              <div className="">
+                <UserDisplay creatorPhoto={this.state.info.photo} />
+                <table>
+                  <tr>
+                    <td>First Name:</td>
+                    <td>{this.state.info.firstName}</td>
+                  </tr>
+                  <tr>
+                    <td>Last Name:</td>
+                    <td>{this.state.info.lastName}</td>
+                  </tr>
+                  <tr>
+                    <td>Email:</td>
+                    <td>{this.state.info.email}</td>
+                  </tr>
+                </table>
+                {/* <p>First Name: {this.state.info.firstName}</p>
+                <p>Last Name: {this.state.info.lastName}</p>
+                <p>Email: {this.state.info.email}</p> */}
               </div>
             </div>
           </div>
-          <br />
           <form id="newUserForm" className="box" onSubmit={this.submitHandler}>
             <div className="field">
-              <h1>Update your profile!</h1>
+              <h2>Update your info:</h2>
               <br />
               <h1>First Name</h1>
               <input
@@ -163,7 +175,11 @@ class UpdateForm extends Component {
               </div>
             </div>
 
-            <button className="button is-primary is-small" type="submit">
+            <button
+              id="updateInfo"
+              className="button is-primary is-small"
+              type="submit"
+            >
               Update
             </button>
           </form>
@@ -173,4 +189,4 @@ class UpdateForm extends Component {
   }
 }
 
-export default UpdateForm;
+export default UpdateProfile;

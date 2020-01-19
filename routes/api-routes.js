@@ -383,6 +383,7 @@ module.exports = function(app, io) {
     }
   });
 
+  //get user info for profile page
   app.get("/api/userInfo", authWare, function(req, res) {
     console.log("request", req.user._id);
 
@@ -399,19 +400,25 @@ module.exports = function(app, io) {
       });
   });
 
+  //post updates to user info via profile page
   app.post("/api/userInfoUpdate", authWare, function(req, res) {
-    let userId = req.body.id;
-    let newInfo = delete req.body.user;
-    console.log("info", newInfo);
-    console.log("id", userId);
+    if (req.files != null) {
+      console.log("file--------------file");
+      console.log(req.files);
+      upload(req, "photo", userInfoUpdating);
+    } else {
+      userInfoUpdating(req);
+    }
 
-    User.findByIdAndUpdate(req.body.id, req.body, { new: true })
-      .then(function(response) {
-        console.log("newResponse", response);
-        res.json(response);
-      })
-      .catch(function(err) {
-        console.log(err);
-      });
+    function userInfoUpdating(req) {
+      User.findByIdAndUpdate(req.body.id, req.body, { new: true })
+        .then(function(response) {
+          console.log("newResponse", response);
+          res.json(response);
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+    }
   });
 };

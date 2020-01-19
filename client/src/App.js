@@ -7,7 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import UserContext from "./context/UserContext";
 import Mainpage from "./pages/Main";
 import Viewer from "./pages/Viewer";
-import UpdateForm from "./components/UpdateProfile";
+import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import "./app.scss";
 
 class App extends Component {
@@ -45,7 +45,7 @@ class App extends Component {
               {/* <Route exact path="/map" component={EventMap} /> */}
               {/* <Route exact path="/event" component={EventForm} /> */}
               <Route exact path="/viewer" component={Viewer} />
-              <ProtectedRoute exact path="/profile" component={UpdateForm} />
+              <ProtectedRoute exact path="/profile" component={UpdateProfile} />
               <Route path="/" user={this.state.user} component={LoginPage} />
             </Switch>
           </UserContext.Provider>
