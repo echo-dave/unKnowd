@@ -8,7 +8,6 @@ function Auth() {
       .then(response => {
         localStorage.setItem("token", response.data.token);
         cb(response.data);
-        // alert("Welcome back! " + response.data.email);
         window.location = "/mainpage";
       })
       .catch(function(err) {
@@ -26,32 +25,11 @@ function Auth() {
     axios
       .post("/api/signup", userData)
       .then(function(data) {
-        // console.log("userData", userData);
         logIn(email, password, cb);
         console.log(data);
       })
       .catch(function(err) {
         console.log(err.response);
-      });
-  }
-
-  function event(title, description, address, lat, lon, cb) {
-    console.log("Event Created");
-    axios
-      .post("/api/EventForm", {
-        title: title,
-        description: description,
-        address: address,
-        lat: lat,
-        lon: lon
-      })
-      .then(function(data) {
-        console.log(data);
-        alert("Success!");
-        window.location = "/mainpage";
-      })
-      .catch(function(err) {
-        console.log(err);
       });
   }
 
@@ -78,8 +56,7 @@ function Auth() {
     logIn,
     logOut,
     getToken,
-    register,
-    event
+    register
   };
 }
 

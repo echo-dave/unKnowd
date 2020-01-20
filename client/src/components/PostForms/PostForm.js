@@ -13,7 +13,6 @@ class PostForm extends Component {
   };
 
   componentDidMount() {
-    console.log("post form user", this.props.userState);
     this.clearImageSelect = clearImageSelect.bind(this);
   }
   // socket = socketIOClient();
@@ -22,14 +21,14 @@ class PostForm extends Component {
     this.clearImageSelect("photos");
   };
 
-  //this gets the value and name of the inputs that triggered the change
+  //this gets the value and name of the inputs that triggered the changes
   changeHandler = e => {
     const { name, value } = e.target;
     this.setState({
       [name]: value
     });
   };
-
+  //specifically handles file selection changes
   fileChangeHandler = event => {
     var file = event.target.files[0];
     // console.log(file);

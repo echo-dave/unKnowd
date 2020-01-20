@@ -1,11 +1,12 @@
 import React from "react";
 import axios from "axios";
+import UserContext from "../context/UserContext";
 import Post from "../components/Post";
 import Event from "../components/Event";
 import Postform from "../components/PostForms/PostForm";
 import authenticatedAxios from "../utils/AuthenticatedAxios";
 import EventMap from "../components/Map";
-import socketIOClient from "socket.io-client";
+import io from "socket.io-client";
 import EventForm from "../components/PostForms/EventForm";
 import Auth from "../utils/Auth";
 import Nav from "../components/Nav/Nav";
@@ -19,7 +20,8 @@ class Mainpage extends React.Component {
     postFormShow: false,
     eventFormShow: false,
     burgerActive: false,
-    mapShow: true
+    mapShow: true,
+    comment: false
   };
 
   setUser = user => {
@@ -39,7 +41,7 @@ class Mainpage extends React.Component {
 
     this.getPosts();
     this.getEvents();
-    const socket = socketIOClient();
+    const socket = io();
     // socket.on("new post", data => console.log(data));
 
     socket.on("new post", post => {
@@ -55,6 +57,20 @@ class Mainpage extends React.Component {
         events: [event, ...this.state.events]
       });
     });
+
+    socket.on("new comment", comment => {
+      if (comment.post) {
+        // console.log("post comment", comment);
+        // this.setState({ comment: !this.state.comment });
+        this.getPosts();
+      }
+      if (comment.event) {
+        // console.log("evemt comment", comment);
+        // this.setState({ comment: !this.state.comment });
+        this.getEvents();
+      }
+      console.log("done");
+    });
   }
 
   // componentWillUnmount() {
@@ -68,7 +84,7 @@ class Mainpage extends React.Component {
         // console.log(res);
         this.setState({ posts: res.data });
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err.resoponse));
   };
 
   getEvents = () => {
@@ -78,7 +94,7 @@ class Mainpage extends React.Component {
         this.setState({ events: res.data });
         // console.log(this.state.events);
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err.resoponse));
   };
 
   togglePostEventViews = () => {
@@ -181,7 +197,7 @@ class Mainpage extends React.Component {
                     key={event._id}
                     eventData={event}
                     eventShow={this.state.eventShow}
-                    userState={this.state.user}
+                    userState={this.context.user}
                     replyCount={event.replies.length}
                   />
                 ))}
@@ -196,5 +212,5 @@ class Mainpage extends React.Component {
     );
   }
 }
-
+Mainpage.contextType = UserContext;
 export default Mainpage;

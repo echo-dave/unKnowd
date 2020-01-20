@@ -71,6 +71,7 @@ class PostForm extends Component {
     })
       .then(() => {
         this.props.closeForm();
+        this.props.refreshComments();
       })
       .catch(err => console.log(err));
   };
