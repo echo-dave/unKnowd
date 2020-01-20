@@ -32,7 +32,7 @@ class Post extends Component {
     axios
       .get("/api/getComments", { params: { _id: this.props.postData._id } })
       .then(comments => {
-        console.log("comment.data", comments.data);
+        // console.log("comment.data", comments.data);
         this.setState({
           comments: comments.data,
           replyCount: comments.data.length
@@ -81,8 +81,9 @@ class Post extends Component {
           <CommentingButtons
             dataId={this.props.postData._id}
             toggleComments={this.toggleComments}
+            //changed from state to props
             toggleReply={this.toggleReply}
-            replyCount={this.state.replyCount}
+            replyCount={this.props.replyCount}
           />
         </div>
         {this.state.toggleReply ? (
@@ -94,7 +95,8 @@ class Post extends Component {
           />
         ) : null}
         {this.state.readComments
-          ? this.state.comments.map(comment => (
+          ? // ? this.state.comments.map(comment => (
+            this.props.postData.replies.map(comment => (
               <CommentDisplay key={comment.dateCreated} comments={comment} />
             ))
           : null}
