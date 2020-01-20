@@ -37,7 +37,10 @@ class Event extends Component {
       })
       .then(comments => {
         // console.log("comment", comments.data);
-        this.setState({ comments: comments.data });
+        this.setState({
+          comments: comments.data,
+          replyCount: comments.data.length
+        });
         // console.log(this.state.comments);
       });
   };

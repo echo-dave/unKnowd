@@ -10,13 +10,13 @@ class CommentingButtons extends Component {
     this.setState({
       loggedIn: Auth.isLoggedIn()
     });
-    setTimeout(
-      () =>
-        this.setState({
-          replyCount: this.props.replyCount
-        }),
-      100
-    );
+    // setTimeout(
+    //   () =>
+    //     this.setState({
+    //       replyCount: this.props.replyCount
+    //     }),
+    //   100
+    // );
     // setTimeout(() => console.log("login State", this.state.loggedIn), 500);
   }
 

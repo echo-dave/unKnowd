@@ -350,7 +350,8 @@ module.exports = function(app, io) {
         { new: true }
       ).then(function(newReply) {
         // console.log("newPostReply", newReply.replies);
-        io.sockets.emit("new post reply", newReply.replies);
+        // io.sockets.emit("new post reply", newReply.replies);
+        io.sockets.emit("new comment", { post: newReply.replies });
         console.log("done");
 
         res.end();
@@ -392,8 +393,9 @@ module.exports = function(app, io) {
       ).then(function(newReply) {
         console.log("newEventReply", newReply);
 
-        // io.sockets.emit("new post reply", newReply);
-        res.json(newReply);
+        io.sockets.emit("new post reply", newReply);
+        // res.json(newReply);
+        res.end();
       });
     }
   });
@@ -408,6 +410,8 @@ module.exports = function(app, io) {
         delete userData.password;
 
         console.log("userData", userData);
+        io.sockets.emit("new comment", { event: newReply.replies });
+
         res.json(userData);
       })
       .catch(function(err) {

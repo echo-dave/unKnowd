@@ -6,7 +6,7 @@ import Event from "../components/Event";
 import Postform from "../components/PostForms/PostForm";
 import authenticatedAxios from "../utils/AuthenticatedAxios";
 import EventMap from "../components/Map";
-import socketIOClient from "socket.io-client";
+import io from "socket.io-client";
 import EventForm from "../components/PostForms/EventForm";
 import Auth from "../utils/Auth";
 import Nav from "../components/Nav/Nav";
@@ -20,7 +20,8 @@ class Mainpage extends React.Component {
     postFormShow: false,
     eventFormShow: false,
     burgerActive: false,
-    mapShow: true
+    mapShow: true,
+    comment: false
   };
 
   setUser = user => {
@@ -40,7 +41,7 @@ class Mainpage extends React.Component {
 
     this.getPosts();
     this.getEvents();
-    const socket = socketIOClient();
+    const socket = io();
     // socket.on("new post", data => console.log(data));
 
     socket.on("new post", post => {
@@ -55,6 +56,20 @@ class Mainpage extends React.Component {
       this.setState({
         events: [event, ...this.state.events]
       });
+    });
+
+    socket.on("new comment", comment => {
+      if (comment.post) {
+        // console.log("post comment", comment);
+        // this.setState({ comment: !this.state.comment });
+        this.getPosts();
+      }
+      if (comment.event) {
+        // console.log("evemt comment", comment);
+        // this.setState({ comment: !this.state.comment });
+        this.getEvents();
+      }
+      console.log("done");
     });
   }
 
