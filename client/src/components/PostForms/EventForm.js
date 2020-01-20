@@ -49,13 +49,6 @@ class EventForm extends Component {
     });
   };
 
-  // removeImage = () => {
-  //   this.setState({
-  //     img: ""
-  //   });
-  //   document.querySelector("#imageSelect").value = "";
-  // };
-
   submitHandler = e => {
     e.preventDefault();
 
@@ -97,9 +90,9 @@ class EventForm extends Component {
     }
 
     // map stuff
-    axios.get("api/all").then(function(data2) {
-      console.log(data2);
-    });
+    // axios.get("api/maps").then(function(data2) {
+    //   console.log(data2);
+    // });
   };
 
   render() {

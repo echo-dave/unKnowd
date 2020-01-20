@@ -101,16 +101,6 @@ module.exports = function(app, io) {
       }
     });
   });
-  //maps related api call
-  app.get("/api/all", function(req, res) {
-    Event.find({})
-      .then(function(result) {
-        res.json(result);
-      })
-      .catch(function(err) {
-        res.status(500).json({ error: err.message });
-      });
-  });
 
   app.get("/api/protected", authWare, function(req, res) {
     const user = req.user;
@@ -216,6 +206,30 @@ module.exports = function(app, io) {
         // res.json(data);
       });
     }
+  });
+
+  //maps related api call
+  // app.get("/api/all", function(req, res) {
+  //   Event.find({})
+  //     .then(function(result) {
+  //       res.json(result);
+  //     })
+  //     .catch(function(err) {
+  //       res.status(500).json({ error: err.message });
+  //     });
+  // });
+
+  app.get("/api/maps", function(req, res) {
+    let currentDate = new Date();
+    // console.log(currentDate);
+    db.Event.find({
+      "date.start": { $gte: new Date(currentDate) }
+    })
+      .then(mapEvents => res.json(mapEvents))
+      .catch(err => {
+        console.log(err);
+        res.json(err);
+      });
   });
 
   app.get("/api/events", function(req, res) {

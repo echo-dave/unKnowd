@@ -12,8 +12,8 @@ class MapContainer extends Component {
     };
   }
   componentDidMount() {
-    axios.get("/api/all").then(data => {
-      console.log(data.data);
+    axios.get("/api/maps").then(data => {
+      // console.log(data.data);
       this.setState({ events: data.data });
     });
   }
