@@ -133,12 +133,18 @@ module.exports = function(app, io) {
       .sort({ dateCreated: -1 })
       .limit(20)
       .populate("creator")
+      .populate("replies.creator")
       .then(posts => {
-        // console.log("get posts", posts);
+        console.log("get posts", posts);
         for (let i = 0; i < posts.length; i++) {
           posts[i].creator.email = "";
           posts[i].creator.password = "";
           posts[i].creator.lastName = "";
+          for (j = 0; j < posts[i].replies.length; i++) {
+            posts[i].replies[j].creator.email = "";
+            posts[i].replies[j].creator.password = "";
+            posts[i].replies[j].creator.lastName = "";
+          }
         }
         // console.log("trimmed", posts[0]);
 
@@ -146,6 +152,7 @@ module.exports = function(app, io) {
       })
       .catch(err => console.log(err));
   });
+
   app.post("/api/post", function(req, res) {
     console.log(req.body);
     console.log(req.files);

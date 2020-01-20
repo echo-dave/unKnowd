@@ -15,15 +15,15 @@ class Post extends Component {
     replyCount: ""
   };
 
-  componentDidMount = () => {
-    setTimeout(() => {
-      this.setState({
-        user: this.props.userState,
-        comments: this.props.postData.replies,
-        replyCount: this.props.replyCount
-      });
-    }, 50);
-  };
+  // componentDidMount = () => {
+  //   setTimeout(() => {
+  //     this.setState({
+  //       // user: this.props.userState,
+  //       // comments: this.props.postData.replies,
+  //       // replyCount: this.props.replyCount
+  //     });
+  //   }, 50);
+  // };
 
   getComments = () => {
     // let id = this.getAttribute("data-id");
@@ -88,7 +88,7 @@ class Post extends Component {
         </div>
         {this.state.toggleReply ? (
           <PostReply
-            userState={this.state.user}
+            userState={this.props.userState}
             postId={this.props.postData._id}
             closeForm={this.toggleReply}
             refreshComments={this.refreshComments}

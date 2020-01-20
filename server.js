@@ -32,6 +32,7 @@ const mongoose = require("mongoose");
 db = require("./models");
 mongoose.Promise = Promise;
 const mongoUrl = process.env.MONGODB_URI;
+mongoose.set("useCreateIndex", true);
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true
