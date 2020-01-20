@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import UserContext from "../context/UserContext";
 import Post from "../components/Post";
 import Event from "../components/Event";
 import Postform from "../components/PostForms/PostForm";
@@ -68,7 +69,7 @@ class Mainpage extends React.Component {
         // console.log(res);
         this.setState({ posts: res.data });
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err.resoponse));
   };
 
   getEvents = () => {
@@ -78,7 +79,7 @@ class Mainpage extends React.Component {
         this.setState({ events: res.data });
         // console.log(this.state.events);
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err.resoponse));
   };
 
   togglePostEventViews = () => {
@@ -181,7 +182,7 @@ class Mainpage extends React.Component {
                     key={event._id}
                     eventData={event}
                     eventShow={this.state.eventShow}
-                    userState={this.state.user}
+                    userState={this.context.user}
                     replyCount={event.replies.length}
                   />
                 ))}
@@ -196,5 +197,5 @@ class Mainpage extends React.Component {
     );
   }
 }
-
+Mainpage.contextType = UserContext;
 export default Mainpage;

@@ -22,8 +22,6 @@ class EventForm extends Component {
     };
   }
   componentDidMount() {
-    console.log("post form user", this.props.userState);
-    console.log("creator state", this.state.creator);
     this.clearImageSelect = clearImageSelect.bind(this);
   }
 

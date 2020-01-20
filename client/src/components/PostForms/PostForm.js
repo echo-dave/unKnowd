@@ -13,7 +13,6 @@ class PostForm extends Component {
   };
 
   componentDidMount() {
-    console.log("post form user", this.props.userState);
     this.clearImageSelect = clearImageSelect.bind(this);
   }
   // socket = socketIOClient();
