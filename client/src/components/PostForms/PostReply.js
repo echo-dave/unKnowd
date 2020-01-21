@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import clearImageSelect from "../../utils/ClearImageSelect";
+import { clearImageSelect, fileChange } from "../../utils/ClearImageSelect";
+import PhotoInput from "../PhotoInput/PhotoInput";
 import "./styles.scss";
 
 class PostForm extends Component {
@@ -18,7 +19,9 @@ class PostForm extends Component {
       parrentComment: this.props.postId
     });
     this.clearImageSelect = clearImageSelect.bind(this);
+    this.fileChange = fileChange.bind(this);
   }
+  fileChangeHandler = event => this.fileChange(event, "photo");
 
   removeImage = () => this.clearImageSelect("photos");
 
@@ -113,7 +116,13 @@ class PostForm extends Component {
               onChange={this.changeHandler}
             />
           </div>
-          <div className="field">
+          <PhotoInput
+            fileChangeHandler={this.fileChangeHandler}
+            removeImage={this.removeImage}
+            fileName="photos"
+            photoFileName={this.state.photos.name}
+          />
+          {/* <div className="field">
             <label className="label" htmlFor="photo">
               Photo
             </label>
@@ -136,7 +145,7 @@ class PostForm extends Component {
                 onChange={this.fileChangeHandler}
               />
             </div>
-          </div>
+          </div> */}
           <button
             id="replyButton"
             className="button is-primary is-small"

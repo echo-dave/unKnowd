@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import Auth from "../utils/Auth";
-import clearImageSelect from "../utils/ClearImageSelect";
+import { clearImageSelect } from "../utils/ClearImageSelect";
+import PhotoInput from "./PhotoInput/PhotoInput";
 
 class SignUpForm extends Component {
   static contextType = UserContext;
@@ -109,8 +110,13 @@ class SignUpForm extends Component {
             />
           </div>
         </div>
-
-        <div className="field">
+        <PhotoInput
+          fileName="photo"
+          fileChangeHandler={this.fileChangeHandler}
+          photoFileName={this.state.photo.name}
+          removeImage={this.removeImage}
+        />
+        {/* <div className="field">
           <label className="label" htmlFor="photo">
             Photo
           </label>
@@ -127,7 +133,7 @@ class SignUpForm extends Component {
               onChange={this.fileChangeHandler}
             />
           </div>
-        </div>
+        </div> */}
         <div className="field">
           <label className="label" htmlFor="password">
             Password (min of 8 characters)

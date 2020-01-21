@@ -161,7 +161,8 @@ h1#title {
   // border: 2px solid white;
   margin: 10px;
   padding: 10px;
-  background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
+  background-color: $commentGrey;
+  // background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
   // background: rgb(214, 214, 214);
   position: absolute;
   // top: 1.3rem;
@@ -191,6 +192,10 @@ h1#title {
     border-radius: 0 0.4rem 0 0;
     width: 100%;
   }
+}
+
+#newUserForm {
+  width: 24rem;
 }
 
 @media only screen and (max-width: 768px) {

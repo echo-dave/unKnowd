@@ -3,7 +3,8 @@ import Nav from "../../components/Nav/Nav";
 import authenticatedAxios from "../../utils/AuthenticatedAxios";
 import UserDisplay from "../../components/UserDisplay/UserDisplay";
 import Auth from "../../utils/Auth";
-import clearImageSelect from "../../utils/ClearImageSelect";
+import { clearImageSelect, fileChange } from "../../utils/ClearImageSelect";
+import PhotoInput from "../../components/PhotoInput/PhotoInput";
 import "./UpdateProfile.scss";
 // import Auth from "../utils/Auth";
 
@@ -52,7 +53,10 @@ class UpdateProfile extends Component {
       });
 
     this.clearImageSelect = clearImageSelect.bind(this);
+    this.fileChange = fileChange.bind(this);
   }
+
+  fileChangeHandler = event => this.fileChange(event, "photo");
 
   removeImage = () => {
     this.clearImageSelect("photo");
@@ -63,13 +67,13 @@ class UpdateProfile extends Component {
     this.setState({ [name]: value });
   };
 
-  fileChangeHandler = event => {
-    var file = event.target.files[0];
-    // console.log(file);
-    this.setState({
-      photo: file
-    });
-  };
+  // fileChangeHandler = event => {
+  //   var file = event.target.files[0];
+  //   // console.log(file);
+  //   this.setState({
+  //     photo: file
+  //   });
+  // };
 
   logout = () => {
     Auth.logOut(() => (window.location = "/"));
@@ -205,8 +209,13 @@ class UpdateProfile extends Component {
                     />
                   </div>
                 </div>
-
-                <div className="field">
+                <PhotoInput
+                  fileChangeHandler={this.fileChangeHandler}
+                  removeImage={this.removeImage}
+                  fileName="photo"
+                  photoFileName={this.state.photo.name}
+                />
+                {/* <div className="field">
                   <label className="label" htmlFor="photo">
                     Photo
                   </label>
@@ -224,7 +233,7 @@ class UpdateProfile extends Component {
                       onChange={this.fileChangeHandler}
                     />
                   </div>
-                </div>
+                </div> */}
 
                 <div className="field">
                   <label className="label" htmlFor="newPassword">

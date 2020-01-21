@@ -2,7 +2,8 @@ import React, { Component } from "react";
 // import eventPost from "../utils/EventPost";
 import axios from "axios";
 import DatePicker from "react-datepicker";
-import clearImageSelect from "../../utils/ClearImageSelect";
+import { clearImageSelect, fileChange } from "../../utils/ClearImageSelect";
+import PhotoInput from "../PhotoInput/PhotoInput";
 import "react-datepicker/dist/react-datepicker.css";
 import "./styles.scss";
 
@@ -23,7 +24,9 @@ class EventForm extends Component {
   }
   componentDidMount() {
     this.clearImageSelect = clearImageSelect.bind(this);
+    this.fileChange = fileChange.bind(this);
   }
+  fileChangeHandler = event => this.fileChange(event, "photo");
 
   removeImage = () => {
     this.clearImageSelect("img");
@@ -132,6 +135,7 @@ class EventForm extends Component {
           <DatePicker
             selected={this.state.start}
             onChange={this.handleDateChange}
+            className="input"
           />
 
           <div className="field">
@@ -148,7 +152,14 @@ class EventForm extends Component {
               />
             </div>
           </div>
-          <div className="field">
+          <PhotoInput
+            fileChangeHandler={this.fileChangeHandler}
+            removeImage={this.removeImage}
+            fileName="img"
+            photoFileName={this.state.img.name}
+          />
+
+          {/* <div className="field">
             <label className="label" htmlFor="img">
               Photo
             </label>
@@ -171,7 +182,7 @@ class EventForm extends Component {
                 onChange={this.fileChangeHandler}
               />
             </div>
-          </div>
+          </div> */}
 
           <button
             id="submitEvent"
