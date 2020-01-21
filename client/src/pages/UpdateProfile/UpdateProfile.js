@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Nav from "../../components/Nav/Nav";
-import axios from "axios";
 import authenticatedAxios from "../../utils/AuthenticatedAxios";
 import UserDisplay from "../../components/UserDisplay/UserDisplay";
 import Auth from "../../utils/Auth";
