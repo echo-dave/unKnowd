@@ -71,7 +71,7 @@ class PostForm extends Component {
     })
       .then(() => {
         this.props.closeForm();
-        this.props.refreshComments();
+        // this.props.refreshComments();
       })
       .catch(err => console.log(err));
   };
@@ -86,7 +86,7 @@ class PostForm extends Component {
       headers: { "Content-Type": "multipart/form-data" }
     })
       .then(() => {
-        this.props.refreshComments();
+        // this.props.refreshComments();
         this.props.closeForm();
       })
       .catch(err => console.log(err));

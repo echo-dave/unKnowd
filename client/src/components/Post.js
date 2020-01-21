@@ -15,15 +15,15 @@ class Post extends Component {
     replyCount: ""
   };
 
-  componentDidMount = () => {
-    setTimeout(() => {
-      this.setState({
-        user: this.props.userState,
-        comments: this.props.postData.replies,
-        replyCount: this.props.replyCount
-      });
-    }, 50);
-  };
+  // componentDidMount = () => {
+  //   setTimeout(() => {
+  //     this.setState({
+  //       // user: this.props.userState,
+  //       // comments: this.props.postData.replies,
+  //       // replyCount: this.props.replyCount
+  //     });
+  //   }, 50);
+  // };
 
   getComments = () => {
     // let id = this.getAttribute("data-id");
@@ -32,7 +32,7 @@ class Post extends Component {
     axios
       .get("/api/getComments", { params: { _id: this.props.postData._id } })
       .then(comments => {
-        console.log("comment.data", comments.data);
+        // console.log("comment.data", comments.data);
         this.setState({
           comments: comments.data,
           replyCount: comments.data.length
@@ -81,20 +81,22 @@ class Post extends Component {
           <CommentingButtons
             dataId={this.props.postData._id}
             toggleComments={this.toggleComments}
+            //changed from state to props
             toggleReply={this.toggleReply}
-            replyCount={this.state.replyCount}
+            replyCount={this.props.replyCount}
           />
         </div>
         {this.state.toggleReply ? (
           <PostReply
-            userState={this.state.user}
+            userState={this.props.userState}
             postId={this.props.postData._id}
             closeForm={this.toggleReply}
             refreshComments={this.refreshComments}
           />
         ) : null}
         {this.state.readComments
-          ? this.state.comments.map(comment => (
+          ? // ? this.state.comments.map(comment => (
+            this.props.postData.replies.map(comment => (
               <CommentDisplay key={comment.dateCreated} comments={comment} />
             ))
           : null}

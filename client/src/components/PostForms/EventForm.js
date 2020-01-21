@@ -56,7 +56,7 @@ class EventForm extends Component {
           `https://api.opencagedata.com/geocode/v1/json?q=${this.state.address}&key=73b2bdf763ad428694bf092b08ad995d&language=es&pretty=1`
         )
         .then(data => {
-          console.log(data);
+          // console.log(data);
           this.setState({
             lat: data.data.results[0].geometry.lat,
             lon: data.data.results[0].geometry.lng

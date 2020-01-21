@@ -133,12 +133,17 @@ module.exports = function(app, io) {
       .sort({ dateCreated: -1 })
       .limit(20)
       .populate("creator")
+      .populate("replies.creator")
       .then(posts => {
-        // console.log("get posts", posts);
         for (let i = 0; i < posts.length; i++) {
           posts[i].creator.email = "";
           posts[i].creator.password = "";
           posts[i].creator.lastName = "";
+          for (let j = 0; j < posts[i].replies.length; i++) {
+            posts[i].replies[j].creator.email = "";
+            posts[i].replies[j].creator.password = "";
+            posts[i].replies[j].creator.lastName = "";
+          }
         }
         // console.log("trimmed", posts[0]);
 
@@ -146,6 +151,7 @@ module.exports = function(app, io) {
       })
       .catch(err => console.log(err));
   });
+
   app.post("/api/post", function(req, res) {
     console.log(req.body);
     console.log(req.files);
@@ -238,15 +244,26 @@ module.exports = function(app, io) {
     db.Event.find({
       "date.start": { $gte: new Date(currentDate) }
     })
+      .sort({ "date.start": 1 })
       .populate("creator")
+      .populate("replies.creator")
       .then(events => {
         for (let i = 0; i < events.length; i++) {
           events[i].creator.email = "";
           events[i].creator.password = "";
           events[i].creator.lastName = "";
+
+          for (let j = 0; j < events[i].replies.length; j++) {
+            events[i].replies[j].creator.email = "";
+            events[i].replies[j].creator.password = "";
+            events[i].replies[j].creator.lastName = "";
+          }
         }
+        console.log("events", events);
+
         res.json(events);
-      });
+      })
+      .catch(err => console.log(err));
   });
 
   //we need to have the user _id to insert into the event as well as getting the user name and user photo from the User collection
@@ -392,8 +409,8 @@ module.exports = function(app, io) {
         { $push: { replies: req.body } }
       ).then(function(newReply) {
         console.log("newEventReply", newReply);
-
-        io.sockets.emit("new post reply", newReply);
+        // io.sockets.emit("new post reply", newReply);
+        io.sockets.emit("new comment", { event: newReply.replies });
         // res.json(newReply);
         res.end();
       });

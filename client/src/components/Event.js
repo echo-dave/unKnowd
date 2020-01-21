@@ -11,21 +11,21 @@ class Event extends Component {
     comments: [],
     toggleReply: false,
     user: "",
-    replyCount: 0
+    replyCount: ""
   };
-  componentDidMount() {
-    // console.log("eventUser", this.props.eventData);
-    this.setState({ user: this.props.userState });
-    setTimeout(
-      () =>
-        this.setState({
-          comments: this.props.eventData.replies,
-          replyCount: this.props.replyCount
-        }),
-      100
-    );
-    // setTimeout(() => console.log("props.eventData", this.props.eventData), 500);
-  }
+  // componentDidMount() {
+  //   // console.log("eventUser", this.props.eventData);
+  //   this.setState({ user: this.props.userState });
+  //   setTimeout(
+  //     () =>
+  //       this.setState({
+  //         comments: this.props.eventData.replies,
+  //         replyCount: this.props.replyCount
+  //       }),
+  //     100
+  //   );
+  //   // setTimeout(() => console.log("props.eventData", this.props.eventData), 500);
+  // }
 
   getComments = () => {
     // let id = this.getAttribute("data-id");
@@ -67,7 +67,8 @@ class Event extends Component {
       description,
       date,
       creator,
-      _id
+      _id,
+      replies
     } = this.props.eventData;
     return (
       <div className="event box clearfix" data-attr={_id}>
@@ -90,20 +91,20 @@ class Event extends Component {
             dataId={_id}
             toggleComments={this.toggleComments}
             toggleReply={this.toggleReply}
-            replyCount={this.state.replyCount}
+            replyCount={this.props.replyCount}
           />
         </div>
         {this.state.toggleReply ? (
           <PostReply
-            userState={this.state.user}
+            userState={this.props.userState}
             postId={_id}
             closeForm={this.toggleReply}
             eventShow={this.props.eventShow}
-            refreshComments={this.refreshComments}
+            // refreshComments={this.refreshComments}
           />
         ) : null}
         {this.state.readComments
-          ? this.state.comments.map(comment => (
+          ? replies.map(comment => (
               <CommentDisplay key={comment.dateCreated} comments={comment} />
             ))
           : null}
