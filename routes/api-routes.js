@@ -252,13 +252,15 @@ module.exports = function(app, io) {
           events[i].creator.email = "";
           events[i].creator.password = "";
           events[i].creator.lastName = "";
-          // console.log(events[i].replies);
-          for (let j = 0; j < events[i].replies.length; i++) {
+
+          for (let j = 0; j < events[i].replies.length; j++) {
             events[i].replies[j].creator.email = "";
             events[i].replies[j].creator.password = "";
             events[i].replies[j].creator.lastName = "";
           }
         }
+        console.log("events", events);
+
         res.json(events);
       })
       .catch(err => console.log(err));
@@ -407,8 +409,8 @@ module.exports = function(app, io) {
         { $push: { replies: req.body } }
       ).then(function(newReply) {
         console.log("newEventReply", newReply);
-
-        io.sockets.emit("new post reply", newReply);
+        // io.sockets.emit("new post reply", newReply);
+        io.sockets.emit("new comment", { event: newReply.replies });
         // res.json(newReply);
         res.end();
       });
