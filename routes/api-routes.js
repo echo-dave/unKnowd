@@ -8,10 +8,11 @@ const authWare = require("../middleware/authware");
 // const socket = socketIOClient("http://127.0.0.1:3001");
 const cloud = require("../nodejs/cloudinaryUp");
 const upload = require("../nodejs/upload");
+const bcrypt = require("bcryptjs");
 
 module.exports = function(app, io) {
   app.post("/api/signup", function(req, res) {
-    console.log(req.body, req.files);
+    console.log("signup body", req.body, req.files);
 
     if (req.files != null) {
       console.log("file--------------file");
@@ -259,7 +260,7 @@ module.exports = function(app, io) {
             events[i].replies[j].creator.lastName = "";
           }
         }
-        console.log("events", events);
+        // console.log("events", events);
 
         res.json(events);
       })
@@ -436,6 +437,10 @@ module.exports = function(app, io) {
 
   //post updates to user info via profile page
   app.post("/api/userInfoUpdate", authWare, function(req, res) {
+    console.log("update user", req.body);
+    if (req.body.password) {
+      req.body.password = bcrypt.hashSync(req.body.password, 10);
+    }
     if (req.files != null) {
       console.log("file--------------file");
       console.log(req.files);

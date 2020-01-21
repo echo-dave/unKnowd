@@ -7,8 +7,7 @@ function Auth() {
       .post("/api/authenticate", { email: email, password: password })
       .then(response => {
         localStorage.setItem("token", response.data.token);
-        cb(response.data);
-        window.location = "/mainpage";
+        cb(response);
       })
       .catch(function(err) {
         console.log(err.response);
