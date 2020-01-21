@@ -187,28 +187,6 @@ h1#title {
   }
 }
 
-.comments {
-  background-color: $commentGrey;
-}
-
-.commentWrap {
-  margin-top: 1.5rem;
-}
-
-.newPost {
-  background-color: $secondary;
-  color: $light;
-}
-.newPost:hover,
-.newPost:focus {
-  background-color: lighten($secondary, 5.686274509803921);
-  color: white;
-}
-
-#postform {
-  z-index: 10;
-}
-
 @media only screen and (max-width: 768px) {
   #newUserForm {
     max-width: 80vw;

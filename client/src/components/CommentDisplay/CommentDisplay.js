@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import UserDisplay from "../UserDisplay/UserDisplay";
-import "./commentDisplay.css";
+import "./commentDisplay.scss";
 class CommentDisplay extends Component {
   componentDidMount = () => {
     // setTimeout(() => console.log("display", this.props.comments), 500);
