@@ -11,6 +11,7 @@ A community platform to help bring the community back into community. Some commu
 ![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/echo-dave/unKowd)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/echo-dave/unKnowd)
 ![GitHub contributors](https://img.shields.io/github/contributors/echo-dave/unKowd)
+![GitHub](https://img.shields.io/github/license/echo-dave/unKnowd)
 
 ## Technology
 
@@ -38,6 +39,7 @@ As a work in progress here’s what what’s been added:
 - broke out some components in an effort to start code cleanup
 - added a user profile page for updating info - click name / photo top right
 - added signup form validations that were missing
+- realtime comment updating is now working
 
 ![mobile login and posts](readmeImages/loginMobile_posts.jpg)
 ![mobile menu and events](readmeImages/mobileMenu_events.jpg)
