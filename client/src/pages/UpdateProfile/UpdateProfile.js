@@ -19,7 +19,6 @@ class UpdateProfile extends Component {
       info: "",
       user: "",
       currentPassword: "",
-      // new password
       newPassword: "",
       passwordCheck: ""
     };
@@ -111,7 +110,10 @@ class UpdateProfile extends Component {
               email: "",
               firstName: "",
               lastName: "",
-              photo: ""
+              photo: "",
+              currentPassword: "",
+              newPassword: "",
+              passwordCheck: ""
             });
           })
           .catch(function(err) {
