@@ -145,34 +145,46 @@ class UpdateProfile extends Component {
                 <div className="field">
                   <h2>Update your info:</h2>
                   <br />
-                  <h1>First Name</h1>
-                  <input
-                    className="input"
-                    type="text"
-                    name="firstName"
-                    value={this.state.firstName}
-                    onChange={this.changeHandler}
-                  />
+                  <label className="label" htmlFor="firstName">
+                    First Name
+                  </label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="text"
+                      name="firstName"
+                      value={this.state.firstName}
+                      onChange={this.changeHandler}
+                    />
+                  </div>
                 </div>
                 <div className="field">
-                  <h1>Last Name</h1>
-                  <input
-                    className="input"
-                    type="text"
-                    name="lastName"
-                    value={this.state.lastName}
-                    onChange={this.changeHandler}
-                  />
+                  <label className="label" htmlFor="lastName">
+                    Last Name
+                  </label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="text"
+                      name="lastName"
+                      value={this.state.lastName}
+                      onChange={this.changeHandler}
+                    />
+                  </div>
                 </div>
                 <div className="field">
-                  <h1>Email</h1>
-                  <input
-                    className="input"
-                    type="text"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.changeHandler}
-                  />
+                  <label className="label" htmlFor="email">
+                    Email
+                  </label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="text"
+                      name="email"
+                      value={this.state.email}
+                      onChange={this.changeHandler}
+                    />
+                  </div>
                 </div>
 
                 <div className="field">
@@ -220,9 +232,9 @@ class UpdateProfile extends Component {
                   <div className="control">
                     <input
                       className="input"
-                      type="passwordCheck"
-                      name="password"
-                      value={this.state.password}
+                      type="password"
+                      name="passwordCheck"
+                      value={this.state.passwordCheck}
                       onChange={this.changeHandler}
                       required
                       pattern=".{8,}"
