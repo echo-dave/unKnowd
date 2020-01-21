@@ -16,7 +16,7 @@ function Auth() {
   }
 
   function register(userData, cb) {
-    console.log("register");
+    console.log("start register");
     let email = userData.get("email");
     let password = userData.get("password");
     // console.log("login", email, password);
