@@ -64,38 +64,50 @@ class SignUpForm extends Component {
     return (
       <form id="newUserForm" onSubmit={this.submitHandler}>
         <div className="field">
-          <h1>First Name</h1>
-          <input
-            className="input"
-            type="text"
-            name="firstName"
-            value={this.state.first}
-            onChange={this.changeHandler}
-            required
-          />
+          <label className="label" htmlFor="firstName">
+            First Name
+          </label>
+          <div className="control">
+            <input
+              className="input"
+              type="text"
+              name="firstName"
+              value={this.state.first}
+              onChange={this.changeHandler}
+              required
+            />
+          </div>
         </div>
         <div className="field">
-          <h1>Last Name</h1>
-          <input
-            className="input"
-            type="text"
-            name="lastName"
-            value={this.state.last}
-            onChange={this.changeHandler}
-          />
+          <label className="label" htmlFor="lastName">
+            Last Name
+          </label>
+          <div className="control">
+            <input
+              className="input"
+              type="text"
+              name="lastName"
+              value={this.state.last}
+              onChange={this.changeHandler}
+            />
+          </div>
         </div>
 
         <div className="field">
-          <h1>Email</h1>
-          <input
-            className="input"
-            type="text"
-            name="email"
-            value={this.state.email}
-            onChange={this.changeHandler}
-            required
-            pattern=".+@.+\..+"
-          />
+          <label className="label" htmlFor="email">
+            Email
+          </label>
+          <div className="control">
+            <input
+              className="input"
+              type="text"
+              name="email"
+              value={this.state.email}
+              onChange={this.changeHandler}
+              required
+              pattern=".+@.+\..+"
+            />
+          </div>
         </div>
 
         <div className="field">
@@ -117,16 +129,20 @@ class SignUpForm extends Component {
           </div>
         </div>
         <div className="field">
-          <h1>Password (min of 8 characters)</h1>
-          <input
-            className="input"
-            type="password"
-            name="password"
-            value={this.state.password}
-            onChange={this.changeHandler}
-            required
-            pattern=".{8,}"
-          />
+          <label className="label" htmlFor="password">
+            Password (min of 8 characters)
+          </label>
+          <div className="contol">
+            <input
+              className="input"
+              type="password"
+              name="password"
+              value={this.state.password}
+              onChange={this.changeHandler}
+              required
+              pattern=".{8,}"
+            />
+          </div>
         </div>
 
         <button

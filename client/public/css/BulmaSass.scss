@@ -123,6 +123,12 @@ h1#title {
 .event {
   position: relative;
 }
+
+.posts > .post.box:not(:last-child),
+.posts > .event.box:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
 #loginButton,
 #signupButton {
   margin-top: 0.5rem;

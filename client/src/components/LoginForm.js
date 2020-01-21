@@ -51,24 +51,32 @@ class LoginForm extends Component {
       <>
         <form onSubmit={this.submitHandler}>
           <div className="field">
-            <h1>Email</h1>
-            <input
-              className="input"
-              type="text"
-              name="email"
-              value={this.state.email}
-              onChange={this.changeHandler}
-            />
+            <label className="label" htmlFor="email">
+              Email
+            </label>
+            <div className="control">
+              <input
+                className="input"
+                type="text"
+                name="email"
+                value={this.state.email}
+                onChange={this.changeHandler}
+              />
+            </div>
           </div>
           <div className="field">
-            <h1>Password</h1>
-            <input
-              className="input"
-              type="password"
-              name="password"
-              value={this.state.password}
-              onChange={this.changeHandler}
-            />
+            <label className="label" htmlFor="password">
+              Password
+            </label>
+            <div className="control">
+              <input
+                className="input"
+                type="password"
+                name="password"
+                value={this.state.password}
+                onChange={this.changeHandler}
+              />
+            </div>
           </div>
           <button
             id="loginButton"
