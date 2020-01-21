@@ -18,7 +18,11 @@ class UpdateProfile extends Component {
       lastName: "",
       photo: "",
       info: "",
-      user: ""
+      user: "",
+      currentPassword: "",
+      // new password
+      password: "",
+      passwordCheck: ""
     };
   }
 
@@ -76,7 +80,7 @@ class UpdateProfile extends Component {
   submitHandler = e => {
     e.preventDefault();
 
-    //bild data set to update
+    //build data set to update
     let updatingUser = new FormData();
     if (this.state.email) updatingUser.append("email", this.state.email);
     if (this.state.firstName)
@@ -188,6 +192,60 @@ class UpdateProfile extends Component {
                       type="file"
                       // value={this.state.photo}
                       onChange={this.fileChangeHandler}
+                    />
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label className="label" htmlFor="password">
+                    New Password
+                  </label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="password"
+                      name="password"
+                      value={this.state.password}
+                      onChange={this.changeHandler}
+                      required
+                      pattern=".{8,}"
+                      placeholder="min 8 chars"
+                    />
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label className="label" htmlFor="passwordCheck">
+                    New Password Again
+                  </label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="passwordCheck"
+                      name="password"
+                      value={this.state.password}
+                      onChange={this.changeHandler}
+                      required
+                      pattern=".{8,}"
+                      placeholder="min 8 chars"
+                    />
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label className="label" htmlFor="currentPassword">
+                    Current Password
+                  </label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="password"
+                      name="currentPassword"
+                      value={this.state.currentPassword}
+                      onChange={this.changeHandler}
+                      required
+                      pattern=".{8,}"
+                      placeholder="min 8 chars"
                     />
                   </div>
                 </div>

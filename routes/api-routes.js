@@ -123,7 +123,7 @@ module.exports = function(app, io) {
         firstName: dbUser.firstName,
         photo: dbUser.photo
       };
-      console.log(dbUser);
+      // console.log("dbuser", dbUser);
       res.json(dbUser);
     });
   });
@@ -419,20 +419,18 @@ module.exports = function(app, io) {
 
   //get user info for profile page
   app.get("/api/userInfo", authWare, function(req, res) {
-    console.log("request", req.user._id);
+    // console.log("request", req.user._id);
 
     User.findById(req.user._id)
       .then(function(data) {
         let userData = data;
         delete userData.password;
 
-        console.log("userData", userData);
-        io.sockets.emit("new comment", { event: newReply.replies });
-
+        // console.log("userData", userData);
         res.json(userData);
       })
       .catch(function(err) {
-        console.log("err", err.response);
+        console.log("err", err);
       });
   });
 
