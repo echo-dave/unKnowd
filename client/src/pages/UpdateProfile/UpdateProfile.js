@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Nav from "../../components/Nav/Nav";
-import axios from "axios";
 import authenticatedAxios from "../../utils/AuthenticatedAxios";
 import UserDisplay from "../../components/UserDisplay/UserDisplay";
 import Auth from "../../utils/Auth";
@@ -18,7 +17,11 @@ class UpdateProfile extends Component {
       lastName: "",
       photo: "",
       info: "",
-      user: ""
+      user: "",
+      currentPassword: "",
+      // new password
+      newPassword: "",
+      passwordCheck: ""
     };
   }
 
@@ -41,9 +44,9 @@ class UpdateProfile extends Component {
     authenticatedAxios
       .get("/api/userInfo", this.state.user.id)
       .then(response => {
-        console.log(response);
+        // console.log(response);
         this.setState({ info: response.data });
-        console.log(this.state.info);
+        // console.log(this.state.info);
       })
       .catch(function(error) {
         console.log(error.response);
@@ -76,32 +79,49 @@ class UpdateProfile extends Component {
   submitHandler = e => {
     e.preventDefault();
 
-    //bild data set to update
-    let updatingUser = new FormData();
-    if (this.state.email) updatingUser.append("email", this.state.email);
-    if (this.state.firstName)
-      updatingUser.append("firstName", this.state.firstName);
-    if (this.state.lastName)
-      updatingUser.append("lastName", this.state.lastName);
-    if (this.state.photo) updatingUser.append("photo", this.state.photo);
-    updatingUser.append("id", this.state.user.id);
+    //build data set to update
 
-    //authenticated posting of user updates
-    authenticatedAxios
-      .post("/api/userInfoUpdate", updatingUser)
-      .then(updatedInfo => {
-        console.log(updatedInfo.data);
-        this.setState({ info: updatedInfo.data });
-        this.setState({
-          email: "",
-          firstName: "",
-          lastName: "",
-          photo: ""
-        });
-      })
-      .catch(function(err) {
-        console.log(err.response);
-      });
+    Auth.logIn(this.state.info.email, this.state.currentPassword, response => {
+      console.log(response.status);
+
+      if (response.status === 200) {
+        console.log("initial auth ok");
+
+        let updatingUser = new FormData();
+        if (this.state.email) updatingUser.append("email", this.state.email);
+        if (this.state.firstName)
+          updatingUser.append("firstName", this.state.firstName);
+        if (this.state.lastName)
+          updatingUser.append("lastName", this.state.lastName);
+        if (this.state.photo) updatingUser.append("photo", this.state.photo);
+        updatingUser.append("id", this.state.user.id);
+        if (
+          this.state.newPassword === this.state.passwordCheck &&
+          this.state.newPassword != ""
+        )
+          updatingUser.append("password", this.state.newPassword);
+
+        //authenticated posting of user updates
+        authenticatedAxios
+          .post("/api/userInfoUpdate", updatingUser)
+          .then(updatedInfo => {
+            console.log(updatedInfo.data);
+            this.setState({ info: updatedInfo.data });
+            this.setState({
+              email: "",
+              firstName: "",
+              lastName: "",
+              photo: ""
+            });
+          })
+          .catch(function(err) {
+            console.log(err.response);
+          });
+      } else if (response.status === 401) {
+        console.log("bad password");
+      }
+      document.querySelector("#profile.container .column").scrollTop = 0;
+    });
   };
 
   render() {
@@ -139,37 +159,49 @@ class UpdateProfile extends Component {
                 className="box"
                 onSubmit={this.submitHandler}
               >
+                <h2>Update your info:</h2>
+                <br />
                 <div className="field">
-                  <h2>Update your info:</h2>
-                  <br />
-                  <h1>First Name</h1>
-                  <input
-                    className="input"
-                    type="text"
-                    name="firstName"
-                    value={this.state.firstName}
-                    onChange={this.changeHandler}
-                  />
+                  <label className="label" htmlFor="firstName">
+                    First Name
+                  </label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="text"
+                      name="firstName"
+                      value={this.state.firstName}
+                      onChange={this.changeHandler}
+                    />
+                  </div>
                 </div>
                 <div className="field">
-                  <h1>Last Name</h1>
-                  <input
-                    className="input"
-                    type="text"
-                    name="lastName"
-                    value={this.state.lastName}
-                    onChange={this.changeHandler}
-                  />
+                  <label className="label" htmlFor="lastName">
+                    Last Name
+                  </label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="text"
+                      name="lastName"
+                      value={this.state.lastName}
+                      onChange={this.changeHandler}
+                    />
+                  </div>
                 </div>
                 <div className="field">
-                  <h1>Email</h1>
-                  <input
-                    className="input"
-                    type="text"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.changeHandler}
-                  />
+                  <label className="label" htmlFor="email">
+                    Email
+                  </label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="text"
+                      name="email"
+                      value={this.state.email}
+                      onChange={this.changeHandler}
+                    />
+                  </div>
                 </div>
 
                 <div className="field">
@@ -188,6 +220,58 @@ class UpdateProfile extends Component {
                       type="file"
                       // value={this.state.photo}
                       onChange={this.fileChangeHandler}
+                    />
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label className="label" htmlFor="newPassword">
+                    New Password
+                  </label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="password"
+                      name="newPassword"
+                      value={this.state.newPassword}
+                      onChange={this.changeHandler}
+                      pattern=".{8,}"
+                      placeholder="min 8 chars"
+                    />
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label className="label" htmlFor="passwordCheck">
+                    New Password Again
+                  </label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="password"
+                      name="passwordCheck"
+                      value={this.state.passwordCheck}
+                      onChange={this.changeHandler}
+                      pattern=".{8,}"
+                      placeholder="min 8 chars"
+                    />
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label className="label" htmlFor="currentPassword">
+                    Current Password
+                  </label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="password"
+                      name="currentPassword"
+                      value={this.state.currentPassword}
+                      onChange={this.changeHandler}
+                      required
+                      pattern=".{8,}"
+                      placeholder="min 8 chars"
                     />
                   </div>
                 </div>

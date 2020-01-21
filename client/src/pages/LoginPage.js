@@ -1,18 +1,40 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import SignUpForm from "../components/SignUpForm";
 import LoginForm from "../components/LoginForm";
+import authenticatedAxios from "../utils/AuthenticatedAxios";
 
 class LoginPage extends React.Component {
   state = {
-    isRegister: false
+    isRegister: false,
+    loggedIn: false
   };
+
+  setUser = user => {
+    this.setState({ user });
+  };
+
+  componentDidMount() {
+    const token = localStorage.getItem("token");
+    if (token) {
+      authenticatedAxios.get("/api/me").then(response => {
+        this.setUser(response.data);
+        if (response.data.id) this.setState({ loggedIn: true });
+        // console.log(this.state.user);
+      });
+    }
+  }
+
   changeForm = () => {
     this.setState({ isRegister: !this.state.isRegister });
   };
+
   render() {
     const { isRegister } = this.state;
     return (
       <div id="wrap">
+        {this.state.loggedIn ? <Redirect to="/mainpage" /> : null}
+
         <nav>
           <h1 id="main-name">UnKnowd</h1>
         </nav>

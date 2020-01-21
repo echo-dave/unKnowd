@@ -10,6 +10,10 @@
 }
 #profile.container {
   max-width: 640px;
+  .column {
+    overflow-y: scroll;
+    height: calc(100vh - 4.4rem);
+  }
 }
 
 #updateInfo {

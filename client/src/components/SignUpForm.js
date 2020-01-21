@@ -48,8 +48,9 @@ class SignUpForm extends Component {
 
     if (email && password && firstName && lastName) {
       Auth.register(userData, response => {
-        this.context.setUser(response);
+        this.context.setUser(response.data);
         this.props.history.push("/");
+        window.location = "/mainpage";
       });
 
       // Auth.register(email, password, firstName, lastName, photo, response => {

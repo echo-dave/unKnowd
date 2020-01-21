@@ -33,10 +33,11 @@ class LoginForm extends Component {
     if (email && password) {
       Auth.logIn(email, password, response => {
         if (response.status === 200) {
-          console.log("submit", response);
-          this.context.setUser(response);
+          // console.log("submit", response.data);
+          this.context.setUser(response.data);
           this.props.history.push("/");
-          console.log(this.state.user);
+          // console.log(this.state.user);
+          window.location = "/mainpage";
         }
         if (response.status === 401) {
           this.badlogin(response.data.msg);
