@@ -237,7 +237,7 @@ module.exports = function(app, io) {
       .then(mapEvents => res.json(mapEvents))
       .catch(err => {
         console.log(err);
-        res.json(err);
+        res.json(err.response);
       });
   });
 
@@ -266,7 +266,10 @@ module.exports = function(app, io) {
 
         res.json(events);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        res.json(err.response);
+      });
   });
 
   //we need to have the user _id to insert into the event as well as getting the user name and user photo from the User collection
@@ -397,7 +400,7 @@ module.exports = function(app, io) {
   });
   //make event comment
   app.post("/api/replyEventComment", function(req, res) {
-    console.log("event req", req.body);
+    // console.log("event req", req.body);
     if (req.files != null) {
       console.log("file--------------file");
       console.log(req.files);
@@ -411,7 +414,7 @@ module.exports = function(app, io) {
         { _id: req.body.commentId },
         { $push: { replies: req.body } }
       ).then(function(newReply) {
-        console.log("newEventReply", newReply);
+        // console.log("newEventReply", newReply);
         // io.sockets.emit("new post reply", newReply);
         io.sockets.emit("new comment", { event: newReply.replies });
         // res.json(newReply);

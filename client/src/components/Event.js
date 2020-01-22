@@ -8,52 +8,13 @@ import CommentingButtons from "./CommentingButtons/CommentingButtons";
 class Event extends Component {
   state = {
     readComments: false,
-    comments: [],
     toggleReply: false,
     user: "",
     replyCount: ""
   };
-  // componentDidMount() {
-  //   // console.log("eventUser", this.props.eventData);
-  //   this.setState({ user: this.props.userState });
-  //   setTimeout(
-  //     () =>
-  //       this.setState({
-  //         comments: this.props.eventData.replies,
-  //         replyCount: this.props.replyCount
-  //       }),
-  //     100
-  //   );
-  //   // setTimeout(() => console.log("props.eventData", this.props.eventData), 500);
-  // }
-
-  getComments = () => {
-    // let id = this.getAttribute("data-id");
-    // setTimeout(() => console.log("id", this.props._id), 200);
-
-    axios
-      .get("/api/getEventComments", {
-        params: { _id: this.props.eventData._id }
-      })
-      .then(comments => {
-        // console.log("comment", comments.data);
-        this.setState({
-          comments: comments.data,
-          replyCount: comments.data.length
-        });
-        // console.log(this.state.comments);
-      });
-  };
-
-  refreshComments = () => {
-    this.getComments();
-  };
 
   toggleComments = () => {
     this.setState({ readComments: !this.state.readComments });
-    this.state.readComments
-      ? (this.setState.comments = [])
-      : this.getComments();
   };
 
   toggleReply = () => {
@@ -63,6 +24,7 @@ class Event extends Component {
   render() {
     const {
       title,
+      address,
       img,
       description,
       date,
@@ -74,6 +36,7 @@ class Event extends Component {
       <div className="event box clearfix" data-attr={_id}>
         <div>
           <h2>{title}</h2>
+          <p>{address}</p>
           <UserDisplay
             firstName={creator.firstName}
             creatorPhoto={creator.photo}

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 // import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import UserDisplay from "../UserDisplay/UserDisplay";
 import UserContext from "../../context/UserContext";
-import { BrowserRouter as Link } from "react-router-dom";
+import { BrowserRouter as Route, Link } from "react-router-dom";
 import "./nav.scss";
 
 //this.context accesses the conextType (UserContext) referenced bottom

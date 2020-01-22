@@ -122,30 +122,6 @@ class PostForm extends Component {
             fileName="photos"
             photoFileName={this.state.photos.name}
           />
-          {/* <div className="field">
-            <label className="label" htmlFor="photo">
-              Photo
-            </label>
-            <div className="control">
-              {!this.state.photos == "" ? (
-                <span
-                  id="imageRemove"
-                  className="imageRemovePopupForms"
-                  onClick={this.removeImage}
-                >
-                  x
-                </span>
-              ) : null}
-              <input
-                id="imageSelect"
-                className="input"
-                name="photo"
-                type="file"
-                // value={this.state.photos}
-                onChange={this.fileChangeHandler}
-              />
-            </div>
-          </div> */}
           <button
             id="replyButton"
             className="button is-primary is-small"

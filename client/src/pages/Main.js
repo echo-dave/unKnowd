@@ -204,7 +204,7 @@ class Mainpage extends React.Component {
           </div>
           {window.innerWidth <= 768 && !this.state.mapShow ? null : (
             <div className="column events">
-              <EventMap />
+              <EventMap events={this.state.events} />
             </div>
           )}
         </div>
