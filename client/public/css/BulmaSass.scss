@@ -34,6 +34,7 @@ h2 {
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
   font-size: 0.85em;
+  white-space: pre-wrap;
 }
 .button.is-small {
   font-size: 1em;
@@ -123,6 +124,12 @@ h1#title {
 .event {
   position: relative;
 }
+
+.posts > .post.box:not(:last-child),
+.posts > .event.box:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
 #loginButton,
 #signupButton {
   margin-top: 0.5rem;
@@ -155,7 +162,8 @@ h1#title {
   // border: 2px solid white;
   margin: 10px;
   padding: 10px;
-  background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
+  background-color: $commentGrey;
+  // background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
   // background: rgb(214, 214, 214);
   position: absolute;
   // top: 1.3rem;
@@ -187,26 +195,8 @@ h1#title {
   }
 }
 
-.comments {
-  background-color: $commentGrey;
-}
-
-.commentWrap {
-  margin-top: 1.5rem;
-}
-
-.newPost {
-  background-color: $secondary;
-  color: $light;
-}
-.newPost:hover,
-.newPost:focus {
-  background-color: lighten($secondary, 5.686274509803921);
-  color: white;
-}
-
-#postform {
-  z-index: 10;
+#newUserForm {
+  width: 24rem;
 }
 
 @media only screen and (max-width: 768px) {

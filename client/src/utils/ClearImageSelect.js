@@ -5,4 +5,12 @@ function clearImageSelect(imageStateName) {
   });
 }
 
-export default clearImageSelect;
+function fileChange(event, photoFileName) {
+  var file = event.target.files[0];
+  // console.log(file);
+  this.setState({
+    [photoFileName]: file
+  });
+}
+
+export { clearImageSelect, fileChange };
