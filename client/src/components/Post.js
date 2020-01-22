@@ -9,43 +9,13 @@ import CommentingButtons from "./CommentingButtons/CommentingButtons";
 class Post extends Component {
   state = {
     readComments: false,
-    comments: [],
     toggleReply: false,
     user: "",
     replyCount: ""
   };
 
-  // componentDidMount = () => {
-  //   setTimeout(() => {
-  //     this.setState({
-  //       // user: this.props.userState,
-  //       // comments: this.props.postData.replies,
-  //       // replyCount: this.props.replyCount
-  //     });
-  //   }, 50);
-  // };
-
-  getComments = () => {
-    // let id = this.getAttribute("data-id");
-    // setTimeout(() => console.log("id", this.props._id), 200);
-
-    axios
-      .get("/api/getComments", { params: { _id: this.props.postData._id } })
-      .then(comments => {
-        // console.log("comment.data", comments.data);
-        this.setState({
-          comments: comments.data,
-          replyCount: comments.data.length
-        });
-        // console.log("comment data", this.state.comments);
-      });
-  };
-
   toggleComments = () => {
     this.setState({ readComments: !this.state.readComments });
-    this.state.readComments
-      ? (this.setState.comments = [])
-      : this.getComments();
   };
 
   toggleReply = () => {

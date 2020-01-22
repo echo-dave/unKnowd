@@ -43,7 +43,7 @@ class LoginPage extends React.Component {
           <div className="columns is-centered is-vcentered is-mobile">
             <div className="column is-narrow box">
               {isRegister ? <SignUpForm /> : <LoginForm />}
-              <a className="" id="login" onClick={this.changeForm}>
+              <a href="#" className="" id="login" onClick={this.changeForm}>
                 {isRegister
                   ? "Already have an account?"
                   : "Sign up for an account"}

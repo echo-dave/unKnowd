@@ -89,11 +89,6 @@ class EventForm extends Component {
           console.log(error);
         });
     }
-
-    // map stuff
-    // axios.get("api/maps").then(function(data2) {
-    //   console.log(data2);
-    // });
   };
 
   render() {
@@ -158,32 +153,6 @@ class EventForm extends Component {
             fileName="img"
             photoFileName={this.state.img.name}
           />
-
-          {/* <div className="field">
-            <label className="label" htmlFor="img">
-              Photo
-            </label>
-            <div className="control">
-              {!this.state.img == "" ? (
-                <span
-                  id="imageRemove"
-                  className="imageRemovePopupForms"
-                  onClick={this.removeImage}
-                >
-                  x
-                </span>
-              ) : null}
-              <input
-                id="imageSelect"
-                className="input"
-                name="img"
-                type="file"
-                // value={this.state.photos}
-                onChange={this.fileChangeHandler}
-              />
-            </div>
-          </div> */}
-
           <button
             id="submitEvent"
             className="button newPost is-small"
