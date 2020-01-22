@@ -79,28 +79,30 @@ module.exports = function(app, io) {
 
   app.post("/api/authenticate", function(req, res) {
     const { email, password } = req.body;
-    User.findOne({ email: email }).then(function(dbUser) {
-      if (!dbUser) {
-        res.status(401).json({ msg: "email or password is incorrect" });
-      }
-      if (dbUser.comparePassword(password)) {
-        const token = jwt.sign(
-          {
-            data: dbUser._id
-          },
-          process.env.SECRET
-        );
+    User.findOne({ email: email })
+      .then(function(dbUser) {
+        if (!dbUser) {
+          res.status(401).json({ msg: "email or password is incorrect" });
+        }
+        if (dbUser.comparePassword(password)) {
+          const token = jwt.sign(
+            {
+              data: dbUser._id
+            },
+            process.env.SECRET
+          );
 
-        res.json({
-          id: dbUser._id,
-          email: dbUser.email,
-          token: token
-        });
-        console.log(email);
-      } else {
-        res.status(401).json({ msg: "email or password incorrect" });
-      }
-    });
+          res.json({
+            id: dbUser._id,
+            email: dbUser.email,
+            token: token
+          });
+          console.log(email);
+        } else {
+          res.status(401).json({ msg: "email or password incorrect" });
+        }
+      })
+      .catch(err => console.log(err));
   });
 
   app.get("/api/protected", authWare, function(req, res) {
