@@ -32,9 +32,9 @@ class Viewer extends React.Component {
     });
   }
 
-  componentWillUnmount() {
-    this.socket.close();
-  }
+  // componentWillUnmount() {
+  //   this.socket.close();
+  // }
 
   getPosts = () => {
     axios
@@ -67,7 +67,7 @@ class Viewer extends React.Component {
             ))}
           </div>
           <div className="column events">
-            <EventMap />
+            <EventMap events={this.state.events} />
           </div>
         </div>
       </div>
