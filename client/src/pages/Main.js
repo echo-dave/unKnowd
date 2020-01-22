@@ -130,7 +130,7 @@ class Mainpage extends React.Component {
   };
 
   toggleMapMobile = () => {
-    if (window.innerWidth < 769 && this.state.mapShow == true) {
+    if (window.innerWidth < 769 && this.state.mapShow === true) {
       document
         .querySelector(".column.posts")
         .setAttribute("style", `height:calc(100vh - 4.3rem)`);
