@@ -39,22 +39,32 @@
 //   color: $light;
 // }
 
-.navbar-item .button {
-  height: 100%;
+.navbar-item > .button {
+  height: 65px;
+  width: 65px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 1em;
+  background: none !important;
+  border: none;
 }
 
 .navbar-item .button:focus {
-  background-color: $primary;
+  // background-color: $primary;
   color: $dark;
+  border: 1px black solid;
+  background-color: none;
 }
 
 .navbar-item .button:hover,
 .navbar-item .button:active {
-  background-color: darken(
-    desaturate($color: $primary, $amount: 100),
-    $amount: 25
-  );
-  color: $light;
+  // background-color: darken(
+  //   desaturate($color: $primary, $amount: 100),
+  //   $amount: 25
+  // );
+  // color: $light;
+  border: solid 1px black;
+  background-color: none;
 }
 
 nav .userphoto {

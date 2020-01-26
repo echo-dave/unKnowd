@@ -64,31 +64,45 @@ class Nav extends Component {
                     <div className="navbar-item" id="viewChanger">
                       <a
                         href="#"
-                        className="button is-primary is-small"
+                        className="button is-small"
                         id="viewChange"
                         onClick={this.props.togglePostEventViews}
                       >
-                        {this.props.eventShow ? "View Posts" : "View Events"}
+                        {this.props.eventShow ? "Posts" : "Events"}
                       </a>
                     </div>
                     <div className="navbar-item" id="postMaker">
                       <a
                         href="#"
-                        className="button is-primary is-small"
+                        className="button is-small"
                         id="formButton"
                         onClick={this.props.togglePostForm}
                       >
-                        {this.props.postFormShow ? "Close" : "Add Post"}
+                        {this.props.postFormShow ? (
+                          "Close"
+                        ) : (
+                          <>
+                            +<br />
+                            Post
+                          </>
+                        )}
                       </a>
                     </div>
                     <div className="navbar-item" id="eventMaker">
                       <a
                         href="#"
-                        className="button is-primary is-small"
+                        className="button is-small"
                         id="makeEvent"
                         onClick={this.props.toggleEventForm}
                       >
-                        {this.props.eventFormShow ? "close" : "Add Event"}
+                        {this.props.eventFormShow ? (
+                          "close"
+                        ) : (
+                          <>
+                            +<br />
+                            Event
+                          </>
+                        )}
                       </a>
                     </div>
                     {/* render if mobile */}
@@ -96,10 +110,12 @@ class Nav extends Component {
                       <div className="navbar-item" id="mapHide">
                         <a
                           href="#"
-                          className="button is-primary is-small"
+                          className="button is-small"
                           onClick={this.props.toggleMapMobile}
                         >
-                          Hide Map
+                          Hide
+                          <br />
+                          Map
                         </a>
                       </div>
                     ) : null}
@@ -109,7 +125,7 @@ class Nav extends Component {
                 <div className="navbar-item" id="eventMaker">
                   <a
                     href="#"
-                    className="button is-primary is-small"
+                    className="button is-small"
                     id="makeEvent"
                     onClick={this.props.logout}
                   >
