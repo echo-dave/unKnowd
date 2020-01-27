@@ -30,6 +30,10 @@ class UpdateProfile extends Component {
   };
 
   componentDidMount() {
+    let bodyHeight = window.innerHeight;
+    this.resizeVh(bodyHeight);
+    window.addEventListener("resize", this.resizeVh.bind(this));
+
     const token = localStorage.getItem("token");
     if (token) {
       authenticatedAxios.get("/api/me").then(response => {
@@ -55,6 +59,16 @@ class UpdateProfile extends Component {
     this.clearImageSelect = clearImageSelect.bind(this);
     this.fileChange = fileChange.bind(this);
   }
+
+  resizeVh = bodyHeight => {
+    console.log("rezize");
+    bodyHeight = window.innerHeight;
+    // bodyHeight = window.innerHeight;
+    document.documentElement.style.setProperty(
+      "--bodyHeight",
+      `${bodyHeight}px`
+    );
+  };
 
   fileChangeHandler = event => this.fileChange(event, "photo");
 
