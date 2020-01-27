@@ -13,6 +13,22 @@ class LoginForm extends Component {
     badlogin: ""
   };
 
+  componentDidMount() {
+    let bodyHeight = window.innerHeight;
+    this.resizeVh(bodyHeight);
+    window.addEventListener("resize", this.resizeVh.bind(this));
+  }
+
+  resizeVh = bodyHeight => {
+    console.log("rezize");
+    bodyHeight = window.innerHeight;
+    // bodyHeight = window.innerHeight;
+    document.documentElement.style.setProperty(
+      "--bodyHeight",
+      `${bodyHeight}px`
+    );
+  };
+
   setUser = user => {
     this.setState({ user });
   };

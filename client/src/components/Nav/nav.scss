@@ -78,45 +78,41 @@ nav .userphoto {
   margin: 0 0 0 0.5rem;
 }
 
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 1025px) {
   .navbar-brand {
     margin-left: 1rem;
   }
 }
-@media only screen and (max-width: 1023px) {
+@media only screen and (max-width: 1024px) {
   .navbar-end {
     margin-right: 0rem;
   }
   .navbar-menu {
-    background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
+    // background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
+    background-color: rgba(255, 255, 255, 0.95);
     width: 15rem;
     position: absolute;
     right: 0.5rem;
     text-align: right;
     padding: 1rem;
     border-radius: 0 0 0.25rem 0.25rem;
-  }
-}
-@media only screen and (max-width: 768px) {
-  .navbar-menu {
-    background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
-    width: 15rem;
-    position: absolute;
-    right: 0.5rem;
-    text-align: right;
-    padding: 1rem;
-    border-radius: 0 0 0.25rem 0.25rem;
-  }
-  .navbar-item {
-    text-align: center;
-  }
-  .navbar-menu button {
-    float: right;
-    margin: 0.5em;
-  }
-  .userNameDisplay {
-    float: right;
-    margin: 0.5em 1rem;
-    clear: right;
+    .navbar-item {
+      text-align: center;
+      margin: -0.5rem auto;
+    }
+    button {
+      float: right;
+      margin: 0.5em;
+    }
+    .userNameDisplay {
+      margin: 0.5em auto;
+      clear: right;
+      float: none;
+      text-align: center;
+    }
+    .userphoto {
+      float: none;
+      margin: 0 auto;
+    }
   }
 }

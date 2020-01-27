@@ -39,6 +39,10 @@ class Mainpage extends React.Component {
       });
     }
 
+    let bodyHeight = window.innerHeight;
+    this.resizeVh(bodyHeight);
+    window.addEventListener("resize", this.resizeVh.bind(this));
+
     this.getPosts();
     this.getEvents();
     const socket = io();
@@ -72,6 +76,16 @@ class Mainpage extends React.Component {
       console.log("done");
     });
   }
+
+  resizeVh = bodyHeight => {
+    console.log("rezize");
+    bodyHeight = window.innerHeight;
+    // bodyHeight = window.innerHeight;
+    document.documentElement.style.setProperty(
+      "--bodyHeight",
+      `${bodyHeight}px`
+    );
+  };
 
   // componentWillUnmount() {
   //   this.socket.close();

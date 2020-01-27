@@ -12,6 +12,10 @@ class Viewer extends React.Component {
   };
 
   componentDidMount() {
+    let bodyHeight = window.innerHeight;
+    this.resizeVh(bodyHeight);
+    window.addEventListener("resize", this.resizeVh.bind(this));
+
     this.getPosts();
     this.getEvents();
     const socket = socketIOClient();
@@ -31,6 +35,16 @@ class Viewer extends React.Component {
       });
     });
   }
+
+  resizeVh = bodyHeight => {
+    console.log("rezize");
+    bodyHeight = window.innerHeight;
+    // bodyHeight = window.innerHeight;
+    document.documentElement.style.setProperty(
+      "--bodyHeight",
+      `${bodyHeight}px`
+    );
+  };
 
   // componentWillUnmount() {
   //   this.socket.close();
