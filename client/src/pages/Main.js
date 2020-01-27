@@ -144,14 +144,15 @@ class Mainpage extends React.Component {
   };
 
   toggleMapMobile = () => {
+    let postHeight = window.innerHeight + "px";
     if (window.innerWidth < 769 && this.state.mapShow === true) {
       document
         .querySelector(".column.posts")
-        .setAttribute("style", `height:calc(100vh - 4.3rem)`);
+        .setAttribute("style", `height:calc(${postHeight} - 4rem)`);
     } else {
       document
         .querySelector(".column.posts")
-        .setAttribute("style", `height:calc(60vh - 5rem)`);
+        .setAttribute("style", `height:calc(${postHeight} * .6 - 5rem)`);
     }
     this.setState({ mapShow: !this.state.mapShow });
     this.toggleNavbar();
