@@ -1,10 +1,16 @@
 # The unKnowd
 
-A community platform to help bring the community back into community. Some communities need a platform for communicating in a public / private way that doesn’t promote the stalking and friending practices of Facebook and other social networks. Real community for real people.
+A community platform to help bring the community back into community. 
 
+This project set out to solve a real world problem of a local art community: people felt left out because they didn’t know what was going on with events and gatherings. As a result, one of the requirements became having viewer displays available for visitors and those that don’t log into anything. Primary key components used to build the platform are React.js, WebSockets, and MongoDB. All posts and updates are broadcast and updated in realtime to displays and users.  
+
+Real community for real people without the social stalking.
+
+## Highlights
 - Realtime updating of events to the public via available public displays [https://unknowd.herokuapp.com/viewer](https://unknowd.herokuapp.com/viewer)
-- Users can communicate with the community without having to first friend everyone and or pass around information - need to borrow a ladder? Ask the real life people in you local community
-- Users can upload photos so it’s easier to recognize people you don’t see as often in the community and applies that photo to posts and events
+- Current design goals only make public events available to viewer displays
+- Users can communicate with the community without having to first friend everyone and or pass around information - need to borrow a ladder or need a hand? Ask the real people in you local community
+- Users can upload photos so it’s easier to recognize people you don’t see often in the community and applies that photo to posts and events
 - Community members can post events like a simple gathering for food or a gallery opening across town
 
 ![GitHub issues by-label](https://img.shields.io/github/issues-raw/echo-dave/unKnowd/enhancement?color=green)
@@ -24,11 +30,8 @@ A community platform to help bring the community back into community. Some commu
 - Bulma CSS framework and sass variables allowing simple flexible styling
 - React-datepicker reliable cross-brosser date picking method for consistent database entry
 
-### Challenges
-
-Working around React really slowed us down on this project along with working through websockets implementation initially. Some of the Bulma styling didn’t work with React as expected and resulted in a little more work in layout and design. Specifically breaking out components in later updates and breaking apart the main Bulma Sass to import just what we needed. Future release should include the ability to reply to posts and events as the database is designed to handle it already.
-
 ### Updates
+**Issues for Enahncements / features can be tracked:** [Enhancement Issues](https://github.com/echo-dave/unKnowd/issues?utf8=✓&q=is%3Aissue+is%3Aopen+label%3Aenhancement)
 
 As a work in progress here’s what what’s been added:
 
