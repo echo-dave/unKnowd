@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import UserDisplay from "./UserDisplay/UserDisplay";
-import axios from "axios";
 import PostReply from "./PostForms/PostReply";
 import CommentDisplay from "./CommentDisplay/CommentDisplay";
 import CommentingButtons from "./CommentingButtons/CommentingButtons";
-// import socketIOClient from "socket.io-client";
 
 class Post extends Component {
   state = {
@@ -51,7 +49,6 @@ class Post extends Component {
           <CommentingButtons
             dataId={this.props.postData._id}
             toggleComments={this.toggleComments}
-            //changed from state to props
             toggleReply={this.toggleReply}
             replyCount={this.props.replyCount}
           />
@@ -65,8 +62,7 @@ class Post extends Component {
           />
         ) : null}
         {this.state.readComments
-          ? // ? this.state.comments.map(comment => (
-            this.props.postData.replies.map(comment => (
+          ? this.props.postData.replies.map(comment => (
               <CommentDisplay key={comment.dateCreated} comments={comment} />
             ))
           : null}
