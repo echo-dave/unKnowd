@@ -38,7 +38,7 @@ class LoginPage extends React.Component {
         <nav>
           <h1 id="main-name">UnKnowd</h1>
         </nav>
-        <div class="loginBody">
+        <div className="loginBody">
           <h5 id="quote">Putting community back in community</h5>
           <div className="container" id="signup-container">
             <div className="columns is-centered is-vcentered is-mobile">
