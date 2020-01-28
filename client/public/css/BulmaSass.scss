@@ -177,6 +177,8 @@ h1#title {
   width: 270px;
   z-index: 10;
   border-radius: 0 0 0.5rem 0;
+  max-height: calc(var(--bodyHeight) - 9.5rem);
+  overflow-y: scroll;
 }
 
 #replyButton {
