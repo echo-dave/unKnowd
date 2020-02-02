@@ -4,8 +4,9 @@
   "description": "Mern Demo",
   "main": "server.js",
   "scripts": {
+    "preinstall": "npm i pm2 -g",
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-    "start:prod": "pm2-runtime start ecosystem.config.js --env production",
+    "start:prod": "pm2-runtime start ecosystem.config.js --env production -i max",
     "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
     "client": "cd client && npm run start",
     "install": "cd client && npm install",
@@ -33,6 +34,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongojs": "^3.1.0",
     "mongoose": "^5.8.2",
+    "morgan": "^1.9.1",
     "node-geocoder": "^3.25.0",
     "node-sass": "^4.13.1",
     "path": "^0.12.7",
