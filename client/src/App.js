@@ -10,6 +10,26 @@ import Viewer from "./pages/Viewer";
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import "./app.scss";
 
+const NotFound = () => (
+  <div
+    className="container is-center"
+    style={{
+      height: "100vh",
+      maxWidth: "600px",
+      paddingTop: "0",
+      marginTop: "0"
+    }}
+  >
+    <div className="columns is-vcentered" style={{ height: "100%" }}>
+      <div className="column">
+        <div className="box">
+          <h1>404 NOT FOUND</h1>
+          <h3>Looks like you got lost along the way</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+);
 class App extends Component {
   state = {
     user: null
@@ -42,11 +62,15 @@ class App extends Component {
           >
             <Switch>
               <ProtectedRoute exact path="/mainpage" component={Mainpage} />
-              {/* <Route exact path="/map" component={EventMap} /> */}
-              {/* <Route exact path="/event" component={EventForm} /> */}
               <Route exact path="/viewer" component={Viewer} />
               <ProtectedRoute exact path="/profile" component={UpdateProfile} />
-              <Route path="/" user={this.state.user} component={LoginPage} />
+              <Route
+                exact
+                path="/"
+                user={this.state.user}
+                component={LoginPage}
+              />
+              <Route component={NotFound} />
             </Switch>
           </UserContext.Provider>
         </div>
