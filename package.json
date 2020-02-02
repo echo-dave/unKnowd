@@ -6,7 +6,7 @@
   "scripts": {
     "preinstall": "npm i pm2 -g",
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-    "start:prod": "pm2-runtime start ecosystem.config.js --env production -i max",
+    "start:prod": "pm2 start ecosystem.config.js --env production -i max",
     "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
     "client": "cd client && npm run start",
     "install": "cd client && npm install",
