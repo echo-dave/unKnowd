@@ -1,67 +1,44 @@
-// $primary: rgb(240, 240, 240);
-// $secondary: #003621;
-// //smaller size for commenting buttons
-// $smaller: 2.5em;
-// $commentGrey: #f2f2f2;
 @import "../../src/app.scss";
 @import "../../../node_modules/bulma/sass/elements/container.sass";
 @import "../../../node_modules/bulma/sass/grid/columns.sass";
 @import "../../../node_modules/bulma/sass/elements/button.sass";
 @import "../../../node_modules/bulma/sass/elements/box.sass";
 @import "../../../node_modules/bulma/sass/form/shared.sass";
+@import "../../../node_modules/bulma/sass/form/tools.sass";
 @import "../../../node_modules/bulma/sass/form/input-textarea.sass";
 @import "../../../node_modules/bulma/sass/form/file.sass";
-// @import "../../../node_modules/bulma/bulma.sass";
-// commenting buttons smaller size and style
-// .is-smaller {
-//   font-size: 0.8em;
-//   height: $smaller;
-//   max-height: $smaller;
-//   min-height: $smaller;
-//   background-color: $secondary;
-//   color: $light;
-//   border-radius: 0.4rem;
-// }
-button.is-smaller:hover {
-  background-color: lighten($secondary, 5.686274509803921);
-  color: white;
-}
 
 body {
   background: $secondary;
   font-family: "Montserrat", sans-serif;
-  height: 100vh;
+  height: var(--bodyHeight);
   overflow: hidden;
 }
 
 h2 {
+  font-size: 1.2em !important;
+  font-weight: 500 !important;
+}
+
+//used for event titles
+h2 {
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
   font-size: 1.2em;
-  color: rgb(87, 1, 1);
+  color: $secondary;
   margin-bottom: 0.5em;
 }
 
-// .navbar-burger {
-//   background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
-//   :hover,
-//   :active,
-//   :checked {
-//     background-color: lighten(
-//       desaturate(lighten($secondary, 64.31372549019608), 85%),
-//       5.6
-//     );
-//   }
-// }
-
-.posts p {
+.posts p,
+#profile p {
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
   font-size: 0.85em;
+  white-space: pre-wrap;
 }
 .button.is-small {
   font-size: 1em;
-  border-radius: 0.4rem;
+  border-radius: 0.25rem;
 }
 
 .clearfix::after {
@@ -72,11 +49,17 @@ h2 {
 
 div #wrap {
   height: 100vh;
-  // background-color: aliceblue;
   background-image: url("../img/placeholder_background.jpg");
   background-size: cover;
   background-position: center;
-  // font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  // overflow-y: scroll;
+  padding-bottom: 2rem;
+}
+.loginBody {
+  overflow-y: scroll;
+  /* height: calc(100vh - 4rem); */
+  padding-bottom: 3rem;
+  height: 100%;
 }
 
 #main-name {
@@ -96,7 +79,7 @@ div #wrap {
 
 .container {
   position: relative;
-  margin-top: 30px;
+  margin-top: 50px;
   padding-top: 40px;
 }
 
@@ -118,11 +101,12 @@ h1 {
 // map style
 
 .main .column {
-  height: calc(100vh - 5.5rem);
+  height: calc(var(--bodyHeight, 1vh) * 1 - 5.5rem);
+  margin-bottom: 1em;
 }
 
 .column.events {
-  padding-top: 2rem;
+  padding-top: 1rem;
 }
 
 div.column.events > div {
@@ -148,6 +132,33 @@ h1#title {
   position: relative;
 }
 
+.posts > .post.box:not(:last-child),
+.posts > .event.box:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+#loginButton,
+#signupButton {
+  margin-top: 0.5rem;
+  background-color: darken(desaturate($color: $tertiary, $amount: 100), 10);
+  color: $light;
+}
+
+#loginButton:hover,
+#loginButton:focus,
+#signupButton:hover,
+#signupButton:focus {
+  background-color: lighten(
+    desaturate($color: $tertiary, $amount: 100),
+    $amount: 5
+  );
+  color: $dark;
+}
+.badlogin {
+  color: red;
+  font-size: 0.9em;
+}
+
 #submitPost,
 #submitEvent {
   margin-top: 0.5rem;
@@ -158,25 +169,22 @@ h1#title {
   // border: 2px solid white;
   margin: 10px;
   padding: 10px;
-  background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
+  background-color: $commentGrey;
+  // background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
   // background: rgb(214, 214, 214);
   position: absolute;
   // top: 1.3rem;
   width: 270px;
   z-index: 10;
   border-radius: 0 0 0.5rem 0;
+  max-height: calc(var(--bodyHeight) - 9.5rem);
+  overflow-y: scroll;
 }
 
-// .userNameDisplay {
-//   margin: 1rem;
-//   font-weight: bold;
-// }
-// .navbar {
-//   background-color: rgba(255, 255, 255, 0.95);
-// }
-// .navbar-menu a {
-//   width: 8em;
-// }
+#replyButton {
+  margin-top: 0.5rem;
+}
+
 .clearRight {
   clear: right;
 }
@@ -187,8 +195,6 @@ h1#title {
 }
 
 .postPhotos {
-  // margin-bottom: 1.5rem;
-  // padding-right: 1rem;
   float: right;
   width: calc(100% - 50px - 0.5rem);
   min-height: 78px;
@@ -198,27 +204,33 @@ h1#title {
   }
 }
 
-.comments {
-  background-color: $commentGrey;
+#newUserForm {
+  width: 24rem;
 }
 
-.commentWrap {
-  margin-top: 1.5rem;
+@media only screen and (max-width: 1024px) {
+  .container {
+    margin-top: 3rem;
+  }
+  .main .column.posts {
+    height: calc(var(--bodyHeight, 1vh) * 1 - 3.5rem);
+  }
 }
 
 @media only screen and (max-width: 768px) {
   #newUserForm {
     max-width: 80vw;
   }
-  .column.posts {
-    height: calc(60vh - 5rem);
+  .main .column.posts {
+    height: calc(var(--bodyHeight, 1vh) * 0.6 - 5rem);
+    margin-bottom: 0;
   }
-  .column.events {
+  .main .column.events {
     padding: 0;
-    height: calc(40vh - 1.9rem);
+    height: calc(var(--bodyHeight, 1vh) * 0.4 - 1.9rem);
   }
   div.column.events > div {
-    height: calc(40vh + 0.75rem);
+    height: calc(var(--bodyHeight, 1vh) * 0.4 + 1.75rem);
     padding: 0;
   }
   .column {
@@ -227,29 +239,9 @@ h1#title {
   body {
     overflow: hidden;
     // height: calc(100vh - 1.85rem);
+    height: calc(var(--bodyHeight) * 1);
   }
-  // .navbar-menu button {
-  //   float: right;
-  //   margin: 0.5em;
-  // }
-  // .userNameDisplay {
-  //   float: right;
-  //   margin: 0.5em 1rem;
-  //   clear: right;
-  // }
-
-  // .navbar-menu {
-  //   // background-color: #bfbfbf;
-  //   background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
-  //   // background-color: adjust($secondary, $lightness: 50%);
-  //   width: 15rem;
-  //   position: absolute;
-  //   right: 0.5rem;
-  //   text-align: right;
-  //   padding: 1rem;
-  //   border-radius: 0 0 0.25rem 0.25rem;
-  // }
-  // .navbar-item {
-  //   text-align: center;
-  // }
+  .container {
+    margin-top: 1em;
+  }
 }
