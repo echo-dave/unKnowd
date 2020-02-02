@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-    "start:prod": "node server.js",
+    "start:prod": "pm2-runtime start ecosystem.config.js --env production",
     "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
     "client": "cd client && npm run start",
     "install": "cd client && npm install",
@@ -36,6 +36,7 @@
     "node-geocoder": "^3.25.0",
     "node-sass": "^4.13.1",
     "path": "^0.12.7",
+    "pm2": "^4.2.3",
     "react-datepicker": "^2.10.1",
     "react-map-gl": "^5.1.7",
     "react-router-dom": "^5.1.2",
