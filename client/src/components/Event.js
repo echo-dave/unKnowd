@@ -36,7 +36,7 @@ class Event extends Component {
       <div className="event box clearfix" data-attr={_id}>
         <div>
           <h2>{title}</h2>
-          <h3>
+          <h3 className="address">
             {address} | {moment(date.start).format("MMM Do YYYY")}
           </h3>
           <UserDisplay
