@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import moment from "moment";
 import UserDisplay from "./UserDisplay/UserDisplay";
 import PostReply from "./PostForms/PostReply";
 import CommentDisplay from "./CommentDisplay/CommentDisplay";
@@ -35,7 +36,9 @@ class Event extends Component {
       <div className="event box clearfix" data-attr={_id}>
         <div>
           <h2>{title}</h2>
-          <p>{address}</p>
+          <h3>
+            {address} | {moment(date.start).format("MMM Do YYYY")}
+          </h3>
           <UserDisplay
             firstName={creator.firstName}
             creatorPhoto={creator.photo}
@@ -48,7 +51,9 @@ class Event extends Component {
           <p className={!img == "" ? "clearRight description" : "description"}>
             {description}
           </p>
-          <span className="dates">{date.start}</span>
+          {/* <span className="dates">
+            {moment(date.start).format("MMM Do YYYY")}
+          </span> */}
           <CommentingButtons
             dataId={_id}
             toggleComments={this.toggleComments}
