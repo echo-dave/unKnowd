@@ -4,6 +4,7 @@ import UserDisplay from "./UserDisplay/UserDisplay";
 import PostReply from "./PostForms/PostReply";
 import CommentDisplay from "./CommentDisplay/CommentDisplay";
 import CommentingButtons from "./CommentingButtons/CommentingButtons";
+import { urlClick } from "../utils/ClearImageSelect";
 
 class Event extends Component {
   state = {
@@ -48,9 +49,12 @@ class Event extends Component {
               <img src={img} alt="" />
             </div>
           ) : null}
-          <p className={!img == "" ? "clearRight description" : "description"}>
-            {description}
-          </p>
+          <p
+            className={!img == "" ? "clearRight description" : "description"}
+            dangerouslySetInnerHTML={{
+              __html: urlClick(description)
+            }}
+          />
           {/* <span className="dates">
             {moment(date.start).format("MMM Do YYYY")}
           </span> */}

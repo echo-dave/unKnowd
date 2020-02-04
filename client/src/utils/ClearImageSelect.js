@@ -13,4 +13,25 @@ function fileChange(event, photoFileName) {
   });
 }
 
-export { clearImageSelect, fileChange };
+function urlClick(para) {
+  let url = /(https?:\/\/\S*)/i;
+  let newPar = para.split(url);
+  let parIndex;
+  for (let i = 0; i < newPar.length; i++) {
+    if (newPar[i].match(url)) parIndex = i;
+  }
+
+  newPar[
+    parIndex
+  ] = `<a alt="" rel="noopener" target="_blank" href="${newPar[parIndex]}">${newPar[parIndex]}</a>`;
+
+  let strgPar = "";
+
+  for (let i = 0; i < newPar.length; i++) {
+    strgPar += newPar[i];
+  }
+
+  return [strgPar];
+}
+
+export { clearImageSelect, fileChange, urlClick };
