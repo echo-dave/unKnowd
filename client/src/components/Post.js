@@ -3,6 +3,7 @@ import UserDisplay from "./UserDisplay/UserDisplay";
 import PostReply from "./PostForms/PostReply";
 import CommentDisplay from "./CommentDisplay/CommentDisplay";
 import CommentingButtons from "./CommentingButtons/CommentingButtons";
+import { urlClick } from "../utils/ClearImageSelect";
 
 class Post extends Component {
   state = {
@@ -11,6 +12,10 @@ class Post extends Component {
     user: "",
     replyCount: ""
   };
+
+  componentDidMount() {
+    this.setState({ message: urlClick(this.props.postData.msg) });
+  }
 
   toggleComments = () => {
     this.setState({ readComments: !this.state.readComments });
@@ -44,7 +49,11 @@ class Post extends Component {
                 </div>
               ) : null}
             </div>
-            <p>{this.props.postData.msg}</p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: urlClick(this.props.postData.msg)
+              }}
+            />
           </div>
           <CommentingButtons
             dataId={this.props.postData._id}

@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import UserDisplay from "../UserDisplay/UserDisplay";
 import "./commentDisplay.scss";
-class CommentDisplay extends Component {
-  componentDidMount = () => {
-    // setTimeout(() => console.log("display", this.props.comments), 500);
-  };
+import { urlClick } from "../../utils/ClearImageSelect";
 
+class CommentDisplay extends Component {
   render() {
     const { _id, creator, photos, msg } = this.props.comments;
     return (
@@ -15,9 +13,12 @@ class CommentDisplay extends Component {
           creatorPhoto={creator.photo}
         />
         {photos ? <img alt="" className="postPhotos" src={photos} /> : null}
-        <p className={!photos == "" ? "clearRight description" : "description"}>
-          {msg}
-        </p>
+        <p
+          className={!photos == "" ? "clearRight description" : "description"}
+          dangerouslySetInnerHTML={{
+            __html: urlClick(msg)
+          }}
+        />
       </div>
     );
   }
