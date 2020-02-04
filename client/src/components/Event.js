@@ -55,9 +55,6 @@ class Event extends Component {
               __html: urlClick(description)
             }}
           />
-          {/* <span className="dates">
-            {moment(date.start).format("MMM Do YYYY")}
-          </span> */}
           <CommentingButtons
             dataId={_id}
             toggleComments={this.toggleComments}
@@ -71,7 +68,6 @@ class Event extends Component {
             postId={_id}
             closeForm={this.toggleReply}
             eventShow={this.props.eventShow}
-            // refreshComments={this.refreshComments}
           />
         ) : null}
         {this.state.readComments

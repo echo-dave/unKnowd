@@ -4,10 +4,6 @@ import "./commentDisplay.scss";
 import { urlClick } from "../../utils/ClearImageSelect";
 
 class CommentDisplay extends Component {
-  componentDidMount = () => {
-    // setTimeout(() => console.log("display", this.props.comments), 500);
-  };
-
   render() {
     const { _id, creator, photos, msg } = this.props.comments;
     return (
