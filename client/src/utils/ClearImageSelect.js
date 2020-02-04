@@ -18,13 +18,14 @@ function urlClick(para) {
   let newPar = para.split(url);
   let parIndex;
   for (let i = 0; i < newPar.length; i++) {
-    if (newPar[i].match(url)) parIndex = i;
+    if (newPar[i].match(url)) {
+      parIndex = i;
+
+      newPar[
+        parIndex
+      ] = `<a alt="" rel="noopener" target="_blank" href="${newPar[parIndex]}">${newPar[parIndex]}</a>`;
+    }
   }
-
-  newPar[
-    parIndex
-  ] = `<a alt="" rel="noopener" target="_blank" href="${newPar[parIndex]}">${newPar[parIndex]}</a>`;
-
   let strgPar = "";
 
   for (let i = 0; i < newPar.length; i++) {
