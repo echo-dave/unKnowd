@@ -10,7 +10,7 @@ module.exports = {
       },
       env_production: {
         NODE_ENV: "production",
-        ignore_watch: ["client/public/upload"],
+        ignore_watch: ["client/public/upload","node_modules"],
         exec_mode: "cluster",
         instances: "max"
       }
