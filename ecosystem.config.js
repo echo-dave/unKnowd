@@ -6,10 +6,11 @@ module.exports = {
       watch: true,
       env: {
         NODE_ENV: "development",
-        "ignore-watch": "client/*"
+        ignore_watch: ["client/*"]
       },
       env_production: {
         NODE_ENV: "production",
+        ignore_watch: ["client/public/upload"],
         exec_mode: "cluster",
         instances: "max"
       }
