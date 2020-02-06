@@ -3,6 +3,15 @@ const path = require("path");
 // const cloudinary = require("cloudinary-core");
 
 module.exports = function(filename) {
+   filename = filename.split(".")
+  let fileExtension = filename[filename.length - 1];
+  filename.pop()
+  filename = filename.join(".")
+
+console.log("file name inc", filename)
+console.log("extension", fileExtension)
+
+
   const eager_options = [
     {
       width: 800,
@@ -12,13 +21,13 @@ module.exports = function(filename) {
     }
   ];
   //   filename = path.join(__dirname, "../public/upload" ,filename)
-  console.log(filename);
+  console.log(filename + "." + fileExtension);
 
   return cloudinary.uploader
-    .upload(path.join(__dirname, "../client/public/upload", filename), {
+    .upload(path.join(__dirname, "../client/public/upload", `${filename}.${fileExtension}`), {
       use_filename: true,
       eager: eager_options,
-      public_id: filename.slice(0, -4)
+      public_id: filename
     })
     .then(function(image, err) {
       console.log("upload");

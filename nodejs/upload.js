@@ -2,11 +2,14 @@ const path = require("path");
 const cloud = require("../nodejs/cloudinaryUp");
 
 module.exports = function(req, imgProperty, dbfunction) {
+  let fileName = req.files[imgProperty].name.split(".");
+  fileExtension = fileName[fileName.length - 1];
+  fileName.pop()
+  fileName = fileName.join(".")
+
   req.files[imgProperty].namelong =
-    req.files[imgProperty].name.slice(0, -4) +
-    "-" +
-    Date.now() +
-    req.files[imgProperty].name.slice(-4);
+    fileName + "-" +
+    Date.now() + "." + fileExtension;
 
   req.files[imgProperty].mv(
     path.join(
