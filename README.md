@@ -13,11 +13,8 @@ Real community for real people without the social stalking.
 - Users can upload photos so it’s easier to recognize people you don’t see often in the community and applies that photo to posts and events
 - Community members can post events like a simple gathering for food or a gallery opening across town
 
-![GitHub issues by-label](https://img.shields.io/github/issues-raw/echo-dave/unKnowd/enhancement?color=green)
-![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/echo-dave/unKowd)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/w/echo-dave/unKnowd)
-![GitHub contributors](https://img.shields.io/github/contributors/echo-dave/unKowd)
-![GitHub](https://img.shields.io/github/license/echo-dave/unKnowd)
+![GitHub issues by-label](https://img.shields.io/github/issues-raw/echo-dave/unKnowd/bug) ![GitHub issues by-label](https://img.shields.io/github/issues-raw/echo-dave/unKnowd/enhancement?color=green) ![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/echo-dave/unKowd) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/echo-dave/unKnowd) ![GitHub last commit](https://img.shields.io/github/last-commit/echo-dave/unKnowd) ![GitHub contributors](https://img.shields.io/github/contributors/echo-dave/unKowd) ![GitHub](https://img.shields.io/github/license/echo-dave/unKnowd) 
+
 
 ## Technology
 
