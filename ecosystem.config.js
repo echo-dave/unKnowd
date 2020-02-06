@@ -4,9 +4,9 @@ module.exports = {
       name: "unKnowd",
       script: "./server.js",
       watch: true,
-      env: {
+      env_dev: {
         NODE_ENV: "development",
-        ignore_watch: ["client/*"]
+        ignore_watch: ["client","client/*",]
       },
       env_production: {
         NODE_ENV: "production",
