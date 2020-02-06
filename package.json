@@ -1,17 +1,21 @@
 {
-  "name": "mern",
-  "version": "1.0.0",
-  "description": "Mern Demo",
+  "name": "unknowd",
+  "version": "0.8.0",
+  "description": "Putting the communitiy back in community",
   "main": "server.js",
   "scripts": {
     "preinstall": "npm i pm2 -g",
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:prod": "pm2-runtime start ecosystem.config.js --env production -i max",
-    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "start:dev": "concurrently \"pm2 start\" \"npm run client\"",
     "client": "cd client && npm run start",
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/echo-dave/unKnowd"
   },
   "author": "",
   "license": "ISC",
@@ -37,7 +41,6 @@
     "mongoose": "^5.8.2",
     "morgan": "^1.9.1",
     "node-geocoder": "^3.25.0",
-    "node-sass": "^4.13.1",
     "path": "^0.12.7",
     "pm2": "^4.2.3",
     "react-datepicker": "^2.10.1",
