@@ -1,26 +1,47 @@
 import React, { Component } from "react";
 // import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
 
-import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
+import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
 
 class MapContainer extends Component {
+  state = {
+    showingInfoWindow: false,
+    activeMarker: {},
+    selectedPlace: {}
+  };
+
   displayMarkers = () =>
     this.props.events.map((events, index) => (
       <Marker
         key={index}
         id={index}
-        title={events.address}
+        title={events.title}
+        description={events.description}
+        address={events.address}
         position={{
           lat: events.lat,
           lng: events.lon
         }}
-        onClick={() =>
-          alert(`Event: ${events.title} 
-Address:${events.address}
-Description: ${events.description}`)
-        }
+        onClick={this.onMarkerClick}
+        name={events.title}
       />
     ));
+
+  onMarkerClick = (props, marker, e) =>
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
+
+  onMapClicked = props => {
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+      });
+    }
+  };
 
   render() {
     return (
@@ -28,8 +49,28 @@ Description: ${events.description}`)
         google={this.props.google}
         zoom={11}
         initialCenter={{ lat: 33.753746, lng: -84.38633 }}
+        onClick={this.onMapClicked}
       >
         {this.displayMarkers()}
+
+        <InfoWindow
+          marker={this.state.activeMarker}
+          visible={this.state.showingInfoWindow}
+        >
+          <div>
+            <h1 className="title is-4" style={{ marginBottom: ".5rem" }}>
+              {this.state.selectedPlace.name}
+            </h1>
+            <div className="is-size-6">
+              <p>
+                <span className="has-text-weight-bold">Where: </span>
+                {this.state.selectedPlace.address} <br />
+                <span className="has-text-weight-bold">What: </span>
+                {this.state.selectedPlace.description}
+              </p>
+            </div>
+          </div>
+        </InfoWindow>
       </Map>
     );
   }
