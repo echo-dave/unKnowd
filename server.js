@@ -16,6 +16,12 @@ app.use(
     {
       skip: function(req, res) {
         return res.statusCode <= 200;
+      },
+      skip: function(req, res) {
+        return res.statusCode == 304;
+      },
+      skip: function(req, res) {
+        return res.url != "/favicon.ico";
       }
     }
   )
