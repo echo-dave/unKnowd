@@ -16,65 +16,23 @@ module.exports = function(app, io) {
 
     if (req.files != null) {
       console.log("file--------------file");
-      console.log(req.files);
+      // console.log(req.files);
 
-      req.files.photo.namelong =
-        req.files.photo.name.slice(0, -4) +
-        "-" +
-        Date.now() +
-        req.files.photo.name.slice(-4);
-
-      req.files.photo.mv(
-        path.join(
-          __dirname,
-          "../client/public/upload",
-          req.files.photo.namelong
-        ),
-        function(err) {
-          if (err) {
-            console.log(err);
-            res.send(err);
-          } else {
-            console.log("upload success");
-            cloud(req.files.photo.namelong)
-              .then(function(imageurl) {
-                console.log("create doc next");
-                req.body.photo = imageurl;
-                console.log(req.body);
-
-                User.create(req.body)
-                  .then(function(result) {
-                    res.json({ message: "user created", user: result._id });
-                  })
-                  .catch(function(err) {
-                    res.status(500).json({ error: err.message });
-                  });
-              })
-              .catch(function(err) {
-                console.log(err);
-              });
-          }
-        }
-      );
+      upload(req, "photo", signup);
     } else {
+      signup(req);
+    }
+
+    function signup(req) {
       User.create(req.body)
         .then(function(result) {
           res.json({ message: "user created", user: result._id });
+          console.log("done");
         })
         .catch(function(err) {
           res.status(500).json({ error: err.message });
         });
     }
-  });
-
-  app.post("/api/eventForm", function(req, res) {
-    Event.create(req.body)
-      .then(function(result) {
-        res.json({ message: "user created" });
-      })
-      .catch(function(err) {
-        res.status(500).json({ error: err.message });
-      });
   });
 
   app.post("/api/authenticate", function(req, res) {
@@ -113,12 +71,6 @@ module.exports = function(app, io) {
     });
   });
 
-  // app.get("/api/public", function(req, res) {
-  //   res.json({
-  //     message: "this is available for everyone"
-  //   });
-  // });
-
   app.get("/api/me", authWare, function(req, res) {
     User.findById(req.user._id).then(dbUser => {
       dbUser = {
@@ -126,7 +78,6 @@ module.exports = function(app, io) {
         firstName: dbUser.firstName,
         photo: dbUser.photo
       };
-      // console.log("dbuser", dbUser);
       res.json(dbUser);
     });
   });
@@ -148,7 +99,6 @@ module.exports = function(app, io) {
             posts[i].replies[j].creator.lastName = "";
           }
         }
-        // console.log("trimmed", posts[0]);
 
         res.json(posts);
       })
@@ -157,53 +107,18 @@ module.exports = function(app, io) {
 
   app.post("/api/post", function(req, res) {
     console.log(req.body);
-    console.log(req.files);
+    // console.log(req.files);
 
     if (req.files != null) {
       console.log("file--------------file");
       console.log(req.files);
 
-      req.files.photos.namelong =
-        req.files.photos.name.slice(0, -4) +
-        "-" +
-        Date.now() +
-        req.files.photos.name.slice(-4);
-
-      req.files.photos.mv(
-        path.join(
-          __dirname,
-          "../client/public/upload",
-          req.files.photos.namelong
-        ),
-        function(err) {
-          if (err) {
-            console.log(err);
-            res.send(err);
-          } else {
-            console.log("upload success");
-            cloud(req.files.photos.namelong)
-              .then(function(imageurl) {
-                console.log("create doc next");
-                req.body.photos = [imageurl];
-
-                db.Post.create(req.body).then(function(data) {
-                  data
-                    .populate("creator")
-                    .execPopulate()
-                    .then(populatedData => {
-                      io.sockets.emit("new post", populatedData);
-                      res.end();
-                    });
-                  // res.json(data);
-                });
-              })
-              .catch(function(err) {
-                console.log(err);
-              });
-          }
-        }
-      );
+      upload(req, "photos", newPost);
     } else {
+      newPost(req);
+    }
+
+    function newPost(req) {
       db.Post.create(req.body).then(function(data) {
         data
           .populate("creator")
@@ -211,22 +126,11 @@ module.exports = function(app, io) {
           .then(populatedData => {
             io.sockets.emit("new post", populatedData);
             res.end();
-          });
-        // res.json(data);
+          })
+          .catch(err => res.status(500).json({ error: err.message }));
       });
     }
   });
-
-  //maps related api call
-  // app.get("/api/all", function(req, res) {
-  //   Event.find({})
-  //     .then(function(result) {
-  //       res.json(result);
-  //     })
-  //     .catch(function(err) {
-  //       res.status(500).json({ error: err.message });
-  //     });
-  // });
 
   app.get("/api/maps", function(req, res) {
     let currentDate = new Date();
@@ -278,46 +182,50 @@ module.exports = function(app, io) {
 
     if (req.files != null) {
       console.log("file--------------file");
-      console.log(req.files);
+      // console.log(req.files);
 
-      req.files.img.namelong =
-        req.files.img.name.slice(0, -4) +
-        "-" +
-        Date.now() +
-        req.files.img.name.slice(-4);
+      upload(req, "img", newEvent);
 
-      req.files.img.mv(
-        path.join(__dirname, "../client/public/upload", req.files.img.namelong),
-        function(err) {
-          if (err) {
-            console.log(err);
-            res.send(err);
-          } else {
-            console.log("upload success");
-            cloud(req.files.img.namelong)
-              .then(function(imageurl) {
-                console.log("create doc next");
-                req.body.img = imageurl;
-                console.log(req.body);
+      // req.files.img.namelong =
+      //   req.files.img.name.slice(0, -4) +
+      //   "-" +
+      //   Date.now() +
+      //   req.files.img.name.slice(-4);
 
-                db.Event.create(req.body).then(function(data) {
-                  data
-                    .populate("creator")
-                    .execPopulate()
-                    .then(populatedData => {
-                      io.sockets.emit("new event", populatedData);
-                      res.end();
-                    });
-                  // res.json(data);
-                });
-              })
-              .catch(function(err) {
-                console.log(err);
-              });
-          }
-        }
-      );
+      // req.files.img.mv(
+      //   path.join(__dirname, "../client/public/upload", req.files.img.namelong),
+      //   function(err) {
+      //     if (err) {
+      //       console.log(err);
+      //       res.send(err);
+      //     } else {
+      //       console.log("upload success");
+      //       cloud(req.files.img.namelong)
+      //         .then(function(imageurl) {
+      //           console.log("create doc next");
+      //           req.body.img = imageurl;
+      //           console.log(req.body);
+
+      //           db.Event.create(req.body).then(function(data) {
+      //             data
+      //               .populate("creator")
+      //               .execPopulate()
+      //               .then(populatedData => {
+      //                 io.sockets.emit("new event", populatedData);
+      //                 res.end();
+      //               });
+      //             // res.json(data);
+      //           });
+      //         })
+      //         .catch(function(err) {
+      //           console.log(err);
+      //         });
+      //     }
+      //   }
+      // );
     } else {
+    }
+    function newEvent(req) {
       db.Event.create(req.body)
         .then(function(data) {
           data
@@ -325,11 +233,14 @@ module.exports = function(app, io) {
             .execPopulate()
             .then(populatedData => {
               io.sockets.emit("new event", populatedData);
+              console.log("done");
+
               res.end();
             });
         })
         .catch(function(err) {
           console.log(err);
+          res.status(500).json({ error: err.message });
         });
     }
   });
@@ -357,10 +268,9 @@ module.exports = function(app, io) {
   });
   //make post comment
   app.post("/api/replyComment", function(req, res) {
-    // console.log(req.body);
     if (req.files != null) {
       console.log("file--------------file");
-      console.log(req.files);
+      // console.log(req.files);
       upload(req, "photos", postComment);
     } else {
       postComment(req);
@@ -372,8 +282,6 @@ module.exports = function(app, io) {
         { $push: { replies: req.body } },
         { new: true }
       ).then(function(newReply) {
-        // console.log("newPostReply", newReply.replies);
-        // io.sockets.emit("new post reply", newReply.replies);
         io.sockets.emit("new comment", { post: newReply.replies });
         console.log("done");
 
