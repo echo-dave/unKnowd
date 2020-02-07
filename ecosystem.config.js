@@ -6,7 +6,7 @@ module.exports = {
       watch: true,
       env_dev: {
         NODE_ENV: "development",
-        ignore_watch: ["client","client/*",]
+        ignore_watch: ["client","client/*",".git"]
       },
       env_production: {
         NODE_ENV: "production",
@@ -16,7 +16,8 @@ module.exports = {
           ".pm2",
           ".ssh",
           ".profile.d",
-          ".heroku_exec_data.json"
+          ".heroku_exec_data.json",
+          ".git"
         ],
         exec_mode: "cluster",
         instances: "max"
