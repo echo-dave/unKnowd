@@ -1,17 +1,21 @@
 {
-  "name": "mern",
-  "version": "1.0.0",
-  "description": "Mern Demo",
+  "name": "unknowd",
+  "version": "0.8.0",
+  "description": "Putting the communitiy back in community",
   "main": "server.js",
   "scripts": {
     "preinstall": "npm i pm2 -g",
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:prod": "pm2-runtime start ecosystem.config.js --env production -i max",
-    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "start:dev": "concurrently \"pm2 start --env dev\" \"npm run client\"",
     "client": "cd client && npm run start",
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/echo-dave/unKnowd"
   },
   "author": "",
   "license": "ISC",
@@ -20,11 +24,11 @@
     "nodemon": "^1.18.7"
   },
   "dependencies": {
-    "@google/maps": "^1.0.2",
-    "axios": "^0.19.0",
+    "@google/maps": "^1.1.0",
+    "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "bulma": "^0.8.0",
-    "cloudinary": "^1.18.1",
+    "cloudinary": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.16.3",
     "express-fileupload": "^1.1.6",
@@ -34,16 +38,15 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "mongojs": "^3.1.0",
-    "mongoose": "^5.8.2",
+    "mongoose": "^5.8.11",
     "morgan": "^1.9.1",
     "node-geocoder": "^3.25.0",
-    "node-sass": "^4.13.1",
     "path": "^0.12.7",
     "pm2": "^4.2.3",
-    "react-datepicker": "^2.10.1",
-    "react-map-gl": "^5.1.7",
+    "react-datepicker": "^2.11.0",
+    "react-map-gl": "^5.2.2",
     "react-router-dom": "^5.1.2",
-    "sass": "^1.24.2",
+    "sass": "^1.25.0",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0"
   }
