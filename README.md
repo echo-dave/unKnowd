@@ -1,20 +1,20 @@
 # The unKnowd
 
-A community platform to help bring the community back into community. 
+A community platform to help bring the community back into community.
 
-This project set out to solve a real world problem of a local art community: people felt left out because they didn’t know what was going on with events and gatherings. As a result, one of the requirements became having viewer displays available for visitors and those that don’t log into anything. Primary key components used to build the platform are React.js, WebSockets, and MongoDB. All posts and updates are broadcast and updated in realtime to displays and users.  
+This project set out to solve a real world problem of a local art community: people felt left out because they didn’t know what was going on with events and gatherings. As a result, one of the requirements became having viewer displays available for visitors and those that don’t log into anything. Primary key components used to build the platform are React.js, WebSockets, and MongoDB. All posts and updates are broadcast and updated in realtime to displays and users.
 
 Real community for real people without the social stalking.
 
 ## Highlights
+
 - Realtime updating of events to the public via available public displays [https://unknowd.herokuapp.com/viewer](https://unknowd.herokuapp.com/viewer)
 - Current design goals only make public events available to viewer displays
 - Users can communicate with the community without having to first friend everyone and or pass around information - need to borrow a ladder or need a hand? Ask the real people in you local community
 - Users can upload photos so it’s easier to recognize people you don’t see often in the community and applies that photo to posts and events
 - Community members can post events like a simple gathering for food or a gallery opening across town
 
-![GitHub issues by-label](https://img.shields.io/github/issues-raw/echo-dave/unKnowd/bug) ![GitHub issues by-label](https://img.shields.io/github/issues-raw/echo-dave/unKnowd/enhancement?color=green) ![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/echo-dave/unKowd) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/echo-dave/unKnowd) ![GitHub last commit](https://img.shields.io/github/last-commit/echo-dave/unKnowd) ![GitHub contributors](https://img.shields.io/github/contributors/echo-dave/unKowd) ![GitHub](https://img.shields.io/github/license/echo-dave/unKnowd) 
-
+![GitHub issues by-label](https://img.shields.io/github/issues-raw/echo-dave/unKnowd/bug) ![GitHub issues by-label](https://img.shields.io/github/issues-raw/echo-dave/unKnowd/enhancement?color=green) ![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/echo-dave/unKowd) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/echo-dave/unKnowd) ![GitHub last commit](https://img.shields.io/github/last-commit/echo-dave/unKnowd) ![GitHub contributors](https://img.shields.io/github/contributors/echo-dave/unKowd) ![GitHub](https://img.shields.io/github/license/echo-dave/unKnowd)
 
 ## Technology
 
@@ -27,7 +27,26 @@ Real community for real people without the social stalking.
 - Bulma CSS framework and sass variables allowing simple flexible styling
 - React-datepicker reliable cross-brosser date picking method for consistent database entry
 
-### Updates
+# Deployment
+
+## Heroku
+
+1. Fork the repo
+2. Login to Heroku and make a new app.
+3. Go to Deploy menu within the app and connect to Github
+4. Go to Resources and add Cloudinary
+5. If you want to use mLab database you can add it as well - I’m using MongoDB Atlas
+6. Go to settings and click Reveal Config Vars
+   You’ll need to have:
+   1. CLOUDINARY_URL (this should be filled in when adding to app)
+   2. MAP_API (This is a Google map api key you’ll need to get from Google)
+   3. MONGODB_URI (this should be filled in for you if you used mLab)
+   4. SECRET (this is just a string used for tokens)
+   5. PM2 Keys can be found on [https://app.pm2.io/](https://app.pm2.io/) via the blue Connect button at top
+7. Once all that’s done you can go back to deploy towards the bottom and deploy your master branch
+
+# Updates
+
 **Issues for Enahncements / features can be tracked:** [Enhancement Issues](https://github.com/echo-dave/unKnowd/issues?utf8=✓&q=is%3Aissue+is%3Aopen+label%3Aenhancement)
 
 As a work in progress here’s what what’s been added:
