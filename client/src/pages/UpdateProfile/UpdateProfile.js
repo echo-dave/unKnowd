@@ -144,7 +144,7 @@ class UpdateProfile extends Component {
           this.setState({
             loading: !this.state.loading,
             error: `${response.response.status} | ${response.response.data.error}`
-          })
+          });
       }
       document.querySelector("#profile.container").scrollTop = 0;
     });
