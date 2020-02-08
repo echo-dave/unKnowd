@@ -23,11 +23,18 @@ module.exports = function(app, io) {
     function signup(req) {
       User.create(req.body)
         .then(function(result) {
-          res.json({ message: "user created", user: result._id });
-          console.log("done");
+          if (result._id) {
+            console.log(result);
+
+            res.json({ message: "user created", user: result._id });
+          }
         })
         .catch(function(err) {
-          res.status(500).json({ error: err.message });
+          if (err.code === 11000 ) res.status(500).json({error: "email in use"})
+          else {
+          res.status(500).json({ error: err.errmsg })}
+          console.log(err);
+          
         });
     }
   });

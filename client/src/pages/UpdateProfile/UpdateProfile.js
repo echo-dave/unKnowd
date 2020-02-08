@@ -6,6 +6,7 @@ import Auth from "../../utils/Auth";
 import { clearImageSelect, fileChange } from "../../utils/ClearImageSelect";
 import PhotoInput from "../../components/PhotoInput/PhotoInput";
 import "./UpdateProfile.scss";
+import Spinner from "../../components/Spinner/Spinner";
 // import Auth from "../utils/Auth";
 
 class UpdateProfile extends Component {
@@ -21,7 +22,9 @@ class UpdateProfile extends Component {
       user: "",
       currentPassword: "",
       newPassword: "",
-      passwordCheck: ""
+      passwordCheck: "",
+      loading:false,
+      error:""
     };
   }
 
@@ -61,7 +64,6 @@ class UpdateProfile extends Component {
   }
 
   resizeVh = bodyHeight => {
-    console.log("rezize");
     bodyHeight = window.innerHeight;
     // bodyHeight = window.innerHeight;
     document.documentElement.style.setProperty(
@@ -98,12 +100,9 @@ class UpdateProfile extends Component {
 
     //build data set to update
 
+
     Auth.logIn(this.state.info.email, this.state.currentPassword, response => {
-      console.log(response.status);
-
       if (response.status === 200) {
-        console.log("initial auth ok");
-
         let updatingUser = new FormData();
         if (this.state.email) updatingUser.append("email", this.state.email);
         if (this.state.firstName)
@@ -136,11 +135,18 @@ class UpdateProfile extends Component {
           })
           .catch(function(err) {
             console.log(err.response);
+            this.setState({
+              loading: !this.state.loading,
+              error: `${err.response.status} | ${err.response.data.error}`
+            })
           });
       } else if (response.status === 401) {
-        console.log("bad password");
+          this.setState({
+            loading: !this.state.loading,
+            error: `${response.response.status} | ${response.response.data.error}`
+          });
       }
-      document.querySelector("#profile.container .column").scrollTop = 0;
+      document.querySelector("#profile.container").scrollTop = 0;
     });
   };
 
@@ -170,9 +176,7 @@ class UpdateProfile extends Component {
                     </tr>
                   </tbody>
                 </table>
-                {/* <p>First Name: {this.state.info.firstName}</p>
-                <p>Last Name: {this.state.info.lastName}</p>
-                <p>Email: {this.state.info.email}</p> */}
+      
               </div>
               <form
                 id="updateUserForm"
@@ -229,25 +233,6 @@ class UpdateProfile extends Component {
                   fileName="photo"
                   photoFileName={this.state.photo.name}
                 />
-                {/* <div className="field">
-                  <label className="label" htmlFor="photo">
-                    Photo
-                  </label>
-                  <div className="control">
-                    <span id="imageRemove" onClick={this.removeImage}>
-                      x
-                    </span>
-                    <input
-                      id="imageSelect"
-                      // id="userPhoto"
-                      className="input"
-                      name="photo"
-                      type="file"
-                      // value={this.state.photo}
-                      onChange={this.fileChangeHandler}
-                    />
-                  </div>
-                </div> */}
 
                 <div className="field">
                   <label className="label" htmlFor="newPassword">
@@ -308,6 +293,8 @@ class UpdateProfile extends Component {
                 >
                   Update
                 </button>
+                {this.state.loading ? <Spinner /> : null}
+                {this.state.error ? <span className="error">{this.state.error}</span> : null}
               </form>
             </div>
           </div>

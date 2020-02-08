@@ -4,6 +4,7 @@ import UserContext from "../context/UserContext";
 import Auth from "../utils/Auth";
 import { clearImageSelect } from "../utils/ClearImageSelect";
 import PhotoInput from "./PhotoInput/PhotoInput";
+import Spinner from "../components/Spinner/Spinner";
 
 class SignUpForm extends Component {
   static contextType = UserContext;
@@ -13,7 +14,9 @@ class SignUpForm extends Component {
     password: "",
     firstName: "",
     lastName: "",
-    photo: ""
+    photo: "",
+    loading: false,
+    error: ""
   };
 
   componentDidMount() {
@@ -39,6 +42,11 @@ class SignUpForm extends Component {
       photo: file
     });
   };
+
+  toggleLoading = () => {
+    this.setState({ loading: !this.state.loading });
+  };
+
   submitHandler = e => {
     e.preventDefault();
     this.setState({ email: this.state.email.toLowerCase() });
@@ -47,11 +55,21 @@ class SignUpForm extends Component {
     const userData = new FormData(document.querySelector("#newUserForm"));
     userData.set("email", this.state.email.toLowerCase());
 
+    this.toggleLoading();
+
     if (email && password && firstName && lastName) {
       Auth.register(userData, response => {
-        this.context.setUser(response.data);
-        this.props.history.push("/");
-        window.location = "/mainpage";
+        if (response.data) {
+          this.context.setUser(response.data);
+          this.props.history.push("/");
+          window.location = "/mainpage";
+        } else {
+         // console.log(response.response.status, response.response.data);
+          this.setState({
+            loading: !this.state.loading,
+            error: `${response.response.status} | ${response.response.data.error}`
+          });
+        }
       });
 
       // Auth.register(email, password, firstName, lastName, photo, response => {
@@ -90,6 +108,7 @@ class SignUpForm extends Component {
               name="lastName"
               value={this.state.last}
               onChange={this.changeHandler}
+              required
             />
           </div>
         </div>
@@ -116,24 +135,7 @@ class SignUpForm extends Component {
           photoFileName={this.state.photo.name}
           removeImage={this.removeImage}
         />
-        {/* <div className="field">
-          <label className="label" htmlFor="photo">
-            Photo
-          </label>
-          <div className="control">
-            <span id="imageRemove" onClick={this.removeImage}>
-              x
-            </span>
-            <input
-              id="imageSelect"
-              className="input"
-              name="photo"
-              type="file"
-              // value={this.state.photo}
-              onChange={this.fileChangeHandler}
-            />
-          </div>
-        </div> */}
+
         <div className="field">
           <label className="label" htmlFor="password">
             Password (min of 8 characters)
@@ -158,6 +160,10 @@ class SignUpForm extends Component {
         >
           Sign up
         </button>
+        {this.state.loading ? <Spinner /> : null}
+        {this.state.error ? (
+          <span className="error">{this.state.error}</span>
+        ) : null}
       </form>
     );
   }

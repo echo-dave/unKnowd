@@ -15,13 +15,7 @@ app.use(
     ":date[iso] :remote-addr :remote-user :method :status :url HTTP/:http-version :res[content-length] - :response-time ms",
     {
       skip: function(req, res) {
-        return res.statusCode <= 200;
-      },
-      skip: function(req, res) {
-        return res.statusCode == 304;
-      },
-      skip: function(req, res) {
-        return res.url != "/favicon.ico";
+        return res.statusCode <= 200 || res.statusCode === 304;
       }
     }
   )
