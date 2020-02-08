@@ -1,12 +1,9 @@
-// const db = require("../models");
-const path = require("path");
+const db = require("../models");
 const User = require("../models/User");
-const Event = require("../models/Event");
 const jwt = require("jsonwebtoken");
 const authWare = require("../middleware/authware");
 // const socketIOClient = require("socket.io-client");
 // const socket = socketIOClient("http://127.0.0.1:3001");
-const cloud = require("../nodejs/cloudinaryUp");
 const upload = require("../nodejs/upload");
 const bcrypt = require("bcryptjs");
 
@@ -88,26 +85,29 @@ module.exports = function(app, io) {
       .limit(20)
       .populate("creator")
       .populate("replies.creator")
+      .lean()
       .then(posts => {
         for (let i = 0; i < posts.length; i++) {
-          posts[i].creator.email = "";
-          posts[i].creator.password = "";
-          posts[i].creator.lastName = "";
+          delete posts[i].creator.email;
+          delete posts[i].creator.password;
+          delete posts[i].creator.lastName;
           for (let j = 0; j < posts[i].replies.length; j++) {
-            posts[i].replies[j].creator.email = "";
-            posts[i].replies[j].creator.password = "";
-            posts[i].replies[j].creator.lastName = "";
+            delete posts[i].replies[j].creator.email;
+            delete posts[i].replies[j].creator.password;
+            delete posts[i].replies[j].creator.lastName;
           }
         }
 
         res.json(posts);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({ error: err.message });
+      });
   });
 
   app.post("/api/post", function(req, res) {
     console.log(req.body);
-    // console.log(req.files);
 
     if (req.files != null) {
       console.log("file--------------file");
@@ -154,16 +154,17 @@ module.exports = function(app, io) {
       .sort({ "date.start": 1 })
       .populate("creator")
       .populate("replies.creator")
+      .lean()
       .then(events => {
         for (let i = 0; i < events.length; i++) {
-          events[i].creator.email = "";
-          events[i].creator.password = "";
-          events[i].creator.lastName = "";
+          delete events[i].creator.email;
+          delete events[i].creator.password;
+          delete events[i].creator.lastName;
 
           for (let j = 0; j < events[i].replies.length; j++) {
-            events[i].replies[j].creator.email = "";
-            events[i].replies[j].creator.password = "";
-            events[i].replies[j].creator.lastName = "";
+            delete events[i].replies[j].creator.email;
+            delete events[i].replies[j].creator.password;
+            delete events[i].replies[j].creator.lastName;
           }
         }
         // console.log("events", events);
@@ -182,48 +183,10 @@ module.exports = function(app, io) {
 
     if (req.files != null) {
       console.log("file--------------file");
-      // console.log(req.files);
 
       upload(req, "img", newEvent);
-
-      // req.files.img.namelong =
-      //   req.files.img.name.slice(0, -4) +
-      //   "-" +
-      //   Date.now() +
-      //   req.files.img.name.slice(-4);
-
-      // req.files.img.mv(
-      //   path.join(__dirname, "../client/public/upload", req.files.img.namelong),
-      //   function(err) {
-      //     if (err) {
-      //       console.log(err);
-      //       res.send(err);
-      //     } else {
-      //       console.log("upload success");
-      //       cloud(req.files.img.namelong)
-      //         .then(function(imageurl) {
-      //           console.log("create doc next");
-      //           req.body.img = imageurl;
-      //           console.log(req.body);
-
-      //           db.Event.create(req.body).then(function(data) {
-      //             data
-      //               .populate("creator")
-      //               .execPopulate()
-      //               .then(populatedData => {
-      //                 io.sockets.emit("new event", populatedData);
-      //                 res.end();
-      //               });
-      //             // res.json(data);
-      //           });
-      //         })
-      //         .catch(function(err) {
-      //           console.log(err);
-      //         });
-      //     }
-      //   }
-      // );
     } else {
+      newEvent(req);
     }
     function newEvent(req) {
       db.Event.create(req.body)
@@ -236,36 +199,19 @@ module.exports = function(app, io) {
               console.log("done");
 
               res.end();
+            })
+            .catch(function(err) {
+              console.log(err);
+              res.status(500).json({ error: err });
             });
         })
         .catch(function(err) {
           console.log(err);
-          res.status(500).json({ error: err.message });
+          res.status(500).json({ error: err });
         });
     }
   });
 
-  //get post comments
-  app.get("/api/getComments", function(req, res) {
-    console.log("query post comments", req.query);
-    db.Post.find({ _id: req.query._id })
-      .populate("replies.creator")
-      .then(function(comments) {
-        // console.log("returned comments", comments);
-        // console.log("array post Replies", comments[0].replies);
-        for (let i = 0; i < comments[0].replies.length; i++) {
-          comments[0].replies[i].creator.email = "";
-          comments[0].replies[i].creator.password = "";
-          comments[0].replies[i].creator.lastName = "";
-        }
-        // console.log("trimmed creator", comments[0].replies[0]);
-
-        res.json(comments[0].replies);
-      })
-      .catch(function(err) {
-        console.log(err);
-      });
-  });
   //make post comment
   app.post("/api/replyComment", function(req, res) {
     if (req.files != null) {
@@ -290,22 +236,6 @@ module.exports = function(app, io) {
     }
   });
 
-  // get event comments
-  app.get("/api/getEventComments", function(req, res) {
-    console.log("query event comments", req.query);
-    db.Event.find({ _id: req.query._id })
-      .populate("replies.creator")
-      .then(function(comments) {
-        // console.log(comments);
-        console.log("array Replies", comments[0].replies);
-        for (let i = 0; i < comments[0].replies.length; i++) {
-          comments[0].replies[i].creator.email;
-          comments[0].replies[i].creator.password = "";
-          comments[0].replies[i].creator.lastName = "";
-        }
-        res.json(comments[0].replies);
-      });
-  });
   //make event comment
   app.post("/api/replyEventComment", function(req, res) {
     // console.log("event req", req.body);
@@ -322,8 +252,6 @@ module.exports = function(app, io) {
         { _id: req.body.commentId },
         { $push: { replies: req.body } }
       ).then(function(newReply) {
-        // console.log("newEventReply", newReply);
-        // io.sockets.emit("new post reply", newReply);
         io.sockets.emit("new comment", { event: newReply.replies });
         // res.json(newReply);
         res.end();
@@ -336,6 +264,7 @@ module.exports = function(app, io) {
     // console.log("request", req.user._id);
 
     User.findById(req.user._id)
+      .lean()
       .then(function(data) {
         let userData = data;
         delete userData.password;
