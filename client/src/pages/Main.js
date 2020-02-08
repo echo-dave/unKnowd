@@ -22,7 +22,7 @@ class Mainpage extends React.Component {
     burgerActive: false,
     mapShow: true,
     comment: false,
-    loading: true
+    loading: false
   };
 
   setUser = user => {

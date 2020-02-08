@@ -23,7 +23,7 @@ class UpdateProfile extends Component {
       currentPassword: "",
       newPassword: "",
       passwordCheck: "",
-      loading:true,
+      loading:false,
       error:""
     };
   }
