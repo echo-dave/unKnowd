@@ -198,10 +198,16 @@ h1#title {
   float: right;
   width: calc(100% - 50px - 0.5rem);
   min-height: 78px;
+  text-align: center;
   img {
     border-radius: 0 0.4rem 0 0;
-    width: 100%;
+    max-width: 100%;
+    max-height: 350px;
   }
+}
+
+img.commentPhotos {
+  max-height: 200px;
 }
 
 #newUserForm {
