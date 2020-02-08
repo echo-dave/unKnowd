@@ -212,6 +212,12 @@ img.commentPhotos {
 
 #newUserForm {
   width: 24rem;
+  .error {
+    margin-top: 1em;
+    margin-left: 1em;
+    display: inline-block;
+    color: red;
+  }
 }
 
 .address {

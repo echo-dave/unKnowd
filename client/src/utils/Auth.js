@@ -1,20 +1,6 @@
 import axios from "axios";
 
 function Auth() {
-  function logIn(email, password, cb) {
-    //code goes here
-    axios
-      .post("/api/authenticate", { email: email, password: password })
-      .then(response => {
-        localStorage.setItem("token", response.data.token);
-        cb(response);
-      })
-      .catch(function(err) {
-        console.log(err.response);
-        if (err.response.status === 401) cb(err.response);
-      });
-  }
-
   function register(userData, cb) {
     console.log("start register");
     let email = userData.get("email");
@@ -28,7 +14,22 @@ function Auth() {
         console.log(data);
       })
       .catch(function(err) {
+        //   console.log(err.response.status, err.response.data);
+        cb(err);
+      });
+  }
+
+  function logIn(email, password, cb) {
+    //code goes here
+    axios
+      .post("/api/authenticate", { email: email, password: password })
+      .then(response => {
+        localStorage.setItem("token", response.data.token);
+        cb(response);
+      })
+      .catch(function(err) {
         console.log(err.response);
+        if (err.response.status === 401) cb(err.response);
       });
   }
 

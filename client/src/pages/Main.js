@@ -21,7 +21,8 @@ class Mainpage extends React.Component {
     eventFormShow: false,
     burgerActive: false,
     mapShow: true,
-    comment: false
+    comment: false,
+    loading: true
   };
 
   setUser = user => {
@@ -51,26 +52,24 @@ class Mainpage extends React.Component {
     socket.on("new post", post => {
       // console.log(post);
       this.setState({
-        posts: [post, ...this.state.posts]
+        posts: [post, ...this.state.posts],
+        loading: false
       });
     });
 
     socket.on("new event", event => {
       // console.log(event);
       this.setState({
-        events: [event, ...this.state.events]
+        events: [event, ...this.state.events],
+        loading: false
       });
     });
 
     socket.on("new comment", comment => {
       if (comment.post) {
-        // console.log("post comment", comment);
-        // this.setState({ comment: !this.state.comment });
         this.getPosts();
       }
       if (comment.event) {
-        // console.log("evemt comment", comment);
-        // this.setState({ comment: !this.state.comment });
         this.getEvents();
       }
     });
@@ -156,6 +155,10 @@ class Mainpage extends React.Component {
     this.toggleNavbar();
   };
 
+  toggleLoading = () => {
+    this.setState({ loading: !this.state.loading });
+  };
+
   logout = () => {
     Auth.logOut(() => (window.location = "/"));
   };
@@ -169,8 +172,6 @@ class Mainpage extends React.Component {
           togglePostForm={this.togglePostForm}
           toggleEventForm={this.toggleEventForm}
           logout={this.logout}
-          // firstName={this.state.user.firstName}
-          // user={this.state.user}
           postFormShow={this.state.postFormShow}
           eventFormShow={this.state.eventFormShow}
           toggleNavbar={this.toggleNavbar}
@@ -180,6 +181,8 @@ class Mainpage extends React.Component {
         <div>
           {this.state.postFormShow ? (
             <Postform
+              loading={this.state.loading}
+              toggleLoading={this.toggleLoading}
               userState={this.state.user}
               closeForm={this.togglePostForm}
             />
@@ -187,6 +190,8 @@ class Mainpage extends React.Component {
 
           {this.state.eventFormShow ? (
             <EventForm
+              loading={this.state.loading}
+              toggleLoading={this.toggleLoading}
               userState={this.state.user}
               closeForm={this.toggleEventForm}
               eventShow={this.state.eventShow}
@@ -203,6 +208,8 @@ class Mainpage extends React.Component {
                     postData={post}
                     userState={this.state.user}
                     replyCount={post.replies.length}
+                    loading={this.state.loading}
+                    toggleLoading={this.toggleLoading}
                   />
                 ))
               : this.state.events.map(event => (
@@ -212,6 +219,8 @@ class Mainpage extends React.Component {
                     eventShow={this.state.eventShow}
                     userState={this.context.user}
                     replyCount={event.replies.length}
+                    loading={this.state.loading}
+                    toggleLoading={this.toggleLoading}
                   />
                 ))}
           </div>

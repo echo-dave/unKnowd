@@ -3,6 +3,7 @@ import axios from "axios";
 import { clearImageSelect, fileChange } from "../../utils/ClearImageSelect";
 import PhotoInput from "../PhotoInput/PhotoInput";
 import "./styles.scss";
+import Spinner from "../Spinner/Spinner";
 
 class PostForm extends Component {
   //settting compoent forms initial structure
@@ -56,6 +57,9 @@ class PostForm extends Component {
     // for (var [key, value] of formPostData.entries()) {
     //   console.log(key, value);
     // }
+
+    this.props.toggleLoading();
+
     this.props.eventShow
       ? this.saveEvent(formPostData)
       : this.savePost(formPostData);
@@ -124,6 +128,7 @@ class PostForm extends Component {
           >
             Post!
           </button>
+          {this.props.loading ? <Spinner /> : null}
         </form>
       </div>
     );

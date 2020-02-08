@@ -21,13 +21,17 @@ module.exports = function(app, io) {
     }
 
     function signup(req) {
-      User.create(req.body)
+      User.create(req.body, { new: true })
         .then(function(result) {
-          res.json({ message: "user created", user: result._id });
-          console.log("done");
+          if (result._id) {
+            console.log(result);
+
+            res.json({ message: "user created", user: result._id });
+            console.log("done");
+          }
         })
         .catch(function(err) {
-          res.status(500).json({ error: err.message });
+          res.status(500).json({ error: err._message });
         });
     }
   });

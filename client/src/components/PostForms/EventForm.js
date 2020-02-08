@@ -6,6 +6,7 @@ import { clearImageSelect, fileChange } from "../../utils/ClearImageSelect";
 import PhotoInput from "../PhotoInput/PhotoInput";
 import "react-datepicker/dist/react-datepicker.css";
 import "./styles.scss";
+import Spinner from "../Spinner/Spinner";
 
 class EventForm extends Component {
   constructor(props) {
@@ -76,6 +77,8 @@ class EventForm extends Component {
           eventData.append("date.start", this.state.start);
           eventData.append("creator", this.state.creator);
           eventData.append("img", this.state.img);
+
+          this.props.toggleLoading();
 
           axios
             .post("/api/event", eventData)
@@ -160,6 +163,7 @@ class EventForm extends Component {
           >
             Submit
           </button>
+          {this.props.loading ? <Spinner /> : null}
         </form>
       </div>
     );
