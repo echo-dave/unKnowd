@@ -12,7 +12,11 @@ class CommentDisplay extends Component {
           firstName={creator.firstName}
           creatorPhoto={creator.photo}
         />
-        {photos ? <img alt="" className="postPhotos" src={photos} /> : null}
+        {photos ? (
+          <div className="postPhotos">
+            <img alt="" className="commentPhotos" src={photos} />
+          </div>
+        ) : null}
         <p
           className={!photos == "" ? "clearRight description" : "description"}
           dangerouslySetInnerHTML={{
