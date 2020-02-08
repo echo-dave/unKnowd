@@ -11,7 +11,6 @@ function Auth() {
       .post("/api/signup", userData)
       .then(function(data) {
         logIn(email, password, cb);
-        console.log(data);
       })
       .catch(function(err) {
         //   console.log(err.response.status, err.response.data);
@@ -20,7 +19,6 @@ function Auth() {
   }
 
   function logIn(email, password, cb) {
-    //code goes here
     axios
       .post("/api/authenticate", { email: email, password: password })
       .then(response => {
@@ -28,7 +26,6 @@ function Auth() {
         cb(response);
       })
       .catch(function(err) {
-        console.log(err.response);
         if (err.response.status === 401) cb(err.response);
       });
   }

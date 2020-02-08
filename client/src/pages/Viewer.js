@@ -22,14 +22,12 @@ class Viewer extends React.Component {
     // socket.on("new post", data => console.log(data));
 
     socket.on("new post", post => {
-      console.log(post);
       this.setState({
         posts: [post, ...this.state.posts]
       });
     });
 
     socket.on("new event", event => {
-      console.log(event);
       this.setState({
         events: [event, ...this.state.events]
       });
@@ -37,9 +35,7 @@ class Viewer extends React.Component {
   }
 
   resizeVh = bodyHeight => {
-    console.log("rezize");
     bodyHeight = window.innerHeight;
-    // bodyHeight = window.innerHeight;
     document.documentElement.style.setProperty(
       "--bodyHeight",
       `${bodyHeight}px`

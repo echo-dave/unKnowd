@@ -27,13 +27,12 @@ module.exports = function(app, io) {
             console.log(result);
 
             res.json({ message: "user created", user: result._id });
-            console.log("done");
           }
         })
         .catch(function(err) {
           if (err.code === 11000 ) res.status(500).json({error: "email in use"});
           else {
-          res.status(500).json({ error: err.errmsg })}
+          res.status(500).json({ error: err.errmsg })};
           console.log(err);
           
         });

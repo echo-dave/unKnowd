@@ -64,7 +64,6 @@ class UpdateProfile extends Component {
   }
 
   resizeVh = bodyHeight => {
-    console.log("rezize");
     bodyHeight = window.innerHeight;
     // bodyHeight = window.innerHeight;
     document.documentElement.style.setProperty(
@@ -103,11 +102,7 @@ class UpdateProfile extends Component {
 
 
     Auth.logIn(this.state.info.email, this.state.currentPassword, response => {
-      console.log(response.status);
-
       if (response.status === 200) {
-        console.log("initial auth ok");
-
         let updatingUser = new FormData();
         if (this.state.email) updatingUser.append("email", this.state.email);
         if (this.state.firstName)
@@ -146,8 +141,6 @@ class UpdateProfile extends Component {
             })
           });
       } else if (response.status === 401) {
-        console.log("bad password");
-        console.log(response.response.status, response.response.data);
           this.setState({
             loading: !this.state.loading,
             error: `${response.response.status} | ${response.response.data.error}`

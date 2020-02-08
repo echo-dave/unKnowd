@@ -64,7 +64,7 @@ class SignUpForm extends Component {
           this.props.history.push("/");
           window.location = "/mainpage";
         } else {
-          console.log(response.response.status, response.response.data);
+         // console.log(response.response.status, response.response.data);
           this.setState({
             loading: !this.state.loading,
             error: `${response.response.status} | ${response.response.data.error}`
