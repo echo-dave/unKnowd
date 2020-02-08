@@ -21,7 +21,7 @@ module.exports = function(app, io) {
     }
 
     function signup(req) {
-      User.create(req.body, { new: true })
+      User.create(req.body)
         .then(function(result) {
           if (result._id) {
             console.log(result);
@@ -31,7 +31,11 @@ module.exports = function(app, io) {
           }
         })
         .catch(function(err) {
-          res.status(500).json({ error: err._message });
+          if (err.code === 11000 ) res.status(500).json({error: "email in use"});
+          else {
+          res.status(500).json({ error: err.errmsg })}
+          console.log(err);
+          
         });
     }
   });
