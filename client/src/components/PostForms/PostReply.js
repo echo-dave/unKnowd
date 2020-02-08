@@ -35,7 +35,6 @@ class PostForm extends Component {
 
   fileChangeHandler = event => {
     var file = event.target.files[0];
-    // console.log(file);
     this.setState({
       photos: file
     });
@@ -44,7 +43,6 @@ class PostForm extends Component {
   //want to prevent the default of form submit which is to just refresh the page
   submitHandler = e => {
     e.preventDefault();
-    // console.log(Auth.getToken());
     let currentDate = new Date();
 
     let formPostData = new FormData();
@@ -74,14 +72,11 @@ class PostForm extends Component {
     })
       .then(() => {
         this.props.closeForm();
-        // this.props.refreshComments();
       })
       .catch(err => console.log(err));
   };
 
   savePost = postData => {
-    console.log("save post reply");
-
     axios({
       method: "post",
       url: "/api/replyComment",

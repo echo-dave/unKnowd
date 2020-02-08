@@ -4,12 +4,11 @@ const cloud = require("../nodejs/cloudinaryUp");
 module.exports = function(req, imgProperty, dbfunction) {
   let fileName = req.files[imgProperty].name.split(".");
   fileExtension = fileName[fileName.length - 1];
-  fileName.pop()
-  fileName = fileName.join(".")
+  fileName.pop();
+  fileName = fileName.join(".");
 
   req.files[imgProperty].namelong =
-    fileName + "-" +
-    Date.now() + "." + fileExtension;
+    fileName + "-" + Date.now() + "." + fileExtension;
 
   req.files[imgProperty].mv(
     path.join(
@@ -37,32 +36,4 @@ module.exports = function(req, imgProperty, dbfunction) {
       }
     }
   );
-  // } else {
-  //   db.Event.create(req.body)
-  //     .then(function(data) {
-  //       data
-  //         .populate("creator")
-  //         .execPopulate()
-  //         .then(populatedData => {
-  //           io.sockets.emit("new event", populatedData);
-  //           res.end();
-  //         });
-  //     })
-  //     .catch(function(err) {
-  //       console.log(err);
-  //     });
-  // }
-
-  // dbfunction (body) {
-  //   db.Post.create(body).then(function(data) {
-  //       data
-  //         .populate("creator")
-  //         .execPopulate()
-  //         .then(populatedData => {
-  //           io.sockets.emit("new post", populatedData);
-  //           res.end();
-  //         });
-  //       // res.json(data);
-  //     });
-  // })
 };

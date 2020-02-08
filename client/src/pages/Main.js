@@ -73,12 +73,10 @@ class Mainpage extends React.Component {
         // this.setState({ comment: !this.state.comment });
         this.getEvents();
       }
-      console.log("done");
     });
   }
 
   resizeVh = bodyHeight => {
-    console.log("rezize");
     bodyHeight = window.innerHeight;
     // bodyHeight = window.innerHeight;
     document.documentElement.style.setProperty(
