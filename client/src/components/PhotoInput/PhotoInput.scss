@@ -11,11 +11,11 @@
 .file.is-primary .file-cta {
   background-color: darken(desaturate($color: $tertiary, $amount: 100), 10);
   color: $light;
- 
+
   :hover,
   :focus,
   .is-hovered {
-    background-color: 
+    background-color:
       lighten(
       desaturate($color: $tertiary, $amount: 100),
       $amount: 5

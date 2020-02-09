@@ -149,7 +149,7 @@ h1#title {
 #loginButton:focus,
 #signupButton:hover,
 #signupButton:focus {
-  background-color: 
+  background-color:
     lighten(
     desaturate($color: $tertiary, $amount: 100),
     $amount: 5
