@@ -55,42 +55,23 @@ class EventForm extends Component {
     e.preventDefault();
 
     if (this.state.title && this.state.description) {
+      let eventData = new FormData();
+      eventData.append("title", this.state.title);
+      eventData.append("description", this.state.description);
+      eventData.append("address", this.state.address);
+      eventData.append("date.start", this.state.start);
+      eventData.append("creator", this.state.creator);
+      eventData.append("img", this.state.img);
+
+      this.props.toggleLoading();
+
       axios
-        .get(
-          `https://api.opencagedata.com/geocode/v1/json?q=${this.state.address}&key=73b2bdf763ad428694bf092b08ad995d&language=es&pretty=1`
-        )
-        .then(data => {
-          // console.log(data);
-          this.setState({
-            lat: data.data.results[0].geometry.lat,
-            lon: data.data.results[0].geometry.lng
-          });
-          // console.log(this.state.lat);
-          // console.log(this.state.lon);
-
-          let eventData = new FormData();
-          eventData.append("title", this.state.title);
-          eventData.append("description", this.state.description);
-          eventData.append("address", this.state.address);
-          eventData.append("lat", this.state.lat);
-          eventData.append("lon", this.state.lon);
-          eventData.append("date.start", this.state.start);
-          eventData.append("creator", this.state.creator);
-          eventData.append("img", this.state.img);
-
-          this.props.toggleLoading();
-
-          axios
-            .post("/api/event", eventData)
-            .then(() => {
-              if (!this.props.eventShow) this.props.togglePostEventViews();
-              this.props.closeForm();
-            })
-            .catch(err => console.log(err.response));
+        .post("/api/event", eventData)
+        .then(() => {
+          if (!this.props.eventShow) this.props.togglePostEventViews();
+          this.props.closeForm();
         })
-        .catch(error => {
-          console.log(error);
-        });
+        .catch(err => console.log(err.response));
     }
   };
 

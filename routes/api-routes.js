@@ -6,6 +6,10 @@ const authWare = require("../middleware/authware");
 // const socket = socketIOClient("http://127.0.0.1:3001");
 const upload = require("../nodejs/upload");
 const bcrypt = require("bcryptjs");
+const googleMapsClient = require("@google/maps").createClient({
+  key: process.env.GOOGLE_GEOCODE,
+  Promise: Promise
+});
 
 module.exports = function(app, io) {
   app.post("/api/signup", function(req, res) {
@@ -30,11 +34,12 @@ module.exports = function(app, io) {
           }
         })
         .catch(function(err) {
-          if (err.code === 11000 ) res.status(500).json({error: "email in use"})
+          if (err.code === 11000)
+            res.status(500).json({ error: "email in use" });
           else {
-          res.status(500).json({ error: err.errmsg })}
+            res.status(500).json({ error: err.errmsg });
+          }
           console.log(err);
-          
         });
     }
   });
@@ -187,36 +192,50 @@ module.exports = function(app, io) {
   //we need to have the user _id to insert into the event as well as getting the user name and user photo from the User collection
   app.post("/api/event", function(req, res) {
     console.log(req.body);
+    //get latitude on longitude and store in request object
+    googleMapsClient
+      .geocode({ address: req.body.address })
+      .asPromise()
+      .then(response => {
+        req.body.lat = response.json.results[0].geometry.location.lat;
+        req.body.lon = response.json.results[0].geometry.location.lng;
 
-    if (req.files != null) {
-      console.log("file--------------file");
+        console.log("<------------------>");
+        console.log(req.body);
+        res.json(req.body);
+        if (req.files != null) {
+          console.log("file--------------file");
 
-      upload(req, "img", newEvent);
-    } else {
-      newEvent(req);
-    }
-    function newEvent(req) {
-      db.Event.create(req.body)
-        .then(function(data) {
-          data
-            .populate("creator")
-            .execPopulate()
-            .then(populatedData => {
-              io.sockets.emit("new event", populatedData);
-              console.log("done");
+          upload(req, "img", newEvent);
+        } else {
+          newEvent(req);
+        }
+        function newEvent(req) {
+          db.Event.create(req.body)
+            .then(function(data) {
+              data
+                .populate("creator")
+                .execPopulate()
+                .then(populatedData => {
+                  io.sockets.emit("new event", populatedData);
+                  console.log("done");
 
-              res.end();
+                  res.end();
+                })
+                .catch(function(err) {
+                  console.log(err);
+                  res.status(500).json({ error: err });
+                });
             })
             .catch(function(err) {
               console.log(err);
               res.status(500).json({ error: err });
             });
-        })
-        .catch(function(err) {
-          console.log(err);
-          res.status(500).json({ error: err });
-        });
-    }
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   });
 
   //make post comment
