@@ -8,7 +8,7 @@ import UserContext from "./context/UserContext";
 import Mainpage from "./pages/Main";
 import Viewer from "./pages/Viewer";
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
-import axios from 'axios';
+import axios from "axios";
 import "./app.scss";
 
 const NotFound = () => (
@@ -43,7 +43,7 @@ class App extends Component {
   componentDidMount() {
 axios.get("/api/mapsecretkeys").then(key => {
   this.setState(key.data);
-}).catch(err=> console.log(err))
+}).catch(err => console.log(err));
 
     
     const token = localStorage.getItem("token");
