@@ -4,6 +4,10 @@
   margin-top: 1.3rem;
 }
 
+.comments.box:not(:last-child) {
+  margin-bottom: 0.5rem;
+}
+
 .post > div + .comments.box ~ .comments.box,
 .event > div + .comments.box ~ .comments.box {
   margin-top: 0;
@@ -13,9 +17,9 @@
   background-color: $commentGrey;
   margin-bottom: 0;
 }
-.comments.box:not(:last-child) {
-  margin-bottom: 0.5rem;
-}
+
+
+
 .commentWrap {
   margin-top: 1.5rem;
 }

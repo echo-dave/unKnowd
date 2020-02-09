@@ -149,12 +149,14 @@ h1#title {
 #loginButton:focus,
 #signupButton:hover,
 #signupButton:focus {
-  background-color: lighten(
+  background-color: 
+    lighten(
     desaturate($color: $tertiary, $amount: 100),
     $amount: 5
   );
   color: $dark;
 }
+
 .badlogin {
   color: red;
   font-size: 0.9em;
@@ -189,6 +191,7 @@ h1#title {
 .clearRight {
   clear: right;
 }
+
 .imageGroup {
   float: left;
   clear: right;

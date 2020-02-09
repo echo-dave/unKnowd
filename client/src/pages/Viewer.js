@@ -50,7 +50,6 @@ class Viewer extends React.Component {
     axios
       .get("/api/posts")
       .then(res => {
-        console.log(res);
         this.setState({ posts: res.data });
       })
       .catch(err => console.log(err));
@@ -61,7 +60,6 @@ class Viewer extends React.Component {
       .get("/api/events")
       .then(res => {
         this.setState({ events: res.data });
-        console.log(this.state.events);
       })
       .catch(err => console.log(err));
   };
