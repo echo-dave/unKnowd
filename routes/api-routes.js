@@ -159,9 +159,10 @@ module.exports = function(app, io) {
 
   app.get("/api/events", function(req, res) {
     let currentDate = new Date();
+    let yesterday = currentDate.setDate(currentDate.getDate() - 1);
     // console.log(currentDate);
     db.Event.find({
-      "date.start": { $gte: new Date(currentDate) }
+      "date.start": { $gte: new Date(yesterday) }
     })
       .sort({ "date.start": 1 })
       .populate("creator")
