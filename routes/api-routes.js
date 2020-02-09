@@ -329,4 +329,8 @@ module.exports = function(app, io) {
         });
     }
   });
+
+  app.get("/api/mapsecretkeys", function(req, res) {
+    res.json({ map: process.env.MAPJS });
+  });
 };

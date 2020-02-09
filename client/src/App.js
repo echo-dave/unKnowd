@@ -8,6 +8,7 @@ import UserContext from "./context/UserContext";
 import Mainpage from "./pages/Main";
 import Viewer from "./pages/Viewer";
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
+import axios from 'axios';
 import "./app.scss";
 
 const NotFound = () => (
@@ -40,6 +41,11 @@ class App extends Component {
   };
 
   componentDidMount() {
+axios.get("/api/mapsecretkeys").then(key => {
+  this.setState(key.data);
+}).catch(err=> console.log(err))
+
+    
     const token = localStorage.getItem("token");
     if (token) {
       authenticatedAxios
@@ -57,13 +63,23 @@ class App extends Component {
           <UserContext.Provider
             value={{
               user: user,
-              setUser: setUser
+              setUser: setUser,
+              map: this.state.may
             }}
           >
             <Switch>
-              <ProtectedRoute exact path="/mainpage" component={Mainpage} />
-              <Route exact path="/viewer" component={Viewer} />
-              <ProtectedRoute exact path="/profile" component={UpdateProfile} />
+              <ProtectedRoute 
+                exact path="/mainpage" 
+                component={() => <Mainpage mapkey={this.state.map} />} 
+              />
+                <Route 
+                  exact path="/viewer" 
+                  component={() => <Viewer mapkey={this.state.map} />} 
+                  />
+              <ProtectedRoute 
+              exact path="/profile" 
+              component={UpdateProfile} 
+              />
               <Route
                 exact
                 path="/"
