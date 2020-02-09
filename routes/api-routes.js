@@ -34,11 +34,8 @@ module.exports = function(app, io) {
           }
         })
         .catch(function(err) {
-          if (err.code === 11000)
-            res.status(500).json({ error: "email in use" });
-          else {
-            res.status(500).json({ error: err.errmsg });
-          }
+          if (err.code === 11000) res.status(500).json({ error: "email in use" });
+          else res.status(500).json({ error: err.errmsg });
           console.log(err);
         });
     }
