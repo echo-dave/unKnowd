@@ -68,13 +68,13 @@ axios.get("/api/mapsecretkeys").then(key => {
             }}
           >
             <Switch>
-              <ProtectedRoute 
-                exact path="/mainpage" 
-                component={() => <Mainpage mapkey={this.state.map} />} 
+              <ProtectedRoute
+                exact path="/mainpage"
+                component={Mainpage}
               />
-                <Route 
-                  exact path="/viewer" 
-                  component={() => <Viewer mapkey={this.state.map} />} 
+                <Route
+                  exact path="/viewer"
+                  component={Viewer}
                   />
               <ProtectedRoute 
               exact path="/profile" 
