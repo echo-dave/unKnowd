@@ -114,6 +114,9 @@ class EventForm extends Component {
           <DatePicker
             selected={this.state.start}
             onChange={this.handleDateChange}
+            timeInputLabel="Time:"
+            timeFormat="HH:mm"
+            showTimeInput
             className="input"
           />
 
