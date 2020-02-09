@@ -8,12 +8,14 @@
   float: left;
   margin-right: 0.5rem;
 }
+
 #profile.container {
   max-width: 640px;
   margin-top: 5rem;
   height: calc(var(--bodyHeight) - 5rem);
   overflow-y: scroll;
   padding-top: 1rem;
+
   .column {
     padding-bottom: 1rem;
   }
@@ -39,6 +41,7 @@ form {
     font-weight: bold;
     text-align: right;
   }
+
   tr td:nth-child(2) {
     padding-left: 0.5em;
   }
@@ -57,9 +60,3 @@ form {
     margin-top: 3.2rem;
   }
 }
-
-// @media only screen and (max-width: 768px) {
-//   #profile.container {
-//     height: calc(var(--bodyHeight) - 2.4rem);
-//   }
-// }

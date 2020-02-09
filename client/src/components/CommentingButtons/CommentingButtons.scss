@@ -1,8 +1,7 @@
 @import "../../app.scss";
 
 .commentingButtons {
-  /* clear: both; */
-  padding: 1rem 0rem 1rem 0;
+  padding: 1rem 0 1rem 0;
   text-align: right;
   position: relative;
 }
@@ -17,6 +16,7 @@
   top: 0.5rem;
   right: 0;
 }
+
 .commentingButtons button:nth-child(1) {
   position: absolute;
   top: 0.5rem;
@@ -35,11 +35,13 @@
   color: $secondary;
   vertical-align: middle;
   text-align: center;
+
   span {
     position: relative;
     bottom: 0.11em;
   }
 }
+
 .is-smaller {
   font-size: 0.8em;
   height: $smaller;

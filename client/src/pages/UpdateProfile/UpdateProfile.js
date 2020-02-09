@@ -138,7 +138,7 @@ class UpdateProfile extends Component {
             this.setState({
               loading: !this.state.loading,
               error: `${err.response.status} | ${err.response.data.error}`
-            })
+            });
           });
       } else if (response.status === 401) {
           this.setState({

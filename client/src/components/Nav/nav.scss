@@ -1,6 +1,7 @@
 @import "../../app.scss";
 @import "../../../../node_modules/bulma/sass/components/navbar.sass";
 @import "../../../../node_modules/bulma/sass/components/menu.sass";
+
 .navbar {
   background-color: rgba(255, 255, 255, 0.95);
 }
@@ -11,14 +12,12 @@
 
 .navbar-burger {
   background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
+
   :hover,
   :active,
   :checked,
   :focus {
-    background-color: lighten(
-      desaturate(lighten($secondary, 64.31372549019608), 85%),
-      5.6
-    );
+    background-color: lighten(desaturate(lighten($secondary, 64.31372549019608), 85%), 5.6);
   }
 }
 
@@ -26,18 +25,10 @@
   margin: 0rem;
   font-weight: bold;
 }
+
 .navUserName {
   margin-left: 0.25em;
 }
-// .navbar-menu a {
-//   width: 8.5em;
-// }
-
-// .navbar-item .button {
-//   margin-top: 0.5rem;
-//   background-color: darken(desaturate($color: $tertiary, $amount: 100), 10);
-//   color: $light;
-// }
 
 .navbar-item > .button {
   height: 65px;
@@ -50,7 +41,6 @@
 }
 
 .navbar-item .button:focus {
-  // background-color: $primary;
   color: $dark;
   border: 1px black solid;
   background-color: none;
@@ -58,11 +48,6 @@
 
 .navbar-item .button:hover,
 .navbar-item .button:active {
-  // background-color: darken(
-  //   desaturate($color: $primary, $amount: 100),
-  //   $amount: 25
-  // );
-  // color: $light;
   border: solid 1px black;
   background-color: none;
 }
@@ -83,33 +68,39 @@ nav .userphoto {
     margin-left: 1rem;
   }
 }
+
 @media only screen and (max-width: 1023px) {
   .navbar-end {
-    margin-right: 0rem !important;
+    margin-right: 0 !important;
   }
+
   .navbar-menu {
     background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
     background-color: rgba(255, 255, 255, 0.95);
     width: 15rem;
     position: absolute;
-    right: 0rem;
+    right: 0;
     text-align: right;
     padding: 1rem;
     border-radius: 0 0 0.25rem 0.25rem;
+
     .navbar-item {
       text-align: center;
       padding: 0 12px;
     }
+
     button {
       float: right;
       margin: 0.5em;
     }
+
     .userNameDisplay {
       margin: 0.5em auto;
       clear: right;
       float: none;
       text-align: center;
     }
+
     .userphoto {
       float: none;
       margin: 0 auto;
