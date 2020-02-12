@@ -67,7 +67,6 @@ class PostForm extends Component {
   };
 
   savePost = (postData, route) => {
-    console.log("save event reply");
 
     axios({
       method: "post",

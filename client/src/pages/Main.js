@@ -44,6 +44,8 @@ class Mainpage extends React.Component {
     this.resizeVh(bodyHeight);
     window.addEventListener("resize", this.resizeVh.bind(this));
 
+    if (window.innerWidth < 769) this.toggleMapMobile();
+
     this.getPosts();
     this.getEvents();
     const socket = io();
@@ -151,7 +153,7 @@ class Mainpage extends React.Component {
         .setAttribute("style", `height:calc(${postHeight} * .6 - 5rem)`);
     }
     this.setState({ mapShow: !this.state.mapShow });
-    this.toggleNavbar();
+    if (this.state.burgerActive) this.toggleNavbar();
   };
 
   toggleLoading = () => {
@@ -175,6 +177,7 @@ class Mainpage extends React.Component {
           eventFormShow={this.state.eventFormShow}
           toggleNavbar={this.toggleNavbar}
           toggleMapMobile={this.toggleMapMobile}
+          mapShow={this.state.mapShow}
         />
 
         <div>
