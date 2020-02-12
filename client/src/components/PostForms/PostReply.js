@@ -60,17 +60,18 @@ class PostForm extends Component {
 
     this.props.toggleLoading();
 
+//consolidated to single savePost function. true saves event reply, false saves post reply
     this.props.eventShow
-      ? this.saveEvent(formPostData)
-      : this.savePost(formPostData);
+      ? this.savePost(formPostData, "replyEventComment")
+      : this.savePost(formPostData, "replyComment");
   };
 
-  saveEvent = postData => {
+  savePost = (postData, route) => {
     console.log("save event reply");
 
     axios({
       method: "post",
-      url: "/api/replyEventComment",
+      url: `/api/${route}`,
       data: postData,
       headers: { "Content-Type": "multipart/form-data" }
     })
@@ -81,20 +82,7 @@ class PostForm extends Component {
       .catch(err => console.log(err));
   };
 
-  savePost = postData => {
-    axios({
-      method: "post",
-      url: "/api/replyComment",
-      data: postData,
-      headers: { "Content-Type": "multipart/form-data" }
-    })
-      .then(() => {
-        // this.props.refreshComments();
-        this.props.toggleLoading();
-        this.props.closeForm();
-      })
-      .catch(err => console.log(err));
-  };
+  // savePost = postData => {
 
   render() {
     return (
