@@ -47,7 +47,6 @@ class Mainpage extends React.Component {
     this.getPosts();
     this.getEvents();
     const socket = io();
-    // socket.on("new post", data => console.log(data));
 
     socket.on("new post", post => {
       // console.log(post);
@@ -201,8 +200,8 @@ class Mainpage extends React.Component {
         </div>
         <div className="columns">
           <div className="column posts">
-            {!this.state.eventShow
-              ? this.state.posts.map(post => (
+            {!this.state.eventShow ?
+               this.state.posts.map(post => (
                   <Post
                     key={post._id}
                     postData={post}
@@ -226,7 +225,10 @@ class Mainpage extends React.Component {
           </div>
           {window.innerWidth <= 768 && !this.state.mapShow ? null : (
             <div className="column events">
-              <EventMap events={this.state.events} apiKey={this.props.mapkey}/>
+              <EventMap
+                events={this.state.events}
+                mapKey={this.context.mapKey}
+              />
             </div>
           )}
         </div>
