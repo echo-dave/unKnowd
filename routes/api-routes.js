@@ -34,7 +34,8 @@ module.exports = function(app, io) {
           }
         })
         .catch(function(err) {
-          if (err.code === 11000) res.status(500).json({ error: "email in use" });
+          if (err.code === 11000)
+            res.status(500).json({ error: "email in use" });
           else res.status(500).json({ error: err.errmsg });
           console.log(err);
         });
@@ -139,19 +140,6 @@ module.exports = function(app, io) {
           .catch(err => res.status(500).json({ error: err.message }));
       });
     }
-  });
-
-  app.get("/api/maps", function(req, res) {
-    let currentDate = new Date();
-    // console.log(currentDate);
-    db.Event.find({
-      "date.start": { $gte: new Date(currentDate) }
-    })
-      .then(mapEvents => res.json(mapEvents))
-      .catch(err => {
-        console.log(err);
-        res.json(err.response);
-      });
   });
 
   app.get("/api/events", function(req, res) {
@@ -328,6 +316,6 @@ module.exports = function(app, io) {
   });
 
   app.get("/api/mapsecretkeys", function(req, res) {
-    res.json({ map: process.env.MAPJS });
+    res.json({ mapKey: process.env.MAPJS });
   });
 };
