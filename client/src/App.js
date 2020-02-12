@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
 import authenticatedAxios from "./utils/AuthenticatedAxios";
@@ -41,11 +40,13 @@ class App extends Component {
   };
 
   componentDidMount() {
-axios.get("/api/mapsecretkeys").then(key => {
-  this.setState(key.data);
-}).catch(err => console.log(err));
+    axios
+      .get("/api/mapsecretkeys")
+      .then(key => {
+        this.setState(key.data);
+      })
+      .catch(err => console.log(err));
 
-    
     const token = localStorage.getItem("token");
     if (token) {
       authenticatedAxios
@@ -64,22 +65,13 @@ axios.get("/api/mapsecretkeys").then(key => {
             value={{
               user: user,
               setUser: setUser,
-              map: this.state.may
+              mapKey: this.state.mapKey
             }}
           >
             <Switch>
-              <ProtectedRoute
-                exact path="/mainpage"
-                component={Mainpage}
-              />
-                <Route
-                  exact path="/viewer"
-                  component={Viewer}
-                  />
-              <ProtectedRoute 
-              exact path="/profile" 
-              component={UpdateProfile} 
-              />
+              <ProtectedRoute exact path="/mainpage" component={Mainpage} />
+              <Route exact path="/viewer" component={Viewer} />
+              <ProtectedRoute exact path="/profile" component={UpdateProfile} />
               <Route
                 exact
                 path="/"
