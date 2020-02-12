@@ -1,7 +1,8 @@
 function clearImageSelect(imageStateName) {
   document.querySelector("#imageSelect").value = "";
   this.setState({
-    [imageStateName]: ""
+    [imageStateName]: "",
+    preview:""
   });
 }
 
