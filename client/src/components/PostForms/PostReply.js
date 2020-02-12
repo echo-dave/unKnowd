@@ -53,17 +53,16 @@ class PostForm extends Component {
     const reader = new FileReader();
     reader.onload = (function(aImg){ return function(e) { 
       aImg.src =  e.target.result;
-    this.setState({preview: aImg.src});
-    };
-     })(preview).bind(this);
-   reader.readAsDataURL(file);
+      this.setState({preview: aImg.src});
+      };
+    })(preview).bind(this);
+    reader.readAsDataURL(file);
 
   //  console.log(previewTemp);
     // document.querySelector("#previewDiv").appendChild(previewTemp)
    
-    this.setState({preview:preview.src})
-
-  }
+    this.setState({preview:preview.src});
+  };
 
   //want to prevent the default of form submit which is to just refresh the page
   submitHandler = e => {
@@ -71,8 +70,8 @@ class PostForm extends Component {
     if (!this.state.msg) {
     console.log("What did you want to say?");
     return
-  }
-  
+  };
+
     let currentDate = new Date();
 
     let formPostData = new FormData();
@@ -159,7 +158,7 @@ class PostForm extends Component {
           </div>
       </div>        
     )
-  }  
-}
+  };
+};
 
 export default PostForm;
