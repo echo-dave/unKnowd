@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
+import moment from "moment";
 
 class MapContainer extends Component {
   state = {
@@ -20,6 +21,7 @@ class MapContainer extends Component {
           lat: events.lat,
           lng: events.lon
         }}
+        date={events.date.start}
         onClick={this.onMarkerClick}
         name={events.title}
       />
@@ -59,6 +61,7 @@ class MapContainer extends Component {
             <h1 className="title is-4" style={{ marginBottom: ".5rem" }}>
               {this.state.selectedPlace.name}
             </h1>
+            <p className="is-size-7">{moment (this.state.selectedPlace.date).format("dddd MMM Do YYYY")}</p>
             <div className="is-size-6">
               <p>
                 <span className="has-text-weight-bold">Where: </span>
@@ -73,6 +76,7 @@ class MapContainer extends Component {
     );
   }
 }
-export default GoogleApiWrapper({
-  apiKey: "AIzaSyAePGrHhmiuMqr9vOL5PxtJpvSNsYjEnDk"
-})(MapContainer);
+
+export default GoogleApiWrapper(props => ({
+  apiKey: props.mapKey
+}))(MapContainer);
