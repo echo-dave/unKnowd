@@ -69,7 +69,7 @@ class PostForm extends Component {
     e.preventDefault();
     if (!this.state.msg) {
     console.log("What did you want to say?");
-    return
+    return;
   };
 
     let currentDate = new Date();
@@ -157,8 +157,8 @@ class PostForm extends Component {
         </form>
           </div>
       </div>        
-    )
+    );
   };
-};
+}
 
 export default PostForm;

@@ -32,7 +32,6 @@
   margin-top: 0.5rem;
 }
 
-
 .newPost {
   background-color: $secondary;
   color: $light;
@@ -52,8 +51,8 @@
   margin-top: 1.5rem;
   .postPhotos {
     img {
-      max-height:250px;
-      max-width:100%;
+      max-height: 250px;
+      max-width: 100%;
     }
   }
   .file {
@@ -63,7 +62,7 @@
     width: 100%;
     font-size: .85rem;
     margin-bottom: 3rem;
-    padding:.5rem;
+    padding: .5rem;
     border-radius: .25rem;
     border: rgb(219, 219, 219)
   }
@@ -82,13 +81,13 @@
     color: $light;
   }
   .box {
-    background-color: lighten( $commentGrey, 5%);
+    background-color: lighten($commentGrey, 5%);
   }
   #replyButton:hover,
   #replyButton:active,
   #replyButton:focus {
-  background-color: lighten($secondary, 5.686274509803921);
-  color: white;
+    background-color: lighten($secondary, 5.686274509803921);
+    color: white;
   }
 }
 
