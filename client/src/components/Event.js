@@ -64,6 +64,7 @@ class Event extends Component {
         </div>
         {this.state.toggleReply ? (
           <PostReply
+            toggleLoading={this.props.toggleLoading}
             userState={this.props.userState}
             postId={_id}
             closeForm={this.toggleReply}
