@@ -3,7 +3,7 @@ const cloud = require("../nodejs/cloudinaryUp");
 
 module.exports = function(req, imgProperty, dbfunction) {
   let fileName = req.files[imgProperty].name.split(".");
-  fileExtension = fileName[fileName.length - 1];
+  let fileExtension = fileName[fileName.length - 1];
   fileName.pop();
   fileName = fileName.join(".");
 

@@ -44,10 +44,11 @@ class Mainpage extends React.Component {
     this.resizeVh(bodyHeight);
     window.addEventListener("resize", this.resizeVh.bind(this));
 
+    if (window.innerWidth < 769) this.toggleMapMobile();
+
     this.getPosts();
     this.getEvents();
     const socket = io();
-    // socket.on("new post", data => console.log(data));
 
     socket.on("new post", post => {
       // console.log(post);
@@ -152,7 +153,7 @@ class Mainpage extends React.Component {
         .setAttribute("style", `height:calc(${postHeight} * .6 - 5rem)`);
     }
     this.setState({ mapShow: !this.state.mapShow });
-    this.toggleNavbar();
+    if (this.state.burgerActive) this.toggleNavbar();
   };
 
   toggleLoading = () => {
@@ -176,6 +177,7 @@ class Mainpage extends React.Component {
           eventFormShow={this.state.eventFormShow}
           toggleNavbar={this.toggleNavbar}
           toggleMapMobile={this.toggleMapMobile}
+          mapShow={this.state.mapShow}
         />
 
         <div>
@@ -201,8 +203,8 @@ class Mainpage extends React.Component {
         </div>
         <div className="columns">
           <div className="column posts">
-            {!this.state.eventShow
-              ? this.state.posts.map(post => (
+            {!this.state.eventShow ?
+               this.state.posts.map(post => (
                   <Post
                     key={post._id}
                     postData={post}
@@ -226,7 +228,10 @@ class Mainpage extends React.Component {
           </div>
           {window.innerWidth <= 768 && !this.state.mapShow ? null : (
             <div className="column events">
-              <EventMap events={this.state.events} />
+              <EventMap
+                events={this.state.events}
+                mapKey={this.context.mapKey}
+              />
             </div>
           )}
         </div>

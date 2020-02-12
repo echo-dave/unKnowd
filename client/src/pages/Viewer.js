@@ -75,7 +75,7 @@ class Viewer extends React.Component {
             ))}
           </div>
           <div className="column events">
-            <EventMap events={this.state.events} />
+            <EventMap events={this.state.events} apiKey={this.props.mapkey}/>
           </div>
         </div>
       </div>

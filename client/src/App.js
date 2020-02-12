@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
 import authenticatedAxios from "./utils/AuthenticatedAxios";
@@ -8,6 +7,7 @@ import UserContext from "./context/UserContext";
 import Mainpage from "./pages/Main";
 import Viewer from "./pages/Viewer";
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
+import axios from "axios";
 import "./app.scss";
 
 const NotFound = () => (
@@ -40,6 +40,13 @@ class App extends Component {
   };
 
   componentDidMount() {
+    axios
+      .get("/api/mapsecretkeys")
+      .then(key => {
+        this.setState(key.data);
+      })
+      .catch(err => console.log(err));
+
     const token = localStorage.getItem("token");
     if (token) {
       authenticatedAxios
@@ -57,7 +64,8 @@ class App extends Component {
           <UserContext.Provider
             value={{
               user: user,
-              setUser: setUser
+              setUser: setUser,
+              mapKey: this.state.mapKey
             }}
           >
             <Switch>

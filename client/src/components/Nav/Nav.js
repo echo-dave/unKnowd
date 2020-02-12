@@ -113,7 +113,7 @@ class Nav extends Component {
                           className="button is-small"
                           onClick={this.props.toggleMapMobile}
                         >
-                          Hide
+                           {this.props.mapShow? "-" : "+" }
                           <br />
                           Map
                         </a>
