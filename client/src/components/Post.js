@@ -4,6 +4,7 @@ import Replyform from "./PostForms/PostReply";
 import CommentDisplay from "./CommentDisplay/CommentDisplay";
 import CommentingButtons from "./CommentingButtons/CommentingButtons";
 import { urlClick } from "../utils/ClearImageSelect";
+import moment from "moment";
 
 class Post extends Component {
   state = {
@@ -37,7 +38,8 @@ class Post extends Component {
               <UserDisplay
                 firstName={this.props.postData.creator.firstName}
                 creatorPhoto={this.props.postData.creator.photo}
-              />
+              /> 
+              <span className="timePosted">{moment(this.props.postData.dateCreated).fromNow()}</span>
               {!this.props.postData.photos[0] == "" ? (
                 <div className="postPhotos">
                   <img alt="" src={this.props.postData.photos} />
