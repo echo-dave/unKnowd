@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import UserDisplay from "./UserDisplay/UserDisplay";
-import PostReply from "./PostForms/PostReply";
+import Replyform from "./PostForms/PostReply";
 import CommentDisplay from "./CommentDisplay/CommentDisplay";
 import CommentingButtons from "./CommentingButtons/CommentingButtons";
 import { urlClick } from "../utils/ClearImageSelect";
@@ -23,10 +23,6 @@ class Post extends Component {
 
   toggleReply = () => {
     this.setState({ toggleReply: !this.state.toggleReply });
-  };
-
-  refreshComments = () => {
-    this.getComments();
   };
 
   render() {
@@ -63,13 +59,15 @@ class Post extends Component {
           />
         </div>
         {this.state.toggleReply ? (
-          <PostReply
+          <Replyform
             loading={this.props.loading}
             toggleLoading={this.props.toggleLoading}
             userState={this.props.userState}
             postId={this.props.postData._id}
             closeForm={this.toggleReply}
-            refreshComments={this.refreshComments}
+            readComments={this.state.readComments}
+            toggleComments={this.toggleComments}
+
           />
         ) : null}
         {this.state.readComments
