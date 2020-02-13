@@ -120,7 +120,7 @@ class SignUpForm extends Component {
           <div className="control">
             <input
               className="input"
-              type="text"
+              type="email"
               name="email"
               value={this.state.email}
               onChange={this.changeHandler}
