@@ -10,6 +10,7 @@ class PhotoInput extends Component {
             id="imageSelect"
             className="file-input"
             type="file"
+            accept="image/png, image/jpeg"
             name={this.props.fileName}
             onChange={this.props.fileChangeHandler}
           />
