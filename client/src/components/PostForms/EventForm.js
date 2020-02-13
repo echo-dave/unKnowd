@@ -20,14 +20,16 @@ class EventForm extends Component {
       lon: "",
       start: new Date(),
       img: "",
-      creator: this.props.userState.id
+      creator: "",
+      preview: ""
     };
   }
   componentDidMount() {
+    this.setState({creator: this.props.userState.id})
     this.clearImageSelect = clearImageSelect.bind(this);
     this.fileChange = fileChange.bind(this);
   }
-  fileChangeHandler = event => this.fileChange(event, "photo");
+  fileChangeHandler = event => this.fileChange(event, "img");
 
   removeImage = () => {
     this.clearImageSelect("img");
@@ -40,14 +42,6 @@ class EventForm extends Component {
   handleDateChange = date => {
     this.setState({
       start: date
-    });
-  };
-
-  fileChangeHandler = event => {
-    var file = event.target.files[0];
-    // console.log(file);
-    this.setState({
-      img: file
     });
   };
 
@@ -79,28 +73,30 @@ class EventForm extends Component {
     const { title, description, address } = this.state;
     return (
       <div id="eventForm">
-        <button className="button is-smaller" onClick={this.props.closeForm}>
+        {/* <button className="button is-smaller" onClick={this.props.closeForm}>
           X
-        </button>
-        <form onSubmit={this.submitHandler}>
-          <div className="field">
-            <label className="label">Name of event</label>
-            <div className="control">
-              <input
+        </button> */}
+        <div className="post box clearfix">
+          <form onSubmit={this.submitHandler}>
+            {/* title */}
+            <input
+              className="input"
+              type="text"
+              name="title"
+              placeholder="Title of the event"
+              value={title}
+              onChange={this.changeHandler}
+            />
+            <div style={{position:"relative"}}>
+              <DatePicker
+                selected={this.state.start}
+                onChange={this.handleDateChange}
                 className="input"
-                type="text"
-                name="title"
-                placeholder="Title of the event"
-                value={title}
-                onChange={this.changeHandler}
               />
-            </div>
-          </div>
 
-          <div className="field">
-            <label className="label">Address of event</label>
-            <div className="control">
+              {/* address */}
               <input
+                id="eventAddress"
                 className="input"
                 type="text"
                 name="address"
@@ -109,43 +105,43 @@ class EventForm extends Component {
                 onChange={this.changeHandler}
               />
             </div>
-          </div>
-          <h1 className="label">Date</h1>
-          <DatePicker
-            selected={this.state.start}
-            onChange={this.handleDateChange}
-            className="input"
-          />
-
-          <div className="field">
-            <label className="label">Description of event</label>
-            <div className="control">
-              <textarea
-                type="text"
-                className="textarea"
-                rows="3"
-                name="description"
-                placeholder="Description of the event"
-                value={description}
-                onChange={this.changeHandler}
-              />
+            {!this.state.preview == "" ? (
+            <div className="postPhotos">
+              <img alt="" src={this.state.preview} />
             </div>
-          </div>
-          <PhotoInput
-            fileChangeHandler={this.fileChangeHandler}
-            removeImage={this.removeImage}
-            fileName="img"
-            photoFileName={this.state.img.name}
-          />
-          <button
-            id="submitEvent"
-            className="button newPost is-small"
-            type="submit"
-          >
-            Submit
-          </button>
-          {this.props.loading ? <Spinner /> : null}
-        </form>
+              ) : null}
+              <PhotoInput
+              fileChangeHandler={this.fileChangeHandler}
+              removeImage={this.removeImage}
+              fileName="img"
+              photoFileName={this.state.img.name}
+            />
+
+            <textarea
+              type="text"
+              className="textarea clearfix"
+              rows="4"
+              name="description"
+              placeholder="Description of the event"
+              value={description}
+              onChange={this.changeHandler}
+            />
+            {/* <PhotoInput
+              fileChangeHandler={this.fileChangeHandler}
+              removeImage={this.removeImage}
+              fileName="img"
+              photoFileName={this.state.img.name}
+            /> */}
+            <button
+              id="submitEvent"
+              className="button newPost is-small"
+              type="submit"
+            >
+              Submit
+            </button>
+            {this.props.loading ? <Spinner /> : null}
+          </form>
+        </div>
       </div>
     );
   }

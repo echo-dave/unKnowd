@@ -7,12 +7,20 @@ function clearImageSelect(imageStateName) {
 }
 
 function fileChange(event, photoFileName) {
-  var file = event.target.files[0];
-  // console.log(file);
+  let file = event.target.files[0];
   this.setState({
     [photoFileName]: file
   });
-}
+
+  let preview = {};  
+  const reader = new FileReader();
+  reader.onload = (function(aImg){ return function(e) { 
+    aImg.src =  e.target.result;
+    this.setState({preview: aImg.src});
+    };
+  })(preview).bind(this);
+  reader.readAsDataURL(file);   
+};
 
 function urlClick(para) {
   let url = /(https?:\/\/\S*)/i;

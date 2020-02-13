@@ -9,12 +9,14 @@ class PostForm extends Component {
   //settting compoent forms initial structure
   state = {
     msg: "",
-    creator: this.props.userState.id,
+    creator: "",
     dateCreated: "",
-    photos: ""
+    photos: "",
+    preview: ""
   };
 
   componentDidMount() {
+    this.setState({creator: this.props.userState.id})
     this.clearImageSelect = clearImageSelect.bind(this);
     this.fileChange = fileChange.bind(this);
   }
@@ -30,14 +32,6 @@ class PostForm extends Component {
     const { name, value } = e.target;
     this.setState({
       [name]: value
-    });
-  };
-  //specifically handles file selection changes
-  fileChangeHandler = event => {
-    var file = event.target.files[0];
-    // console.log(file);
-    this.setState({
-      photos: file
     });
   };
 
@@ -76,40 +70,43 @@ class PostForm extends Component {
 
   render() {
     return (
-      <div id="postform">
-        <button className="button is-smaller" onClick={this.props.closeForm}>
+      <div id="postForm">
+        {/* <button className="button is-smaller" onClick={this.props.closeForm}>
           X
-        </button>
-        <form className="event" onSubmit={this.submitHandler}>
-          <div className="field">
-            <label className="label" htmlFor="msg">
-              Message
-            </label>
-            <textarea
+        </button> */}
+        <div className="post box clearfix">
+          <form className="event" onSubmit={this.submitHandler}>
+            {!this.state.preview == "" ? (
+            <div className="postPhotos">
+              <img alt="" src={this.state.preview} />
+            </div>
+              ) : null}
+              <PhotoInput
+              fileChangeHandler={this.fileChangeHandler}
+              removeImage={this.removeImage}
+              fileName="photos"
+              photoFileName={this.state.photos.name}
+            />
+
+            <textarea 
               placeholder="message to community"
               type="text"
-              rows="3"
-              className="textarea"
+              rows="4"
+              className="textarea clearfix"
               name="msg"
               value={this.state.msg}
               onChange={this.changeHandler}
             />
-          </div>
-          <PhotoInput
-            fileChangeHandler={this.fileChangeHandler}
-            removeImage={this.removeImage}
-            fileName="photos"
-            photoFileName={this.state.photos.name}
-          />
-          <button
-            id="submitPost"
-            className="button newPost is-small"
-            type="submit"
-          >
-            Post!
-          </button>
-          {this.props.loading ? <Spinner /> : null}
-        </form>
+            <button
+              id="submitPost"
+              className="button newPost is-small"
+              type="submit"
+            >
+              Post!
+            </button>
+            {this.props.loading ? <Spinner /> : null}
+          </form>
+        </div>
       </div>
     );
   }

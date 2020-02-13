@@ -6,33 +6,33 @@
   border-radius: 0 0 0.25rem 0.25rem;
 }
 
-#postform > .is-smaller,
+#postForm > .is-smaller,
 #eventForm > .is-smaller {
   font-size: 0.7em;
 }
 
-#postform,
-#eventForm {
-  // border: 2px solid white;
-  margin: 10px;
-  padding: 10px;
-  background-color: $commentGrey;
-  // background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
-  // background: rgb(214, 214, 214);
-  position: absolute;
-  // top: 1.3rem;
-  width: 270px;
-  z-index: 10;
-  border-radius: 0 0 0.5rem 0;
-  max-height: calc(var(--bodyHeight) - 9.5rem);
-  overflow-y: scroll;
-}
+// #postForm,
+// #eventForm {
+//   // border: 2px solid white;
+//   margin: 10px;
+//   padding: 10px;
+//   background-color: $commentGrey;
+//   // background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
+//   // background: rgb(214, 214, 214);
+//   position: absolute;
+//   // top: 1.3rem;
+//   width: 270px;
+//   z-index: 10;
+//   border-radius: 0 0 0.5rem 0;
+//   max-height: calc(var(--bodyHeight) - 9.5rem);
+//   overflow-y: scroll;
+// }
 
 #replyButton {
   margin-top: 0.5rem;
 }
 
-.newPost {
+.newPost, .newComment {
   background-color: $secondary;
   color: $light;
 }
@@ -43,42 +43,47 @@
   color: white;
 }
 
-#postform {
-  z-index: 10;
-}
-
-#replyform {
+#replyform, #postForm, #eventForm {
   margin-top: 1.5rem;
   .postPhotos {
+    width: 100%;
+    float: none;
     img {
-      max-height: 250px;
+      max-height: 200px;
       max-width: 100%;
     }
   }
   .file {
     display: block;
+    margin-bottom: .75rem;
   }
-  textarea {
+  // textarea, input, .file-name {
+  //   background-color: hsl(202, 100%, 94%);
+  // }
+  textarea, input {
     width: 100%;
     font-size: .85rem;
-    margin-bottom: 3rem;
     padding: .5rem;
     border-radius: .25rem;
-    border: rgb(219, 219, 219)
+    border: rgb(219, 219, 219);
+    margin-bottom: .75rem;
   }
-  textarea:focus {
+  input#eventAddress {
+    max-width: 100%;
+    width: calc(100% - 6rem - 1rem);
+    position: absolute;
+    top:0;
+    right:0;
+  }
+  textarea:focus, input:focus {
     // border: 1px rgb(50, 115, 220) solid;
     outline-offset: -2px;
     outline-width: 2px;
     outline-color: rgb(50, 115, 220);
   }
-  #replyButton {
+  #replyButton, #submitPost, #submitEvent {
     margin-top: .5rem;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    background-color: $secondary;
-    color: $light;
+    float: right;
   }
   .box {
     background-color: lighten($commentGrey, 5%);
@@ -91,8 +96,17 @@
   }
 }
 
+#postForm, #eventForm {
+  margin-top:0;
+  margin-bottom: 1rem;
+  .box {
+    background-color: $light;
+  }
+}
+
 .react-datepicker-wrapper {
-  width: 100%;
+  width: 6rem;
+  margin-right:1rem;
 }
 
 .loader {

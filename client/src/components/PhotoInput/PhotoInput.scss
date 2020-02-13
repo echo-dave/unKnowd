@@ -4,10 +4,6 @@
   background-color: white;
 }
 
-.file {
-  margin: 1rem auto;
-}
-
 .file.is-primary .file-cta {
   background-color: darken(desaturate($color: $tertiary, $amount: 100), 10);
   color: $light;
