@@ -46,11 +46,13 @@ form {
     padding-left: 0.5em;
   }
 }
-
-.loader {
-  display: inline-block;
-  margin-top: 1.5em;
-  margin-left: 1rem;
+#profile {
+  .loader {
+    display: inline-block;
+    margin-top: 2em;
+    margin-left: 1rem;
+    float: none;
+  }
 }
 
 @media only screen and (max-width: 1024px) {
