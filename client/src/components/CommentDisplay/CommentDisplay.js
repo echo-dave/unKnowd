@@ -13,7 +13,7 @@ class CommentDisplay extends Component {
           firstName={creator.firstName}
           creatorPhoto={creator.photo}
         />
-        <span className="timePosted">{moment(dateCreated).fromNow()}</span>
+        <span className="timePosted">{moment(dateCreated).fromNow(true)}</span>
 
         {photos ? (
           <div className="postPhotos">
