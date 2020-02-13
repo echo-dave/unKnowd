@@ -38,7 +38,7 @@ class Event extends Component {
         <div>
           <h2>{title}</h2>
           <h3 className="address">
-          {moment(date.start).format("dddd MMM Do YYYY")} | {address}
+          {moment(date.start).format("ddd MMM Do YYYY")} @ {address}
           </h3>
           <UserDisplay
             firstName={creator.firstName}
