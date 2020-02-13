@@ -9,7 +9,6 @@ class Post extends Component {
   state = {
     readComments: false,
     toggleReply: false,
-    user: "",
     replyCount: ""
   };
 
@@ -34,7 +33,7 @@ class Post extends Component {
               className={
                 !this.props.postData.photos[0] == "" ? "clearfix" : null
               }
-            >
+            > {this.props.userState.id == this.props.postData.creator._id ? <i class="fas fa-edit" style={{float:"right"}}></i> : null}
               <UserDisplay
                 firstName={this.props.postData.creator.firstName}
                 creatorPhoto={this.props.postData.creator.photo}
