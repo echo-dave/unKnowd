@@ -21,7 +21,7 @@ class PostForm extends Component {
     this.fileChange = fileChange.bind(this);
   }
   // socket = socketIOClient();
-  fileChangeHandler = event => this.fileChange(event, "photo");
+  fileChangeHandler = event => this.fileChange(event, "photos");
 
   removeImage = () => {
     this.clearImageSelect("photos");
