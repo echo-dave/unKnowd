@@ -20,7 +20,6 @@ class LoginForm extends Component {
   }
 
   resizeVh = bodyHeight => {
-    console.log("rezize");
     bodyHeight = window.innerHeight;
     // bodyHeight = window.innerHeight;
     document.documentElement.style.setProperty(
