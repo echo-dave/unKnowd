@@ -3,13 +3,13 @@ const path = require("path");
 // const cloudinary = require("cloudinary-core");
 
 module.exports = function(filename) {
-   filename = filename.split(".")
+   filename = filename.split(".");
   let fileExtension = filename[filename.length - 1];
-  filename.pop()
-  filename = filename.join(".")
+  filename.pop();
+  filename = filename.join(".");
 
-console.log("file name inc", filename)
-console.log("extension", fileExtension)
+console.log("file name inc", filename);
+console.log("extension", fileExtension);
 
 
   const eager_options = [

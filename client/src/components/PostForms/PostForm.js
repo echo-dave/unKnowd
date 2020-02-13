@@ -16,7 +16,7 @@ class PostForm extends Component {
   };
 
   componentDidMount() {
-    this.setState({creator: this.props.userState.id})
+    this.setState({creator: this.props.userState.id});
     this.clearImageSelect = clearImageSelect.bind(this);
     this.fileChange = fileChange.bind(this);
   }

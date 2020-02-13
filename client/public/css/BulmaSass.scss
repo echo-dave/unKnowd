@@ -15,11 +15,6 @@ body {
   overflow: hidden;
 }
 
-// h2 {
-//   font-size: 1.2em !important;
-//   font-weight: 500 !important;
-// }
-
 //used for event titles
 h2 {
   font-family: "Montserrat", sans-serif;
@@ -153,7 +148,7 @@ h1#title {
     lighten(
     desaturate($color: $tertiary, $amount: 100),
     $amount: 5
-  );
+    );
   color: $dark;
 }
 
