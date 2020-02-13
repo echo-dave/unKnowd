@@ -71,9 +71,9 @@ class PostForm extends Component {
   render() {
     return (
       <div id="postForm">
-        {/* <button className="button is-smaller" onClick={this.props.closeForm}>
+        <button className="button close is-smaller" onClick={this.props.closeForm}>
           X
-        </button> */}
+        </button>
         <div className="post box clearfix">
           <form className="event" onSubmit={this.submitHandler}>
             {!this.state.preview == "" ? (

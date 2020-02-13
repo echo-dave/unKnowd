@@ -73,9 +73,9 @@ class EventForm extends Component {
     const { title, description, address } = this.state;
     return (
       <div id="eventForm">
-        {/* <button className="button is-smaller" onClick={this.props.closeForm}>
+        <button className="button close is-smaller" onClick={this.props.closeForm}>
           X
-        </button> */}
+        </button>
         <div className="post box clearfix">
           <form onSubmit={this.submitHandler}>
             {/* title */}
