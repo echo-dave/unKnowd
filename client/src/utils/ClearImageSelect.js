@@ -20,7 +20,7 @@ function fileChange(event, photoFileName) {
     };
   })(preview).bind(this);
   reader.readAsDataURL(file);   
-};
+}
 
 function urlClick(para) {
   let url = /(https?:\/\/\S*)/i;

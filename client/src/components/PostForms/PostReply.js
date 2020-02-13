@@ -44,7 +44,7 @@ class ReplyForm extends Component {
     if (!this.state.msg) {
     console.log("What did you want to say?");
     return;
-  };
+  }
 
     let currentDate = new Date();
 
