@@ -29,24 +29,21 @@ form {
   margin: auto;
 }
 
-#profile .columns {
-  width: 100%;
-  margin: auto;
-}
-
-#profile table {
-  font-size: 0.85em;
-
-  tr td:first-child {
-    font-weight: bold;
-    text-align: right;
-  }
-
-  tr td:nth-child(2) {
-    padding-left: 0.5em;
-  }
-}
 #profile {
+  .columns {
+    width: 100%;
+    margin: auto;
+  }
+  table {
+    font-size: 0.85em;
+    tr td:first-child {
+      font-weight: bold;
+      text-align: right;
+    }
+    tr td:nth-child(2) {
+      padding-left: 0.5em;
+    }
+  }
   .loader {
     display: inline-block;
     margin-top: 2em;

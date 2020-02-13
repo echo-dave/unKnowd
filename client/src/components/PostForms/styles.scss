@@ -13,7 +13,6 @@
 
 .button.close {
   border-radius: 50%;
-  border-radius: 50%;
   height: 1rem;
   width: 1.8rem;
   position: absolute;
@@ -21,23 +20,6 @@
   left: .3rem;
   z-index: 1;
 }
-
-// #postForm,
-// #eventForm {
-//   // border: 2px solid white;
-//   margin: 10px;
-//   padding: 10px;
-//   background-color: $commentGrey;
-//   // background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
-//   // background: rgb(214, 214, 214);
-//   position: absolute;
-//   // top: 1.3rem;
-//   width: 270px;
-//   z-index: 10;
-//   border-radius: 0 0 0.5rem 0;
-//   max-height: calc(var(--bodyHeight) - 9.5rem);
-//   overflow-y: scroll;
-// }
 
 #replyButton {
   margin-top: 0.5rem;
@@ -68,9 +50,7 @@
     display: block;
     margin-bottom: .75rem;
   }
-  // textarea, input, .file-name {
-  //   background-color: hsl(202, 100%, 94%);
-  // }
+  
   textarea, input {
     width: 100%;
     font-size: .85rem;
