@@ -5,11 +5,11 @@ import PhotoInput from "../PhotoInput/PhotoInput";
 import "./styles.scss";
 import Spinner from "../Spinner/Spinner";
 
-class PostForm extends Component {
+class ReplyForm extends Component {
   //settting compoent forms initial structure
   state = {
     msg: "",
-    creator: this.props.userState.id,
+    creator: "",
     dateCreated: "",
     photos: "",
     parrentComment: "",
@@ -18,12 +18,15 @@ class PostForm extends Component {
 
   componentDidMount() {
     this.setState({
-      parrentComment: this.props.postId
+      parrentComment: this.props.postId,
+      creator: this.props.userState.id
     });
     this.clearImageSelect = clearImageSelect.bind(this);
     this.fileChange = fileChange.bind(this);
   }
-  fileChangeHandler = event => this.fileChange(event, "photo");
+
+  //stores file changes in state and builds preview images
+  fileChangeHandler = event => this.fileChange(event, "photos");
 
   removeImage = () => this.clearImageSelect("photos");
 
@@ -33,35 +36,6 @@ class PostForm extends Component {
     this.setState({
       [name]: value
     });
-  };
-
-  fileChangeHandler = e => {
-    let file = e.target.files[0];
-    this.setState({
-      photos: file
-    });
-    this.preview(file);
-
-  };
-
-  preview = (file) => {
-    let preview = {};
-    let previewTemp = document.createElement("img");
-    previewTemp.file = file;
-    // console.log(previewTemp.file);
-    
-    const reader = new FileReader();
-    reader.onload = (function(aImg){ return function(e) { 
-      aImg.src =  e.target.result;
-      this.setState({preview: aImg.src});
-      };
-    })(preview).bind(this);
-    reader.readAsDataURL(file);
-
-  //  console.log(previewTemp);
-    // document.querySelector("#previewDiv").appendChild(previewTemp)
-   
-    this.setState({preview:preview.src});
   };
 
   //want to prevent the default of form submit which is to just refresh the page
@@ -104,12 +78,11 @@ class PostForm extends Component {
     })
       .then(() => {
         this.props.toggleLoading();
+        if (!this.props.readComments) this.props.toggleComments();
         this.props.closeForm();
       })
       .catch(err => console.log(err));
   };
-
-  // savePost = postData => {
 
   render() {
     return (
@@ -117,48 +90,45 @@ class PostForm extends Component {
         {/* <button className="button is-smaller" onClick={this.props.closeForm}>
           X
         </button> */}
-       
 
         <div className="post box clearfix">
-     
-        <form className="event" onSubmit={this.submitHandler}>
+          <form className="event" onSubmit={this.submitHandler}>
 
-              {!this.state.preview == "" ? (
-                <div className="postPhotos">
-                  <img alt="" src={this.state.preview} />
-                </div>
-                 ) : null}
-                 <PhotoInput
-                 fileChangeHandler={this.fileChangeHandler}
-                 removeImage={this.removeImage}
-                 fileName="photos"
-                 photoFileName={this.state.photos.name}
-               />
+            {!this.state.preview == "" ? (
+            <div className="postPhotos">
+              <img alt="" src={this.state.preview} />
+            </div>
+              ) : null}
+              <PhotoInput
+              fileChangeHandler={this.fileChangeHandler}
+              removeImage={this.removeImage}
+              fileName="photos"
+              photoFileName={this.state.photos.name}
+            />
              
-      
-               <textarea 
+            <textarea 
               placeholder="message to community"
               type="text"
               rows="4"
-              className="clearfix"
+              className="clearfix textarea"
               name="msg"
               value={this.state.msg}
               onChange={this.changeHandler}
             />
        
-       <button
-            id="replyButton"
-            className="button is-primary is-small"
-            type="submit"
-          >
+            <button
+              id="replyButton"
+              className="button newComment is-small"
+              type="submit"
+            >
             Post!
-          </button>
-          {this.props.loading ? <Spinner /> : null}
-        </form>
-          </div>
+            </button>
+            {this.props.loading ? <Spinner /> : null}
+          </form>
+        </div>
       </div>        
     );
-  };
+  }
 }
 
-export default PostForm;
+export default ReplyForm;
