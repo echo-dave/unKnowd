@@ -63,7 +63,7 @@ class PostForm extends Component {
 
     let formPostData = new FormData();
     if (!this.props.postData) formPostData.set("creator", this.state.creator);
-    if (this.state.photos != "") formPostData.append("photos", this.state.photos);
+    if (this.state.photos != "" || !this.state.photos && !this.state.preview) formPostData.append("photos", this.state.photos);
     formPostData.append("msg", this.state.msg);
     formPostData.append( date , currentDate);
     if (this.props.postData) formPostData.append("postId", this.props.postData._id);

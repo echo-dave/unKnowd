@@ -137,18 +137,26 @@ module.exports = function(app, io) {
     let postId = req.body.postId;
     delete req.body.postId;
     console.log(req.body);
-    db.Post.findOneAndUpdate({_id: postId},{$set: req.body},{"fields":{"creator.email":0},new: true})
-      .populate({path:"creator",select: "-email -password -lastName"})
-      .populate({path:"replies.creator", select: "-email -password -lastName"})
-      .then(updatePopulated => {
-        removeInfo(updatePopulated);
-        console.log("updated populate ",updatePopulated);
-        io.sockets.emit("new post", {update: updatePopulated});
-        res.end();
-      }).catch(function(err) {
-        console.log(err);
-        res.status(500).json({error: err.message});
-      });
+
+    if (req.files != null) {
+      console.log("file--------------file");
+      console.log(req.files);
+      upload(req, "photos", updatePost);
+    } else updatePost(req);
+
+    function updatePost (req) {
+      db.Post.findOneAndUpdate({_id: postId},{$set: req.body},{"fields":{"creator.email":0},new: true})
+        .populate({path:"creator",select: "-email -password -lastName"})
+        .populate({path:"replies.creator", select: "-email -password -lastName"})
+        .then(updatePopulated => {
+          console.log("updated populate ",updatePopulated);
+          io.sockets.emit("new post", {update: updatePopulated});
+          res.end();
+        }).catch(function(err) {
+          console.log(err);
+          res.status(500).json({error: err.message});
+        });
+    }
  });
 
   app.get("/api/events", function(req, res) {
