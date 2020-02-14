@@ -122,6 +122,7 @@ class Mainpage extends React.Component {
       eventFormShow: false,
       burgerActive: false
     });
+    if (this.state.postFormShow === false) this.scrollTop();
     document.querySelector(".navbar-menu").classList.remove("is-active");
   };
 
@@ -131,6 +132,7 @@ class Mainpage extends React.Component {
       postFormShow: false,
       burgerActive: false
     });
+    if (this.state.eventFormShow === false) this.scrollTop();
     document.querySelector(".navbar-menu").classList.remove("is-active");
   };
 
@@ -166,6 +168,9 @@ class Mainpage extends React.Component {
     Auth.logOut(() => (window.location = "/"));
   };
 
+  scrollTop =() => document.querySelector(".column.posts").scrollTop = 0;
+
+
   render() {
     return (
       <div className="container main">
@@ -180,6 +185,7 @@ class Mainpage extends React.Component {
           toggleNavbar={this.toggleNavbar}
           toggleMapMobile={this.toggleMapMobile}
           mapShow={this.state.mapShow}
+          scrollTop={this.scrollTop}
         />
 
        
