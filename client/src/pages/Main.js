@@ -81,7 +81,6 @@ class Mainpage extends React.Component {
 
   resizeVh = bodyHeight => {
     bodyHeight = window.innerHeight;
-    // bodyHeight = window.innerHeight;
     document.documentElement.style.setProperty(
       "--bodyHeight",
       `${bodyHeight}px`
