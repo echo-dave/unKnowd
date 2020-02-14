@@ -15,11 +15,6 @@ body {
   overflow: hidden;
 }
 
-// h2 {
-//   font-size: 1.2em !important;
-//   font-weight: 500 !important;
-// }
-
 //used for event titles
 h2 {
   font-family: "Montserrat", sans-serif;
@@ -29,8 +24,7 @@ h2 {
   margin-bottom: 0.5em;
 }
 
-.posts p,
-#profile p {
+.posts p, #profile p {
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
   font-size: 0.85em;
@@ -56,13 +50,6 @@ div #wrap {
   padding-bottom: 2rem;
 }
 
-.loginBody {
-  overflow-y: scroll;
-  /* height: calc(100vh - 4rem); */
-  padding-bottom: 3rem;
-  height: 100%;
-}
-
 #main-name {
   font-size: 30px;
   text-align: center;
@@ -71,32 +58,84 @@ div #wrap {
   color: white;
 }
 
-#quote {
-  text-align: center;
-  font-style: italic;
-  color: white;
-  font-size: 1.7em;
-}
-
 .container {
   position: relative;
   margin-top: 50px;
   padding-top: 40px;
 }
 
-#signup-container .box {
-  background-color: rgba(250, 250, 250, 0.85);
-}
-
-#login {
-  border: none;
-  margin-top: 10px;
-  background-color: none;
-  font-size: 0.8em;
-}
-
 h1 {
   font-size: 15px;
+}
+
+.loginBody {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: calc(var(--bodyHeight) - 45px);
+  padding-bottom: 3rem;
+  #quote {
+    font-family: $family-secondary;
+    text-align: center;
+    color: white;
+    font-size: 1.7rem;
+  }
+  #login {
+    border: none;
+    margin-top: 10px;
+    background-color: none;
+    font-size: 0.8em;
+  }
+  #signup-container .box {
+    background-color: rgba(250, 250, 250, 0.85);
+  }
+  #loginButton, #signupButton {
+    margin-top: 0.5rem;
+    background-color: darken(desaturate($color: $tertiary, $amount: 100), 10);
+    color: $light;
+  }
+  #loginButton:hover,
+  #loginButton:focus,
+  #signupButton:hover,
+  #signupButton:focus {
+    background-color:
+      lighten(
+      desaturate($color: $tertiary, $amount: 100),
+      $amount: 5
+      );
+    color: $dark;
+  }
+  .badlogin {
+    color: red;
+    font-size: 0.9em;
+  }
+  #newUserForm {
+    width: 24rem;
+    .postPhotos {
+      width: 100%;
+      text-align: center;
+      float: none;
+      img {
+        max-height: 125px;
+        border-radius: .25rem;
+      }
+    }
+    .error {
+      margin-top: 1em;
+      margin-left: 1em;
+      display: inline-block;
+      color: red;
+    }
+    .loader {
+      float: none;
+      margin-left: 1rem;
+      margin-top: 1.5rem;
+      display: inline-block;
+    }
+  }
+}
+
+#submitPost, #submitEvent {
+  margin-top: 0.5rem;
 }
 
 // map style
@@ -138,56 +177,6 @@ h1#title {
   margin-bottom: 1rem;
 }
 
-#loginButton,
-#signupButton {
-  margin-top: 0.5rem;
-  background-color: darken(desaturate($color: $tertiary, $amount: 100), 10);
-  color: $light;
-}
-
-#loginButton:hover,
-#loginButton:focus,
-#signupButton:hover,
-#signupButton:focus {
-  background-color:
-    lighten(
-    desaturate($color: $tertiary, $amount: 100),
-    $amount: 5
-  );
-  color: $dark;
-}
-
-.badlogin {
-  color: red;
-  font-size: 0.9em;
-}
-
-#submitPost,
-#submitEvent {
-  margin-top: 0.5rem;
-}
-
-#postform,
-#eventForm {
-  // border: 2px solid white;
-  margin: 10px;
-  padding: 10px;
-  background-color: $commentGrey;
-  // background-color: desaturate(lighten($secondary, 64.31372549019608), 85%);
-  // background: rgb(214, 214, 214);
-  position: absolute;
-  // top: 1.3rem;
-  width: 270px;
-  z-index: 10;
-  border-radius: 0 0 0.5rem 0;
-  max-height: calc(var(--bodyHeight) - 9.5rem);
-  overflow-y: scroll;
-}
-
-#replyButton {
-  margin-top: 0.5rem;
-}
-
 .clearRight {
   clear: right;
 }
@@ -213,17 +202,6 @@ h1#title {
 
 img.commentPhotos {
   max-height: 200px;
-}
-
-#newUserForm {
-  width: 24rem;
-
-  .error {
-    margin-top: 1em;
-    margin-left: 1em;
-    display: inline-block;
-    color: red;
-  }
 }
 
 .address {

@@ -1,57 +1,63 @@
-#profile .userphoto {
-  width: 50px;
-  height: 50px;
-  border-radius: 10rem;
-  border: solid 1px black;
-  background-position: center;
-  background-size: cover;
-  float: left;
-  margin-right: 0.5rem;
-}
-
 #profile.container {
   max-width: 640px;
   margin-top: 5rem;
   height: calc(var(--bodyHeight) - 5rem);
   overflow-y: scroll;
   padding-top: 1rem;
-
   .column {
     padding-bottom: 1rem;
   }
 }
 
-#updateInfo {
-  margin-top: 1rem;
-}
-
-form {
-  margin: auto;
-}
-
-#profile .columns {
-  width: 100%;
-  margin: auto;
-}
-
-#profile table {
-  font-size: 0.85em;
-
-  tr td:first-child {
-    font-weight: bold;
-    text-align: right;
+#profile {
+  .userphoto {
+    width: 50px;
+    height: 50px;
+    border-radius: 10rem;
+    border: solid 1px black;
+    background-position: center;
+    background-size: cover;
+    float: left;
+    margin-right: 0.5rem;
   }
-
-  tr td:nth-child(2) {
-    padding-left: 0.5em;
+  .columns {
+    width: 100%;
+    margin: auto;
+  }
+  table {
+    font-size: 0.85em;
+    tr td:first-child {
+      font-weight: bold;
+      text-align: right;
+    }
+    tr td:nth-child(2) {
+      padding-left: 0.5em;
+    }
+  }
+  button#updateInfo {
+    margin-top: 1rem;
+  }
+  form {
+    margin: auto;
+  }
+  .postPhotos {
+    text-align: center;
+    float: none;
+    width: 100%;
+    img {
+      max-height: 125px;
+      border-radius: .25rem;
+    }
+  }
+  .loader {
+    display: inline-block;
+    margin-top: 2em;
+    margin-left: 1rem;
+    float: none;
   }
 }
 
-.loader {
-  display: inline-block;
-  margin-top: 1.5em;
-  margin-left: 1rem;
-}
+
 
 @media only screen and (max-width: 1024px) {
   #profile.container {

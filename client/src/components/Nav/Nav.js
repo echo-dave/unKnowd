@@ -68,7 +68,7 @@ class Nav extends Component {
                         id="viewChange"
                         onClick={this.props.togglePostEventViews}
                       >
-                        {this.props.eventShow ? "Posts" : "Events"}
+                        {this.props.eventShow ? <>&#x2192;<br/>Posts</> : <>&#x2192;<br/>Events</>}
                       </a>
                     </div>
                     <div className="navbar-item" id="postMaker">

@@ -38,7 +38,7 @@ class Event extends Component {
         <div>
           <h2>{title}</h2>
           <h3 className="address">
-          {moment(date.start).format("dddd MMM Do YYYY")} | {address}
+          {moment(date.start).format("ddd MMM Do YYYY")} @ {address}
           </h3>
           <UserDisplay
             firstName={creator.firstName}
@@ -64,6 +64,7 @@ class Event extends Component {
         </div>
         {this.state.toggleReply ? (
           <PostReply
+            loading={this.props.loading}
             toggleLoading={this.props.toggleLoading}
             userState={this.props.userState}
             postId={_id}

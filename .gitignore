@@ -3,3 +3,5 @@ node_modules
 .env
 upload/*
 client/build
+client/public/upload/*.jpg
+client/public/upload/*.jpeg

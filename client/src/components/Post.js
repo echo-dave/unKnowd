@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import UserDisplay from "./UserDisplay/UserDisplay";
-import PostReply from "./PostForms/PostReply";
+import Replyform from "./PostForms/PostReply";
 import CommentDisplay from "./CommentDisplay/CommentDisplay";
 import CommentingButtons from "./CommentingButtons/CommentingButtons";
 import { urlClick } from "../utils/ClearImageSelect";
+import moment from "moment";
 
 class Post extends Component {
   state = {
     readComments: false,
     toggleReply: false,
-    user: "",
     replyCount: ""
   };
 
@@ -25,10 +25,6 @@ class Post extends Component {
     this.setState({ toggleReply: !this.state.toggleReply });
   };
 
-  refreshComments = () => {
-    this.getComments();
-  };
-
   render() {
     return (
       <div className="post box clearfix" data-id={this.props.postData._id}>
@@ -38,11 +34,12 @@ class Post extends Component {
               className={
                 !this.props.postData.photos[0] == "" ? "clearfix" : null
               }
-            >
+            > {this.props.userState.id == this.props.postData.creator._id ? <i class="fas fa-edit" style={{float:"right"}}></i> : null}
               <UserDisplay
                 firstName={this.props.postData.creator.firstName}
                 creatorPhoto={this.props.postData.creator.photo}
-              />
+              /> 
+              <span className="timePosted">{moment(this.props.postData.dateCreated).fromNow(true)}</span>
               {!this.props.postData.photos[0] == "" ? (
                 <div className="postPhotos">
                   <img alt="" src={this.props.postData.photos} />
@@ -63,13 +60,15 @@ class Post extends Component {
           />
         </div>
         {this.state.toggleReply ? (
-          <PostReply
+          <Replyform
             loading={this.props.loading}
             toggleLoading={this.props.toggleLoading}
             userState={this.props.userState}
             postId={this.props.postData._id}
             closeForm={this.toggleReply}
-            refreshComments={this.refreshComments}
+            readComments={this.state.readComments}
+            toggleComments={this.toggleComments}
+
           />
         ) : null}
         {this.state.readComments

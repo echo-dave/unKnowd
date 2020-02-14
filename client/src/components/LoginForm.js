@@ -20,7 +20,6 @@ class LoginForm extends Component {
   }
 
   resizeVh = bodyHeight => {
-    console.log("rezize");
     bodyHeight = window.innerHeight;
     // bodyHeight = window.innerHeight;
     document.documentElement.style.setProperty(
@@ -73,7 +72,7 @@ class LoginForm extends Component {
             <div className="control">
               <input
                 className="input"
-                type="text"
+                type="email"
                 name="email"
                 value={this.state.email}
                 onChange={this.changeHandler}

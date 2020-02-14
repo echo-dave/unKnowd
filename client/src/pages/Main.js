@@ -21,7 +21,6 @@ class Mainpage extends React.Component {
     eventFormShow: false,
     burgerActive: false,
     mapShow: true,
-    comment: false,
     loading: false
   };
 
@@ -180,29 +179,30 @@ class Mainpage extends React.Component {
           mapShow={this.state.mapShow}
         />
 
-        <div>
-          {this.state.postFormShow ? (
-            <Postform
-              loading={this.state.loading}
-              toggleLoading={this.toggleLoading}
-              userState={this.state.user}
-              closeForm={this.togglePostForm}
-            />
-          ) : null}
-
-          {this.state.eventFormShow ? (
-            <EventForm
-              loading={this.state.loading}
-              toggleLoading={this.toggleLoading}
-              userState={this.state.user}
-              closeForm={this.toggleEventForm}
-              eventShow={this.state.eventShow}
-              togglePostEventViews={this.togglePostEventViews}
-            />
-          ) : null}
-        </div>
+       
         <div className="columns">
           <div className="column posts">
+            
+            {this.state.postFormShow ? (
+              <Postform
+                loading={this.state.loading}
+                toggleLoading={this.toggleLoading}
+                userState={this.state.user}
+                closeForm={this.togglePostForm}
+              />
+            ) : null}
+
+            {this.state.eventFormShow ? (
+              <EventForm
+                loading={this.state.loading}
+                toggleLoading={this.toggleLoading}
+                userState={this.state.user}
+                closeForm={this.toggleEventForm}
+                eventShow={this.state.eventShow}
+                togglePostEventViews={this.togglePostEventViews}
+              />
+            ) : null}
+          
             {!this.state.eventShow ?
                this.state.posts.map(post => (
                   <Post

@@ -15,6 +15,10 @@ class LoginPage extends React.Component {
   };
 
   componentDidMount() {
+    let bodyHeight = window.innerHeight;
+    this.resizeVh(bodyHeight);
+    window.addEventListener("resize", this.resizeVh.bind(this));
+    
     const token = localStorage.getItem("token");
     if (token) {
       authenticatedAxios.get("/api/me").then(response => {
@@ -29,6 +33,15 @@ class LoginPage extends React.Component {
     this.setState({ isRegister: !this.state.isRegister });
   };
 
+  resizeVh = bodyHeight => {
+    bodyHeight = window.innerHeight;
+    // bodyHeight = window.innerHeight;
+    document.documentElement.style.setProperty(
+      "--bodyHeight",
+      `${bodyHeight}px`
+    );
+  };
+
   render() {
     const { isRegister } = this.state;
     return (
@@ -39,7 +52,7 @@ class LoginPage extends React.Component {
           <h1 id="main-name">UnKnowd</h1>
         </nav>
         <div className="loginBody">
-          <h5 id="quote">Putting community back in community</h5>
+          <h2 id="quote">Bringing community back to community</h2>
           <div className="container" id="signup-container">
             <div className="columns is-centered is-vcentered is-mobile">
               <div className="column is-narrow box">

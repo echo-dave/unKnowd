@@ -24,7 +24,8 @@ class UpdateProfile extends Component {
       newPassword: "",
       passwordCheck: "",
       loading:false,
-      error:""
+      error: "",
+      preview: ""
     };
   }
 
@@ -72,7 +73,7 @@ class UpdateProfile extends Component {
     );
   };
 
-  fileChangeHandler = event => this.fileChange(event, "photo");
+  fileChangeHandler = (event, fileName) => this.fileChange(event, fileName);
 
   removeImage = () => {
     this.clearImageSelect("photo");
@@ -82,14 +83,6 @@ class UpdateProfile extends Component {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
-
-  // fileChangeHandler = event => {
-  //   var file = event.target.files[0];
-  //   // console.log(file);
-  //   this.setState({
-  //     photo: file
-  //   });
-  // };
 
   logout = () => {
     Auth.logOut(() => (window.location = "/"));
@@ -227,6 +220,11 @@ class UpdateProfile extends Component {
                     />
                   </div>
                 </div>
+                {!this.state.preview == "" ? (
+                <div className="postPhotos">
+                  <img alt="" src={this.state.preview} />
+                </div>
+                  ) : null}
                 <PhotoInput
                   fileChangeHandler={this.fileChangeHandler}
                   removeImage={this.removeImage}
