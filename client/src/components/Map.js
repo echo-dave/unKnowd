@@ -47,8 +47,9 @@ class MapContainer extends Component {
     return (
       <Map
         google={this.props.google}
-        zoom={11}
-        initialCenter={{ lat: 33.753746, lng: -84.38633 }}
+        zoom={18}
+        initialCenter={{ lat: 33.7859878, lng: -84.4162648 }}
+        // initialCenter={{ lat: 33.753746, lng: -84.38633 }}
         onClick={this.onMapClicked}
       >
         {this.displayMarkers()}
