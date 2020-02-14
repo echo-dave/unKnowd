@@ -73,13 +73,13 @@ module.exports = function(app, io) {
       .catch(err => console.log(err));
   });
 
-  app.get("/api/protected", authWare, function(req, res) {
-    const user = req.user;
-    res.json({
-      message:
-        user.email + ", you should only see this if you're authenticated."
-    });
-  });
+  // app.get("/api/protected", authWare, function(req, res) {
+  //   const user = req.user;
+  //   res.json({
+  //     message:
+  //       user.email + ", you should only see this if you're authenticated."
+  //   });
+  // });
 
   app.get("/api/me", authWare, function(req, res) {
     User.findById(req.user._id).then(dbUser => {
@@ -92,25 +92,16 @@ module.exports = function(app, io) {
     });
   });
 
-  app.get("/api/posts", function(req, res) {
+  app.get("/api/posts/:page", authWare, function(req, res) {
+    console.log("request ",parseInt(req.params.page));
+    
     db.Post.find()
       .sort({ dateCreated: -1 })
       .limit(20)
-      .populate("creator")
-      .populate("replies.creator")
-      .lean()
+      .skip(Math.max(parseInt(req.params.page)-1,0)*20)
+      .populate({path: "creator", select: "-email -password -lastName"})
+      .populate({path: "replies.creator", select: "-email -password -lastName"})
       .then(posts => {
-        for (let i = 0; i < posts.length; i++) {
-          delete posts[i].creator.email;
-          delete posts[i].creator.password;
-          delete posts[i].creator.lastName;
-          for (let j = 0; j < posts[i].replies.length; j++) {
-            delete posts[i].replies[j].creator.email;
-            delete posts[i].replies[j].creator.password;
-            delete posts[i].replies[j].creator.lastName;
-          }
-        }
-
         res.json(posts);
       })
       .catch(err => {
@@ -119,7 +110,7 @@ module.exports = function(app, io) {
       });
   });
 
-  app.post("/api/post", function(req, res) {
+  app.post("/api/post", authWare, function(req, res) {
     console.log(req.body);
 
     if (req.files != null) {
@@ -145,6 +136,32 @@ module.exports = function(app, io) {
     }
   });
 
+  app.put("/api/post/update", authWare, function(req,res){
+    let postId = req.body.postId;
+    delete req.body.postId;
+    console.log(req.body);
+
+    if (req.files != null) {
+      console.log("file--------------file");
+      console.log(req.files);
+      upload(req, "photos", updatePost);
+    } else updatePost(req);
+
+    function updatePost (req) {
+      db.Post.findOneAndUpdate({_id: postId},{$set: req.body},{"fields":{"creator.email":0},new: true})
+        .populate({path:"creator",select: "-email -password -lastName"})
+        .populate({path:"replies.creator", select: "-email -password -lastName"})
+        .then(updatePopulated => {
+          console.log("updated populate ",updatePopulated);
+          io.sockets.emit("new post", {update: updatePopulated});
+          res.end();
+        }).catch(function(err) {
+          console.log(err);
+          res.status(500).json({error: err.message});
+        });
+    }
+ });
+
   app.get("/api/events", function(req, res) {
     let currentDate = new Date();
     let yesterday = currentDate.setDate(currentDate.getDate() - 1);
@@ -153,23 +170,9 @@ module.exports = function(app, io) {
       "date.start": { $gte: new Date(yesterday) }
     })
       .sort({ "date.start": 1 })
-      .populate("creator")
-      .populate("replies.creator")
-      .lean()
+      .populate({path: "creator", select: "-email -password -lastName"})
+      .populate({path: "replies.creator", select: "-email -password -lastName"})
       .then(events => {
-        for (let i = 0; i < events.length; i++) {
-          delete events[i].creator.email;
-          delete events[i].creator.password;
-          delete events[i].creator.lastName;
-
-          for (let j = 0; j < events[i].replies.length; j++) {
-            delete events[i].replies[j].creator.email;
-            delete events[i].replies[j].creator.password;
-            delete events[i].replies[j].creator.lastName;
-          }
-        }
-        // console.log("events", events);
-
         res.json(events);
       })
       .catch(err => {
@@ -179,7 +182,7 @@ module.exports = function(app, io) {
   });
 
   //we need to have the user _id to insert into the event as well as getting the user name and user photo from the User collection
-  app.post("/api/event", function(req, res) {
+  app.post("/api/event", authWare, function(req, res) {
     console.log(req.body);
     //get latitude on longitude and store in request object
     googleMapsClient
@@ -228,7 +231,7 @@ module.exports = function(app, io) {
   });
 
   //make post comment
-  app.post("/api/replyComment", function(req, res) {
+  app.post("/api/replyComment", authWare, function(req, res) {
     if (req.files != null) {
       console.log("file--------------file");
       // console.log(req.files);
@@ -252,7 +255,7 @@ module.exports = function(app, io) {
   });
 
   //make event comment
-  app.post("/api/replyEventComment", function(req, res) {
+  app.post("/api/replyEventComment", authWare, function(req, res) {
     // console.log("event req", req.body);
     if (req.files != null) {
       console.log("file--------------file");
@@ -321,4 +324,6 @@ module.exports = function(app, io) {
   app.get("/api/mapsecretkeys", function(req, res) {
     res.json({ mapKey: process.env.MAPJS });
   });
+
 };
+

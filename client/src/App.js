@@ -1,14 +1,15 @@
-import React, { Component } from "react";
+import React, { Component, lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
 import authenticatedAxios from "./utils/AuthenticatedAxios";
 import LoginPage from "./pages/LoginPage";
 import UserContext from "./context/UserContext";
-import Mainpage from "./pages/Main";
-import Viewer from "./pages/Viewer";
-import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import axios from "axios";
 import "./app.scss";
+const Mainpage = lazy(() => import("./pages/Main"));
+const Viewer = lazy(() => import("./pages/Viewer"));
+const UpdateProfile = lazy(() => import("./pages/UpdateProfile/UpdateProfile"));
+
 
 const NotFound = () => (
   <div
@@ -61,26 +62,28 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <UserContext.Provider
-            value={{
-              user: user,
-              setUser: setUser,
-              mapKey: this.state.mapKey
-            }}
-          >
-            <Switch>
-              <ProtectedRoute exact path="/mainpage" component={Mainpage} />
-              <Route exact path="/viewer" component={Viewer} />
-              <ProtectedRoute exact path="/profile" component={UpdateProfile} />
-              <Route
-                exact
-                path="/"
-                user={this.state.user}
-                component={LoginPage}
-              />
-              <Route component={NotFound} />
-            </Switch>
-          </UserContext.Provider>
+          <Suspense fallback={<div>Loading...</div>}>
+            <UserContext.Provider
+              value={{
+                user: user,
+                setUser: setUser,
+                mapKey: this.state.mapKey
+              }}
+            >
+              <Switch>
+                <ProtectedRoute exact path="/mainpage" component={Mainpage} />
+                <Route exact path="/viewer" component={Viewer} />
+                <ProtectedRoute exact path="/profile" component={UpdateProfile} />
+                <Route
+                  exact
+                  path="/"
+                  user={this.state.user}
+                  component={LoginPage}
+                />
+                <Route component={NotFound} />
+              </Switch>
+            </UserContext.Provider>
+          </Suspense>
         </div>
       </Router>
     );

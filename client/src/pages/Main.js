@@ -21,7 +21,8 @@ class Mainpage extends React.Component {
     eventFormShow: false,
     burgerActive: false,
     mapShow: true,
-    loading: false
+    loading: false,
+    page: 1
   };
 
   setUser = user => {
@@ -51,10 +52,13 @@ class Mainpage extends React.Component {
 
     socket.on("new post", post => {
       // console.log(post);
+      if (!post.update){
       this.setState({
         posts: [post, ...this.state.posts],
         loading: false
-      });
+      })} else {
+        this.getPosts();
+      }
     });
 
     socket.on("new event", event => {
@@ -77,7 +81,6 @@ class Mainpage extends React.Component {
 
   resizeVh = bodyHeight => {
     bodyHeight = window.innerHeight;
-    // bodyHeight = window.innerHeight;
     document.documentElement.style.setProperty(
       "--bodyHeight",
       `${bodyHeight}px`
@@ -89,8 +92,8 @@ class Mainpage extends React.Component {
   // }
 
   getPosts = () => {
-    axios
-      .get("/api/posts")
+    authenticatedAxios
+      .get(`/api/posts/${this.state.page}`)
       .then(res => {
         // console.log(res);
         this.setState({ posts: res.data });
@@ -119,6 +122,7 @@ class Mainpage extends React.Component {
       eventFormShow: false,
       burgerActive: false
     });
+    if (this.state.postFormShow === false) this.scrollTop();
     document.querySelector(".navbar-menu").classList.remove("is-active");
   };
 
@@ -128,6 +132,7 @@ class Mainpage extends React.Component {
       postFormShow: false,
       burgerActive: false
     });
+    if (this.state.eventFormShow === false) this.scrollTop();
     document.querySelector(".navbar-menu").classList.remove("is-active");
   };
 
@@ -145,7 +150,7 @@ class Mainpage extends React.Component {
     if (window.innerWidth < 769 && this.state.mapShow === true) {
       document
         .querySelector(".column.posts")
-        .setAttribute("style", `height:calc(${postHeight} - 4rem)`);
+        .setAttribute("style", `height:calc(${postHeight} - 3.5rem)`);
     } else {
       document
         .querySelector(".column.posts")
@@ -163,6 +168,9 @@ class Mainpage extends React.Component {
     Auth.logOut(() => (window.location = "/"));
   };
 
+  scrollTop =() => document.querySelector(".column.posts").scrollTop = 0;
+
+
   render() {
     return (
       <div className="container main">
@@ -177,6 +185,7 @@ class Mainpage extends React.Component {
           toggleNavbar={this.toggleNavbar}
           toggleMapMobile={this.toggleMapMobile}
           mapShow={this.state.mapShow}
+          scrollTop={this.scrollTop}
         />
 
        

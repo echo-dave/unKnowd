@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-// import eventPost from "../utils/EventPost";
-import axios from "axios";
+import authenticatedAxios from "../../utils/AuthenticatedAxios"
 import DatePicker from "react-datepicker";
 import { clearImageSelect, fileChange } from "../../utils/ClearImageSelect";
 import PhotoInput from "../PhotoInput/PhotoInput";
@@ -59,7 +58,7 @@ class EventForm extends Component {
 
       this.props.toggleLoading();
 
-      axios
+      authenticatedAxios
         .post("/api/event", eventData)
         .then(() => {
           if (!this.props.eventShow) this.props.togglePostEventViews();
