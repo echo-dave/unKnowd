@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from "axios";
+import authenticatedAxios from "../../utils/AuthenticatedAxios"
 import { clearImageSelect, fileChange } from "../../utils/ClearImageSelect";
 import PhotoInput from "../PhotoInput/PhotoInput";
 import "./styles.scss";
@@ -70,7 +70,7 @@ class ReplyForm extends Component {
 
   savePost = (postData, route) => {
 
-    axios({
+    authenticatedAxios({
       method: "post",
       url: `/api/${route}`,
       data: postData,

@@ -231,7 +231,7 @@ module.exports = function(app, io) {
   });
 
   //make post comment
-  app.post("/api/replyComment", function(req, res) {
+  app.post("/api/replyComment", authWare, function(req, res) {
     if (req.files != null) {
       console.log("file--------------file");
       // console.log(req.files);
@@ -255,7 +255,7 @@ module.exports = function(app, io) {
   });
 
   //make event comment
-  app.post("/api/replyEventComment", function(req, res) {
+  app.post("/api/replyEventComment", authWare, function(req, res) {
     // console.log("event req", req.body);
     if (req.files != null) {
       console.log("file--------------file");
