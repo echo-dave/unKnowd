@@ -21,7 +21,8 @@ class Mainpage extends React.Component {
     eventFormShow: false,
     burgerActive: false,
     mapShow: true,
-    loading: false
+    loading: false,
+    page: 1
   };
 
   setUser = user => {
@@ -92,8 +93,8 @@ class Mainpage extends React.Component {
   // }
 
   getPosts = () => {
-    axios
-      .get("/api/posts")
+    authenticatedAxios
+      .get(`/api/posts/${this.state.page}`)
       .then(res => {
         // console.log(res);
         this.setState({ posts: res.data });

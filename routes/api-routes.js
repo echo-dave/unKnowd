@@ -73,13 +73,13 @@ module.exports = function(app, io) {
       .catch(err => console.log(err));
   });
 
-  app.get("/api/protected", authWare, function(req, res) {
-    const user = req.user;
-    res.json({
-      message:
-        user.email + ", you should only see this if you're authenticated."
-    });
-  });
+  // app.get("/api/protected", authWare, function(req, res) {
+  //   const user = req.user;
+  //   res.json({
+  //     message:
+  //       user.email + ", you should only see this if you're authenticated."
+  //   });
+  // });
 
   app.get("/api/me", authWare, function(req, res) {
     User.findById(req.user._id).then(dbUser => {
@@ -92,10 +92,13 @@ module.exports = function(app, io) {
     });
   });
 
-  app.get("/api/posts", function(req, res) {
+  app.get("/api/posts/:page", authWare, function(req, res) {
+    console.log("request ",parseInt(req.params.page));
+    
     db.Post.find()
       .sort({ dateCreated: -1 })
       .limit(20)
+      .skip(Math.max(parseInt(req.params.page)-1,0)*20)
       .populate({path: "creator", select: "-email -password -lastName"})
       .populate({path: "replies.creator", select: "-email -password -lastName"})
       .then(posts => {
@@ -107,7 +110,7 @@ module.exports = function(app, io) {
       });
   });
 
-  app.post("/api/post", function(req, res) {
+  app.post("/api/post", authWare, function(req, res) {
     console.log(req.body);
 
     if (req.files != null) {
@@ -133,7 +136,7 @@ module.exports = function(app, io) {
     }
   });
 
-  app.put("/api/post/update",function(req,res){
+  app.put("/api/post/update", authWare, function(req,res){
     let postId = req.body.postId;
     delete req.body.postId;
     console.log(req.body);
@@ -179,7 +182,7 @@ module.exports = function(app, io) {
   });
 
   //we need to have the user _id to insert into the event as well as getting the user name and user photo from the User collection
-  app.post("/api/event", function(req, res) {
+  app.post("/api/event", authWare, function(req, res) {
     console.log(req.body);
     //get latitude on longitude and store in request object
     googleMapsClient

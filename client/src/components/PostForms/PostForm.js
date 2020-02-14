@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import authenticatedAxios from "../../utils/AuthenticatedAxios"
 import { clearImageSelect, fileChange } from "../../utils/ClearImageSelect";
 import PhotoInput from "../PhotoInput/PhotoInput";
 import "./styles.scss";
@@ -77,7 +78,7 @@ class PostForm extends Component {
   };
 
   savePost = (postData, url, method) => {
-    axios({
+    authenticatedAxios({
       method: method,
       url: `/api/${url}`,
       data: postData,
