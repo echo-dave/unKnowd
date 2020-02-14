@@ -17,16 +17,30 @@ class EventForm extends Component {
       address: "",
       lat: "",
       lon: "",
-      start: new Date(),
+      start: null,
       img: "",
       creator: "",
       preview: ""
     };
   }
   componentDidMount() {
-    this.setState({creator: this.props.userState.id});
+    this.setState({creator: this.props.userState.id, start: new Date()});
     this.clearImageSelect = clearImageSelect.bind(this);
     this.fileChange = fileChange.bind(this);
+
+    if (this.props.eventData) {
+      const {eventData} = this.props
+      this.setState({
+        title: eventData.title,
+        description: eventData.description,
+        address: eventData.address,
+        preview: eventData.img,
+        start: new Date(eventData.date.start)
+
+      })
+
+    }
+
   }
   fileChangeHandler = event => this.fileChange(event, "img");
 
@@ -72,7 +86,7 @@ class EventForm extends Component {
     const { title, description, address } = this.state;
     return (
       <div id="eventForm">
-        <button className="button close is-smaller" onClick={this.props.closeForm}>
+        <button className="button close is-smaller" onClick={!this.props.editThisEvent ? this.props.closeForm : this.props.editThisEvent}>
           X
         </button>
         <div className="post box clearfix">

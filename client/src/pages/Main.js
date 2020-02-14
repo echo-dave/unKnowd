@@ -105,8 +105,9 @@ class Mainpage extends React.Component {
     axios
       .get("/api/events")
       .then(res => {
+        console.log(res);
+
         this.setState({ events: res.data });
-        // console.log(this.state.events);
       })
       .catch(err => console.log(err.resoponse));
   };
@@ -224,7 +225,7 @@ class Mainpage extends React.Component {
                   />
                 ))
               : this.state.events.map(event => (
-                  <Event
+                  <Post
                     key={event._id}
                     eventData={event}
                     eventShow={this.state.eventShow}

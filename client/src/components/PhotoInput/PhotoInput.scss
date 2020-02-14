@@ -15,7 +15,7 @@
       lighten(
         desaturate($color: $tertiary, $amount: 100),
         $amount: 5
-    );
+      );
     color: $dark;
   }
 }
@@ -27,6 +27,6 @@
     lighten(
       desaturate($color: $tertiary, $amount: 100),
       $amount: 5
-  );
+      );
   color: $dark;
 }

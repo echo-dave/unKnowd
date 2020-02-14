@@ -35,7 +35,7 @@ class PostView extends Component {
                 firstName={this.props.postData.creator.firstName}
                 creatorPhoto={this.props.postData.creator.photo}
               /> 
-                          {this.props.userState.id === this.props.postData.creator._id ? <i className="fas fa-edit" onClick={this.props.editThisPost}></i> : null}
+              {this.props.userState.id === this.props.postData.creator._id ? <i className="fas fa-edit" onClick={this.props.editThisPost}></i> : null}
 
               <span className="timePosted">{moment(this.props.postData.dateCreated).fromNow(true)}</span>
               {!this.props.postData.photos[0] == "" ? (
