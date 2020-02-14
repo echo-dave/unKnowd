@@ -100,17 +100,7 @@ module.exports = function(app, io) {
       .populate("replies.creator")
       .lean()
       .then(posts => {
-        for (let i = 0; i < posts.length; i++) {
-          delete posts[i].creator.email;
-          delete posts[i].creator.password;
-          delete posts[i].creator.lastName;
-          for (let j = 0; j < posts[i].replies.length; j++) {
-            delete posts[i].replies[j].creator.email;
-            delete posts[i].replies[j].creator.password;
-            delete posts[i].replies[j].creator.lastName;
-          }
-        }
-
+        removeInfo(posts)
         res.json(posts);
       })
       .catch(err => {
@@ -144,6 +134,24 @@ module.exports = function(app, io) {
       });
     }
   });
+
+  app.put("/api/post/update",function(req,res){
+    let postId = req.body.postId;
+    delete req.body.postId;
+    console.log(req.body);
+    db.Post.findOneAndUpdate({_id: postId},{$set: req.body},{"fields":{"creator.email":0},new: true})
+      .populate({path:"creator",select: "-email -password -lastName"})
+      .populate({path:"replies.creator", select: "-email -password -lastName"})
+      .then(updatePopulated => {
+        removeInfo(updatePopulated);
+        console.log("updated populate ",updatePopulated);
+        io.sockets.emit("new post", {update: updatePopulated});
+        res.end();
+      }).catch(function(err) {
+        console.log(err);
+        res.status(500).json({error: err.message});
+      });
+ });
 
   app.get("/api/events", function(req, res) {
     let currentDate = new Date();
@@ -322,17 +330,18 @@ module.exports = function(app, io) {
     res.json({ mapKey: process.env.MAPJS });
   });
 
- app.put("/api/post/update",function(req,res){
-  try {
-    let postId = req.body.postId;
-    delete req.body.postId;
-    console.log(req.body);
-    res.status(200).json({msg:"success"})
-   } catch (error) {
-     console.log(error);
-     res.status(500).json(error.response)
-     
-   }
- })
-
 };
+
+// function for removing user details
+removeInfo = (data) => {
+  for (let i = 0; i < data.length; i++) {
+    delete data[i].creator.email;
+    delete data[i].creator.password;
+    delete data[i].creator.lastName;
+    for (let j = 0; j < data[i].replies.length; j++) {
+      delete data[i].replies[j].creator.email;
+      delete data[i].replies[j].creator.password;
+      delete data[i].replies[j].creator.lastName;
+    }
+  }
+}
