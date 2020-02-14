@@ -164,6 +164,7 @@ h1 {
 div.column.events > div {
   position: relative;
   height: calc(100vh - 30px - 5em);
+  margin-top: .6em;
 }
 
 //main
@@ -225,7 +226,7 @@ img.commentPhotos {
 
   .main .column.events {
     height: calc(var(--bodyHeight, 1vh) * 1 - 5rem);
-    margin-top: .6em;
+    margin-top:0;
     }
 
   div.column.events>div {
@@ -249,12 +250,17 @@ img.commentPhotos {
 
   .main .column.events {
     padding: 0;
+    margin-top: 0;
     height: calc(var(--bodyHeight, 1vh) * 0.4 - 1.9rem);
   }
 
   div.column.events > div {
     height: calc(var(--bodyHeight, 1vh) * 0.4 + 1.75rem);
     padding: 0;
+    padding: 0;
+    width: 100vw;
+    position: relative;
+    margin: 0 auto;
   }
 
   .column {

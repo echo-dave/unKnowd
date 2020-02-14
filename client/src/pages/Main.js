@@ -150,7 +150,7 @@ class Mainpage extends React.Component {
     if (window.innerWidth < 769 && this.state.mapShow === true) {
       document
         .querySelector(".column.posts")
-        .setAttribute("style", `height:calc(${postHeight} - 4rem)`);
+        .setAttribute("style", `height:calc(${postHeight} - 3.5rem)`);
     } else {
       document
         .querySelector(".column.posts")

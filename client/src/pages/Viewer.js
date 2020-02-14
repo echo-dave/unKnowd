@@ -4,6 +4,8 @@ import Event from "../components/Event";
 import EventMap from "../components/Map";
 import socketIOClient from "socket.io-client";
 import Nav from "../components/Nav/Nav";
+import UserContext from "../context/UserContext";
+
 
 class Viewer extends React.Component {
   state = {
@@ -75,12 +77,12 @@ class Viewer extends React.Component {
             ))}
           </div>
           <div className="column events">
-            <EventMap events={this.state.events} apiKey={this.props.mapkey}/>
+            <EventMap events={this.state.events} mapKey={this.context.mapKey}/>
           </div>
         </div>
       </div>
     );
   }
 }
-
+Viewer.contextType = UserContext;
 export default Viewer;
