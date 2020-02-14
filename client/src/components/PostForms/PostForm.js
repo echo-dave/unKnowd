@@ -19,6 +19,13 @@ class PostForm extends Component {
     this.setState({creator: this.props.userState.id});
     this.clearImageSelect = clearImageSelect.bind(this);
     this.fileChange = fileChange.bind(this);
+
+    if (this.props.postData){
+      this.setState({
+        msg: this.props.postData.msg,
+        preview: this.props.postData.photos[0]
+      })
+    }
   }
   // socket = socketIOClient();
   fileChangeHandler = event => this.fileChange(event, "photos");
@@ -41,29 +48,44 @@ class PostForm extends Component {
     // console.log(Auth.getToken());
     let currentDate = new Date();
 
+    let url;
+    let method;
+    let date;
+    if (!this.props.postData) {
+      date = "dateCreated";
+      url = "post";
+      method = "post";
+    } else {
+      date = "lastEdit"
+      url = "post/update";
+      method = "put";
+    };
+
     let formPostData = new FormData();
-    formPostData.set("creator", this.state.creator);
-    formPostData.append("photos", this.state.photos);
+    if (!this.props.postData) formPostData.set("creator", this.state.creator);
+    if (this.state.photos != "") formPostData.append("photos", this.state.photos);
     formPostData.append("msg", this.state.msg);
-    formPostData.append("dateCreated", currentDate);
+    formPostData.append( date , currentDate);
+    if (this.props.postData) formPostData.append("postId", this.props.postData._id);
 
     // console.log("form data for axios");
     // for (var [key, value] of formPostData.entries()) {
     //   console.log(key, value);
     // }
     this.props.toggleLoading();
-    this.savePost(formPostData);
+    this.savePost(formPostData, url, method);
   };
 
-  savePost = postData => {
+  savePost = (postData, url, method) => {
     axios({
-      method: "post",
-      url: "/api/post",
+      method: method,
+      url: `/api/${url}`,
       data: postData,
       headers: { "Content-Type": "multipart/form-data" }
     })
       .then(() => {
-        this.props.closeForm();
+        this.props.toggleLoading();
+        this.props.closeForm ? this.props.closeForm() : this.props.editThisPost();
       })
       .catch(err => console.log(err));
   };
@@ -71,7 +93,7 @@ class PostForm extends Component {
   render() {
     return (
       <div id="postForm">
-        <button className="button close is-smaller" onClick={this.props.closeForm}>
+        <button className="button close is-smaller" onClick={!this.props.editThisPost ? this.props.closeForm : this.props.editThisPost}>
           X
         </button>
         <div className="post box clearfix">
@@ -102,7 +124,7 @@ class PostForm extends Component {
               className="button newPost is-small"
               type="submit"
             >
-              Post!
+              {!this.props.postData ? <>Post!</> : <>Update!</> }
             </button>
             {this.props.loading ? <Spinner /> : null}
           </form>

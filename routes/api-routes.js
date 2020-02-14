@@ -321,4 +321,18 @@ module.exports = function(app, io) {
   app.get("/api/mapsecretkeys", function(req, res) {
     res.json({ mapKey: process.env.MAPJS });
   });
+
+ app.put("/api/post/update",function(req,res){
+  try {
+    let postId = req.body.postId;
+    delete req.body.postId;
+    console.log(req.body);
+    res.status(200).json({msg:"success"})
+   } catch (error) {
+     console.log(error);
+     res.status(500).json(error.response)
+     
+   }
+ })
+
 };
