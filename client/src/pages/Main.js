@@ -51,10 +51,13 @@ class Mainpage extends React.Component {
 
     socket.on("new post", post => {
       // console.log(post);
+      if (!post.update){
       this.setState({
         posts: [post, ...this.state.posts],
         loading: false
-      });
+      })} else {
+        this.getPosts();
+      }
     });
 
     socket.on("new event", event => {

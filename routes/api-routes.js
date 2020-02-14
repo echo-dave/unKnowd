@@ -96,11 +96,9 @@ module.exports = function(app, io) {
     db.Post.find()
       .sort({ dateCreated: -1 })
       .limit(20)
-      .populate("creator")
-      .populate("replies.creator")
-      .lean()
+      .populate({path: "creator", select: "-email -password -lastName"})
+      .populate({path: "replies.creator", select: "-email -password -lastName"})
       .then(posts => {
-        removeInfo(posts)
         res.json(posts);
       })
       .catch(err => {
@@ -161,23 +159,9 @@ module.exports = function(app, io) {
       "date.start": { $gte: new Date(yesterday) }
     })
       .sort({ "date.start": 1 })
-      .populate("creator")
-      .populate("replies.creator")
-      .lean()
+      .populate({path: "creator", select: "-email -password -lastName"})
+      .populate({path: "replies.creator", select: "-email -password -lastName"})
       .then(events => {
-        for (let i = 0; i < events.length; i++) {
-          delete events[i].creator.email;
-          delete events[i].creator.password;
-          delete events[i].creator.lastName;
-
-          for (let j = 0; j < events[i].replies.length; j++) {
-            delete events[i].replies[j].creator.email;
-            delete events[i].replies[j].creator.password;
-            delete events[i].replies[j].creator.lastName;
-          }
-        }
-        // console.log("events", events);
-
         res.json(events);
       })
       .catch(err => {
@@ -332,16 +316,3 @@ module.exports = function(app, io) {
 
 };
 
-// function for removing user details
-removeInfo = (data) => {
-  for (let i = 0; i < data.length; i++) {
-    delete data[i].creator.email;
-    delete data[i].creator.password;
-    delete data[i].creator.lastName;
-    for (let j = 0; j < data[i].replies.length; j++) {
-      delete data[i].replies[j].creator.email;
-      delete data[i].replies[j].creator.password;
-      delete data[i].replies[j].creator.lastName;
-    }
-  }
-}
