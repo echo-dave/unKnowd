@@ -1,4 +1,8 @@
 $secondary: rgb(56, 0, 17);
+//orange
+// $secondary: rgb(241, 146, 3);
+//blue
+// $secondary: rgb(0, 183, 255);
 $tertiary: lighten(desaturate($secondary, 80%), 70);
 $primary: rgba(242, 242, 242, 0.95);
 //smaller size for commenting buttons
@@ -14,6 +18,21 @@ $family-secondary: "Indie Flower", cursive;
 @import "../../node_modules/bulma/sass/base/_all.sass";
 @import "../../node_modules/bulma/sass/elements/title.sass";
 @import "../../node_modules/bulma/sass/elements/content.sass";
+
+body {
+  background: lighten($secondary, 0);
+  font-family: "Montserrat", sans-serif;
+  height: var(--bodyHeight);
+  overflow: hidden;
+}
+
+h2 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 1.2em;
+  color: $secondary;
+  margin-bottom: 0.5em;
+}
 
 #imageRemove {
   font-weight: bold;

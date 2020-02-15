@@ -93,16 +93,17 @@ module.exports = function(app, io) {
   });
 
   app.get("/api/posts/:page", authWare, function(req, res) {
-    // console.log("request ",parseInt(req.params.page));
     
     db.Post.find()
-      .sort({ dateCreated: -1 })
+      .sort({ lastEdit: -1, dateCreated: -1})
       .limit(20)
       .skip(Math.max(parseInt(req.params.page)-1,0)*20)
       .populate({path: "creator", select: "-email -password -lastName"})
       .populate({path: "replies.creator", select: "-email -password -lastName"})
       .then(posts => {
-        res.json(posts);
+        db.Post.countDocuments().then(postsCount => res.json({posts:posts,count:postsCount}));
+        
+
       })
       .catch(err => {
         console.log(err);
@@ -111,7 +112,6 @@ module.exports = function(app, io) {
   });
 
   app.post("/api/post", authWare, function(req, res) {
-    console.log(req.body);
 
     if (req.files != null) {
       console.log("file--------------file");
@@ -163,16 +163,14 @@ module.exports = function(app, io) {
   app.get("/api/events", function(req, res) {
     let currentDate = new Date();
     let yesterday = currentDate.setDate(currentDate.getDate() - 1);
-    // console.log(currentDate);
+
     db.Event.find({
       "date.start": { $gte: new Date(yesterday) }
     })
       .sort({ "date.start": 1 })
       .populate({path: "creator", select: "-email -password -lastName"})
       .populate({path: "replies.creator", select: "-email -password -lastName"})
-      .then(events => {
-        console.log(events);
-        
+      .then(events => {        
         res.json(events);
       })
       .catch(err => {

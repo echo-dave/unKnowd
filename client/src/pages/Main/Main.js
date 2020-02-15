@@ -98,9 +98,9 @@ class Mainpage extends React.Component {
     .get(`/api/posts/${this.state.page + 1}`)
     .then(page => {
       console.log(page.data);
-      let newPage = [...this.state.posts, ...page.data];
+      let newPage = [...this.state.posts, ...page.data.posts];
       console.log("newPage ",newPage);
-      this.setState({ posts: newPage });
+      this.setState({ posts: newPage, page: this.state.page + 1 });
     })
     .catch(err => console.log(err));
   }
@@ -108,7 +108,7 @@ class Mainpage extends React.Component {
     authenticatedAxios
       .get(`/api/posts/${this.state.page}`)
       .then(res => {
-        this.setState({ posts: res.data });
+        this.setState({ posts: res.data.posts, postPages: Math.ceil(res.data.count / 20), postCount: res.data.count });
       })
       .catch(err => console.log(err.resoponse));
   };
@@ -247,7 +247,7 @@ class Mainpage extends React.Component {
                     toggleLoading={this.toggleLoading}
                   />
                 ))}
-                <button className="more button" onClick={this.incrementPostPage}>More Posts</button>
+                {this.state.postPages > this.state.page ? <button className="more button is-small" onClick={this.incrementPostPage}>More Posts</button> : null}
           </div>
           {window.innerWidth <= 768 && !this.state.mapShow ? null : (
             <div className="column events">
