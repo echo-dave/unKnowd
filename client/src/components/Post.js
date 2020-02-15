@@ -12,7 +12,6 @@ function Post (props) {
 
     const editThisPost = () => setEditPost(!editPost)
     const editThisEvent = () => setEditEvent(!editEvent)
-    console.log(props);
     
     return (
         <>

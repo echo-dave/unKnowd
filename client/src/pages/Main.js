@@ -51,8 +51,7 @@ class Mainpage extends React.Component {
     const socket = io();
 
     socket.on("new post", post => {
-      // console.log(post);
-      if (!post.update){
+      if (!post.updatePost){
       this.setState({
         posts: [post, ...this.state.posts],
         loading: false
@@ -62,11 +61,13 @@ class Mainpage extends React.Component {
     });
 
     socket.on("new event", event => {
-      // console.log(event);
+      if (!event.updateEvent){
       this.setState({
         events: [event, ...this.state.events],
         loading: false
-      });
+      })} else {
+        this.getEvents();
+      }
     });
 
     socket.on("new comment", comment => {
@@ -95,7 +96,6 @@ class Mainpage extends React.Component {
     authenticatedAxios
       .get(`/api/posts/${this.state.page}`)
       .then(res => {
-        // console.log(res);
         this.setState({ posts: res.data });
       })
       .catch(err => console.log(err.resoponse));
@@ -105,8 +105,6 @@ class Mainpage extends React.Component {
     axios
       .get("/api/events")
       .then(res => {
-        console.log(res);
-
         this.setState({ events: res.data });
       })
       .catch(err => console.log(err.resoponse));

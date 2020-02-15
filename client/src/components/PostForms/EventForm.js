@@ -61,24 +61,40 @@ class EventForm extends Component {
   submitHandler = e => {
     e.preventDefault();
 
+    let url;
+    let method;
+    let lastEdit = new Date();
+    if (!this.props.eventData){
+      method = "post";
+      url = "event";
+    } else {
+      method = "put";
+      url = "event/update";
+    };
+ 
     if (this.state.title && this.state.description) {
       let eventData = new FormData();
       eventData.append("title", this.state.title);
       eventData.append("description", this.state.description);
       eventData.append("address", this.state.address);
       eventData.append("date.start", this.state.start);
-      eventData.append("creator", this.state.creator);
-      eventData.append("img", this.state.img);
+      if (!this.props.eventData) eventData.append("creator", this.state.creator);
+      if (this.state.img != "" || !this.state.img && !this.state.preview) eventData.append("img", this.state.img);
+      if (this.props.eventData) eventData.append("eventId", this.props.eventData._id);
 
       this.props.toggleLoading();
 
-      authenticatedAxios
-        .post("/api/event", eventData)
-        .then(() => {
+      authenticatedAxios({
+        method: method,
+        url: `/api/${url}`,
+        data: eventData,
+        headers: {"Content-Type": "multipart/form-data"}
+      }).then(() => {
+          this.props.toggleLoading();
           if (!this.props.eventShow) this.props.togglePostEventViews();
-          this.props.closeForm();
+          this.props.closeForm ? this.props.closeForm() : this.props.editThisEvent();
         })
-        .catch(err => console.log(err.response));
+        .catch(err => console.log(err));
     }
   };
 

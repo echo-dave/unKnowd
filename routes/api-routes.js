@@ -139,21 +139,19 @@ module.exports = function(app, io) {
   app.put("/api/post/update", authWare, function(req,res){
     let postId = req.body.postId;
     delete req.body.postId;
-    console.log(req.body);
 
     if (req.files != null) {
-      console.log("file--------------file");
-      console.log(req.files);
+      // console.log("file--------------file");
+      // console.log(req.files);
       upload(req, "photos", updatePost);
     } else updatePost(req);
 
     function updatePost (req) {
-      db.Post.findOneAndUpdate({_id: postId},{$set: req.body},{"fields":{"creator.email":0},new: true})
+      db.Post.findOneAndUpdate({_id: postId},{$set: req.body},{new: true})
         .populate({path:"creator",select: "-email -password -lastName"})
         .populate({path:"replies.creator", select: "-email -password -lastName"})
         .then(updatePopulated => {
-          console.log("updated populate ",updatePopulated);
-          io.sockets.emit("new post", {update: updatePopulated});
+          io.sockets.emit("new post", {updatePost: updatePopulated});
           res.end();
         }).catch(function(err) {
           console.log(err);
@@ -173,6 +171,8 @@ module.exports = function(app, io) {
       .populate({path: "creator", select: "-email -password -lastName"})
       .populate({path: "replies.creator", select: "-email -password -lastName"})
       .then(events => {
+        console.log(events);
+        
         res.json(events);
       })
       .catch(err => {
@@ -229,6 +229,30 @@ module.exports = function(app, io) {
         console.log(err);
       });
   });
+
+  app.put("/api/event/update", authWare, function(req,res){
+   let eventId = req.body.eventId;
+   delete req.body.eventId; 
+
+   if (req.files != null) {
+    upload(req, "img", updateEvent);
+   } else {
+    updateEvent(req)
+   }
+   function updateEvent(req) {
+    db.Event.findOneAndUpdate({_id: eventId},{$set:req.body},{new: true})
+    .populate({path:"creator", select: "-email -password -lastName"})
+    .populate({path:"replies.creator", select: "-email -password -lastName"})
+    .then(eventUpdate => {
+      io.sockets.emit("new event", {updateEvent: eventUpdate});
+      res.end();
+    }).catch(function(err) {
+      console.log(err);
+      res.status(500).json({error: err});
+    });
+   }
+
+  })
 
   //make post comment
   app.post("/api/replyComment", authWare, function(req, res) {

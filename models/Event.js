@@ -6,8 +6,8 @@ const EventSchema = new Schema({
   lat: String,
   lon: String,
   date: {
-    start: { type: Date, default: "" }
-    // end: { type: Date, default: "" }
+    start: { type: Date, default: "" },
+    lastEdit: {type: Date, default: null}
   },
   title: String,
   description: String,
