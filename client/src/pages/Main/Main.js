@@ -1,14 +1,15 @@
 import React from "react";
 import axios from "axios";
-import UserContext from "../context/UserContext";
-import EditToggle from "../components/EditToggle";
-import Postform from "../components/PostForms/PostForm";
-import authenticatedAxios from "../utils/AuthenticatedAxios";
-import EventMap from "../components/Map";
+import UserContext from "../../context/UserContext";
+import EditToggle from "../../components/EditToggle";
+import Postform from "../../components/PostForms/PostForm";
+import authenticatedAxios from "../../utils/AuthenticatedAxios";
+import EventMap from "../../components/Map";
 import io from "socket.io-client";
-import EventForm from "../components/PostForms/EventForm";
-import Auth from "../utils/Auth";
-import Nav from "../components/Nav/Nav";
+import EventForm from "../../components/PostForms/EventForm";
+import Auth from "../../utils/Auth";
+import Nav from "../../components/Nav/Nav";
+import "./main.scss";
 
 class Mainpage extends React.Component {
   state = {
@@ -91,6 +92,18 @@ class Mainpage extends React.Component {
   //   this.socket.close();
   // }
 
+  incrementPostPage =() => {
+    console.log(this.state.posts);
+    authenticatedAxios
+    .get(`/api/posts/${this.state.page + 1}`)
+    .then(page => {
+      console.log(page.data);
+      let newPage = [...this.state.posts, ...page.data];
+      console.log("newPage ",newPage);
+      this.setState({ posts: newPage });
+    })
+    .catch(err => console.log(err));
+  }
   getPosts = () => {
     authenticatedAxios
       .get(`/api/posts/${this.state.page}`)
@@ -234,6 +247,7 @@ class Mainpage extends React.Component {
                     toggleLoading={this.toggleLoading}
                   />
                 ))}
+                <button className="more button" onClick={this.incrementPostPage}>More Posts</button>
           </div>
           {window.innerWidth <= 768 && !this.state.mapShow ? null : (
             <div className="column events">

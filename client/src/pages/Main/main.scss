@@ -1,0 +1,24 @@
+@import "../../app.scss";
+
+.more {
+    margin: 0 auto;
+    display: block;
+    position: relative;
+    top: -2.2rem;
+    background-color: $primary;
+    color: $dark;
+}
+
+.more:hover,
+.more:active,
+.more:focus {
+  background-color: darken($primary, 42.686274509803921);
+  color: $light;
+}
+
+.fa-edit {
+    cursor: pointer;
+    position: absolute;
+    top: 1.4rem;
+    right: 1rem;
+  }

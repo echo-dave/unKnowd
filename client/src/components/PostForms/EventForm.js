@@ -166,7 +166,7 @@ class EventForm extends Component {
               className="button newPost is-small"
               type="submit"
             >
-              Submit
+              {!this.props.eventData ? <>Submit</> : <>Update</>}
             </button>
             {this.props.loading ? <Spinner /> : null}
           </form>

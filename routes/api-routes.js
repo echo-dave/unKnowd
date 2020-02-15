@@ -93,7 +93,7 @@ module.exports = function(app, io) {
   });
 
   app.get("/api/posts/:page", authWare, function(req, res) {
-    console.log("request ",parseInt(req.params.page));
+    // console.log("request ",parseInt(req.params.page));
     
     db.Post.find()
       .sort({ dateCreated: -1 })
