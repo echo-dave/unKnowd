@@ -5,7 +5,7 @@
 }
 
 .file.is-primary .file-cta {
-  background-color: darken(desaturate($color: $tertiary, $amount: 100), 10);
+  background-color: lighten(desaturate($color: $secondary, $amount: 0), 0);
   color: $light;
 
   :hover,
@@ -13,10 +13,10 @@
   .is-hovered {
     background-color:
       lighten(
-        desaturate($color: $tertiary, $amount: 100),
-        $amount: 5
-    );
-    color: $dark;
+        desaturate($color: $secondary, $amount: 10),
+        $amount: 10
+      );
+    color: $light;
   }
 }
 
@@ -25,8 +25,8 @@
 .file.is-primary:focus .file-cta {
   background-color:
     lighten(
-      desaturate($color: $tertiary, $amount: 100),
-      $amount: 5
-  );
-  color: $dark;
+      desaturate($color: $secondary, $amount: 10),
+      $amount: 10
+      );
+  color: $light;
 }

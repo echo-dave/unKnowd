@@ -6,7 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import UserContext from "./context/UserContext";
 import axios from "axios";
 import "./app.scss";
-const Mainpage = lazy(() => import("./pages/Main"));
+const Mainpage = lazy(() => import("./pages/Main/Main"));
 const Viewer = lazy(() => import("./pages/Viewer"));
 const UpdateProfile = lazy(() => import("./pages/UpdateProfile/UpdateProfile"));
 

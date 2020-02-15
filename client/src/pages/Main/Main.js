@@ -1,15 +1,15 @@
 import React from "react";
 import axios from "axios";
-import UserContext from "../context/UserContext";
-import Post from "../components/Post";
-import Event from "../components/Event";
-import Postform from "../components/PostForms/PostForm";
-import authenticatedAxios from "../utils/AuthenticatedAxios";
-import EventMap from "../components/Map";
+import UserContext from "../../context/UserContext";
+import EditToggle from "../../components/EditToggle";
+import Postform from "../../components/PostForms/PostForm";
+import authenticatedAxios from "../../utils/AuthenticatedAxios";
+import EventMap from "../../components/Map";
 import io from "socket.io-client";
-import EventForm from "../components/PostForms/EventForm";
-import Auth from "../utils/Auth";
-import Nav from "../components/Nav/Nav";
+import EventForm from "../../components/PostForms/EventForm";
+import Auth from "../../utils/Auth";
+import Nav from "../../components/Nav/Nav";
+import "./main.scss";
 
 class Mainpage extends React.Component {
   state = {
@@ -51,8 +51,7 @@ class Mainpage extends React.Component {
     const socket = io();
 
     socket.on("new post", post => {
-      // console.log(post);
-      if (!post.update){
+      if (!post.updatePost){
       this.setState({
         posts: [post, ...this.state.posts],
         loading: false
@@ -62,11 +61,13 @@ class Mainpage extends React.Component {
     });
 
     socket.on("new event", event => {
-      // console.log(event);
+      if (!event.updateEvent){
       this.setState({
         events: [event, ...this.state.events],
         loading: false
-      });
+      })} else {
+        this.getEvents();
+      }
     });
 
     socket.on("new comment", comment => {
@@ -91,12 +92,23 @@ class Mainpage extends React.Component {
   //   this.socket.close();
   // }
 
+  incrementPostPage =() => {
+    console.log(this.state.posts);
+    authenticatedAxios
+    .get(`/api/posts/${this.state.page + 1}`)
+    .then(page => {
+      console.log(page.data);
+      let newPage = [...this.state.posts, ...page.data.posts];
+      console.log("newPage ",newPage);
+      this.setState({ posts: newPage, page: this.state.page + 1 });
+    })
+    .catch(err => console.log(err));
+  }
   getPosts = () => {
     authenticatedAxios
       .get(`/api/posts/${this.state.page}`)
       .then(res => {
-        // console.log(res);
-        this.setState({ posts: res.data });
+        this.setState({ posts: res.data.posts, postPages: Math.ceil(res.data.count / 20), postCount: res.data.count });
       })
       .catch(err => console.log(err.resoponse));
   };
@@ -106,7 +118,6 @@ class Mainpage extends React.Component {
       .get("/api/events")
       .then(res => {
         this.setState({ events: res.data });
-        // console.log(this.state.events);
       })
       .catch(err => console.log(err.resoponse));
   };
@@ -214,7 +225,8 @@ class Mainpage extends React.Component {
           
             {!this.state.eventShow ?
                this.state.posts.map(post => (
-                  <Post
+                //  Show posts
+                  <EditToggle
                     key={post._id}
                     postData={post}
                     userState={this.state.user}
@@ -224,7 +236,8 @@ class Mainpage extends React.Component {
                   />
                 ))
               : this.state.events.map(event => (
-                  <Event
+                  // show events
+                  <EditToggle
                     key={event._id}
                     eventData={event}
                     eventShow={this.state.eventShow}
@@ -234,6 +247,7 @@ class Mainpage extends React.Component {
                     toggleLoading={this.toggleLoading}
                   />
                 ))}
+                {this.state.postPages > this.state.page ? <button className="more button is-small" onClick={this.incrementPostPage}>More Posts</button> : null}
           </div>
           {window.innerWidth <= 768 && !this.state.mapShow ? null : (
             <div className="column events">

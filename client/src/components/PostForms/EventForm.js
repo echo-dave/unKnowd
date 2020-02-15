@@ -17,16 +17,30 @@ class EventForm extends Component {
       address: "",
       lat: "",
       lon: "",
-      start: new Date(),
+      start: null,
       img: "",
       creator: "",
       preview: ""
     };
   }
   componentDidMount() {
-    this.setState({creator: this.props.userState.id});
+    this.setState({creator: this.props.userState.id, start: new Date()});
     this.clearImageSelect = clearImageSelect.bind(this);
     this.fileChange = fileChange.bind(this);
+
+    if (this.props.eventData) {
+      const {eventData} = this.props
+      this.setState({
+        title: eventData.title,
+        description: eventData.description,
+        address: eventData.address,
+        preview: eventData.img,
+        start: new Date(eventData.date.start)
+
+      })
+
+    }
+
   }
   fileChangeHandler = event => this.fileChange(event, "img");
 
@@ -47,24 +61,40 @@ class EventForm extends Component {
   submitHandler = e => {
     e.preventDefault();
 
+    let url;
+    let method;
+    let lastEdit = new Date();
+    if (!this.props.eventData){
+      method = "post";
+      url = "event";
+    } else {
+      method = "put";
+      url = "event/update";
+    };
+ 
     if (this.state.title && this.state.description) {
       let eventData = new FormData();
       eventData.append("title", this.state.title);
       eventData.append("description", this.state.description);
       eventData.append("address", this.state.address);
       eventData.append("date.start", this.state.start);
-      eventData.append("creator", this.state.creator);
-      eventData.append("img", this.state.img);
+      if (!this.props.eventData) eventData.append("creator", this.state.creator);
+      if (this.state.img != "" || !this.state.img && !this.state.preview) eventData.append("img", this.state.img);
+      if (this.props.eventData) eventData.append("eventId", this.props.eventData._id);
 
       this.props.toggleLoading();
 
-      authenticatedAxios
-        .post("/api/event", eventData)
-        .then(() => {
+      authenticatedAxios({
+        method: method,
+        url: `/api/${url}`,
+        data: eventData,
+        headers: {"Content-Type": "multipart/form-data"}
+      }).then(() => {
+          this.props.toggleLoading();
           if (!this.props.eventShow) this.props.togglePostEventViews();
-          this.props.closeForm();
+          this.props.closeForm ? this.props.closeForm() : this.props.editThisEvent();
         })
-        .catch(err => console.log(err.response));
+        .catch(err => console.log(err));
     }
   };
 
@@ -72,7 +102,7 @@ class EventForm extends Component {
     const { title, description, address } = this.state;
     return (
       <div id="eventForm">
-        <button className="button close is-smaller" onClick={this.props.closeForm}>
+        <button className="button close is-smaller" onClick={!this.props.editThisEvent ? this.props.closeForm : this.props.editThisEvent}>
           X
         </button>
         <div className="post box clearfix">
@@ -136,7 +166,7 @@ class EventForm extends Component {
               className="button newPost is-small"
               type="submit"
             >
-              Submit
+              {!this.props.eventData ? <>Submit</> : <>Update</>}
             </button>
             {this.props.loading ? <Spinner /> : null}
           </form>

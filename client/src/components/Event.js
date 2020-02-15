@@ -44,6 +44,8 @@ class Event extends Component {
             firstName={creator.firstName}
             creatorPhoto={creator.photo}
           />
+          {this.props.userState.id === this.props.eventData.creator._id ? <i className="fas fa-edit" onClick={this.props.editThisEvent}></i> : null}
+
           {img ? (
             <div className="postPhotos">
               <img src={img} alt="" />

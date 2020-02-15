@@ -24,7 +24,6 @@ module.exports = function(req, imgProperty, dbfunction) {
         console.log("upload success");
         cloud(req.files[imgProperty].namelong)
           .then(function(imageurl) {
-            console.log("create doc next");
             req.body[imgProperty] = imageurl;
             console.log(req.body);
 

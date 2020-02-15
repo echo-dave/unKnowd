@@ -45,7 +45,6 @@ class PostForm extends Component {
   //want to prevent the default of form submit which is to just refresh the page
   submitHandler = e => {
     e.preventDefault();
-    // console.log(Auth.getToken());
     let currentDate = new Date();
 
     let url;
