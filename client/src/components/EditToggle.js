@@ -6,7 +6,7 @@ import EventForm from "./PostForms/EventForm";
 
 
 
-function Post (props) {
+function EditToggle (props) {
     const [editPost,setEditPost] = useState(false);
     const [editEvent,setEditEvent] = useState(false);
 
@@ -28,4 +28,4 @@ function Post (props) {
     )
 }
 
-export default Post
+export default EditToggle

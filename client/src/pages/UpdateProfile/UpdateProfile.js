@@ -7,7 +7,6 @@ import { clearImageSelect, fileChange } from "../../utils/ClearImageSelect";
 import PhotoInput from "../../components/PhotoInput/PhotoInput";
 import "./UpdateProfile.scss";
 import Spinner from "../../components/Spinner/Spinner";
-// import Auth from "../utils/Auth";
 
 class UpdateProfile extends Component {
   constructor(props) {
@@ -41,20 +40,14 @@ class UpdateProfile extends Component {
     const token = localStorage.getItem("token");
     if (token) {
       authenticatedAxios.get("/api/me").then(response => {
-        // console.log(response);
         this.setState({ user: response.data });
-        // console.log(this.state.user);
       });
     }
 
-    // console.log("post form user", this.props.userState);
-    // console.log("creator state", this.state.creator);
     authenticatedAxios
       .get("/api/userInfo", this.state.user.id)
       .then(response => {
-        // console.log(response);
         this.setState({ info: response.data });
-        // console.log(this.state.info);
       })
       .catch(function(error) {
         console.log(error.response);
@@ -92,23 +85,17 @@ class UpdateProfile extends Component {
     e.preventDefault();
 
     //build data set to update
-
-
     Auth.logIn(this.state.info.email, this.state.currentPassword, response => {
       if (response.status === 200) {
         let updatingUser = new FormData();
         if (this.state.email) updatingUser.append("email", this.state.email);
-        if (this.state.firstName)
-          updatingUser.append("firstName", this.state.firstName);
-        if (this.state.lastName)
-          updatingUser.append("lastName", this.state.lastName);
+        if (this.state.firstName) updatingUser.append("firstName", this.state.firstName);
+        if (this.state.lastName) updatingUser.append("lastName", this.state.lastName);
         if (this.state.photo) updatingUser.append("photo", this.state.photo);
         updatingUser.append("id", this.state.user.id);
-        if (
-          this.state.newPassword === this.state.passwordCheck &&
+        if (this.state.newPassword === this.state.passwordCheck &&
           this.state.newPassword != ""
-        )
-          updatingUser.append("password", this.state.newPassword);
+        ) updatingUser.append("password", this.state.newPassword);
 
         //authenticated posting of user updates
         authenticatedAxios

@@ -1,8 +1,7 @@
 import React from "react";
 import axios from "axios";
 import UserContext from "../context/UserContext";
-import Post from "../components/Post";
-import Event from "../components/Event";
+import EditToggle from "../components/EditToggle";
 import Postform from "../components/PostForms/PostForm";
 import authenticatedAxios from "../utils/AuthenticatedAxios";
 import EventMap from "../components/Map";
@@ -213,7 +212,8 @@ class Mainpage extends React.Component {
           
             {!this.state.eventShow ?
                this.state.posts.map(post => (
-                  <Post
+                //  Show posts
+                  <EditToggle
                     key={post._id}
                     postData={post}
                     userState={this.state.user}
@@ -223,7 +223,8 @@ class Mainpage extends React.Component {
                   />
                 ))
               : this.state.events.map(event => (
-                  <Post
+                  // show events
+                  <EditToggle
                     key={event._id}
                     eventData={event}
                     eventShow={this.state.eventShow}
