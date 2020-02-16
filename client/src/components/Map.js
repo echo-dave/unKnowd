@@ -43,7 +43,13 @@ class MapContainer extends Component {
         }}
         // date="none"
         onClick={this.onMarkerClick}
-        icon="/img/info-i_maps.png"
+        icon={{url:"/img/info-i_maps.png",
+          labelOrigin:{
+            x: 15,
+            y: 35
+          }
+        }}
+        label={events.name}
         name={events.name}
       />
       ));
