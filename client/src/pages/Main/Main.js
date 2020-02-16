@@ -67,15 +67,18 @@ class Mainpage extends React.Component {
         events: [event, ...this.state.events],
         loading: false
       })} else {
+        this.setState({loading: false});
         this.getEvents();
       }
     });
 
     socket.on("new comment", comment => {
       if (comment.post) {
+        this.setState({loading: false});
         this.getPosts();
       }
       if (comment.event) {
+        this.setState({loading: false});
         this.getEvents();
       }
     });

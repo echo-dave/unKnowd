@@ -77,7 +77,6 @@ class ReplyForm extends Component {
       headers: { "Content-Type": "multipart/form-data" }
     })
       .then(() => {
-        this.props.toggleLoading();
         if (!this.props.readComments) this.props.toggleComments();
         this.props.closeForm();
       })
