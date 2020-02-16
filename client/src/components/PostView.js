@@ -36,7 +36,7 @@ class PostView extends Component {
                 creatorPhoto={this.props.postData.creator.photo}
               /> 
               {this.props.userState.id === this.props.postData.creator._id ? <i className="fas fa-edit" onClick={this.props.editThisPost}></i> : null}
-
+              {/* Time since posted or updated */}
               <span className="timePosted"> {!this.props.postData.lastEdit ? moment(this.props.postData.dateCreated).fromNow(true) : moment(this.props.postData.lastEdit).fromNow(true)}</span>
               {!this.props.postData.photos[0] == "" ? (
                 <div className="postPhotos">
