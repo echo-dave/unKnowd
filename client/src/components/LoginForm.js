@@ -90,12 +90,13 @@ class LoginForm extends Component {
                 name="password"
                 value={this.state.password}
                 onChange={this.changeHandler}
+                required
               />
             </div>
           </div>
           <button
             id="loginButton"
-            className="button is-primary is-small"
+            className="button is-small"
             type="submit"
           >
             Login

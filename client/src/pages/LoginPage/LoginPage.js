@@ -1,8 +1,9 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import SignUpForm from "../components/SignUpForm";
-import LoginForm from "../components/LoginForm";
-import authenticatedAxios from "../utils/AuthenticatedAxios";
+import SignUpForm from "../../components/SignUpForm";
+import LoginForm from "../../components/LoginForm";
+import authenticatedAxios from "../../utils/AuthenticatedAxios";
+import "./loginPage.scss"
 
 class LoginPage extends React.Component {
   state = {

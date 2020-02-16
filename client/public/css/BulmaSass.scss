@@ -87,22 +87,7 @@ h1 {
   #signup-container .box {
     background-color: rgba(250, 250, 250, 0.85);
   }
-  #loginButton, #signupButton {
-    margin-top: 0.5rem;
-    background-color: darken(desaturate($color: $tertiary, $amount: 100), 10);
-    color: $light;
-  }
-  #loginButton:hover,
-  #loginButton:focus,
-  #signupButton:hover,
-  #signupButton:focus {
-    background-color:
-      lighten(
-        desaturate($color: $tertiary, $amount: 100),
-        $amount: 5
-      );
-    color: $dark;
-  }
+
   .badlogin {
     color: red;
     font-size: 0.9em;

@@ -2,7 +2,7 @@ import React, { Component, lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
 import authenticatedAxios from "./utils/AuthenticatedAxios";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
 import UserContext from "./context/UserContext";
 import axios from "axios";
 import "./app.scss";

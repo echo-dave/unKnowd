@@ -56,6 +56,7 @@ class Mainpage extends React.Component {
         posts: [post, ...this.state.posts],
         loading: false
       })} else {
+        this.setState({loading: false});
         this.getPosts();
       }
     });

@@ -1,0 +1,19 @@
+@import "../../app.scss";
+
+#loginButton, #signupButton {
+  margin-top: 0.5rem;
+  background-color: darken(desaturate($secondary, 0), 0);
+  color: $light;
+}
+
+#loginButton:hover,
+#loginButton:focus,
+#signupButton:hover,
+#signupButton:focus {
+  background-color:
+    lighten(
+    desaturate($secondary, 10),
+    10
+    );
+  color: $light;
+}
