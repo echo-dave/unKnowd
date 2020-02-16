@@ -3,7 +3,7 @@ $secondaryColor: rgb(56, 0, 17);
 // $secondaryColor: rgb(241, 146, 3);
 //blue
 // $secondaryColor: rgb(0, 183, 255);
-$secondary: lighten($secondaryColor,0);
+$secondary: lighten($secondaryColor, 0);
 $tertiary: lighten(desaturate($secondaryColor, 80%), 70);
 $primary: rgba(242, 242, 242, 0.95);
 //smaller size for commenting buttons
@@ -21,7 +21,7 @@ $family-secondary: "Indie Flower", cursive;
 @import "../../node_modules/bulma/sass/elements/content.sass";
 
 body {
-  background: desaturate(lighten($secondary, 0),50);
+  background: desaturate(lighten($secondary, 0), 50);
   font-family: "Montserrat", sans-serif;
   height: var(--bodyHeight);
   overflow: hidden;
