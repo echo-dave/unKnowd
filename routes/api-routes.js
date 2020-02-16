@@ -112,7 +112,7 @@ module.exports = function(app, io) {
   });
 
   app.post("/api/post", authWare, function(req, res) {
-
+    req.body.lastEdit = req.body.dateCreated
     if (req.files != null) {
       console.log("file--------------file");
       console.log(req.files);
@@ -345,6 +345,17 @@ module.exports = function(app, io) {
 
   app.get("/api/mapsecretkeys", function(req, res) {
     res.json({ mapKey: process.env.MAPJS });
+  });
+
+  app.get("/api/markers",function(req,res){
+    res.json([
+        {"name":"Building B","position":{"lat":33.785528,"lng":-84.415722}},
+        {"name":"Porch","position":{"lat":33.785917,"long":-84.416139}},
+        {"name":"Courtyard","position":{"lat":33.785704,"lng":-84.416775}},
+        {"name":"Dove Tail","position":{"lat":33.785607,"lng":-84.418337}}
+        ]
+    )
+   
   });
 
 };
