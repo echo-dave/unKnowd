@@ -255,6 +255,8 @@ class Mainpage extends React.Component {
               <EventMap
                 events={this.state.events}
                 mapKey={this.context.mapKey}
+                markers={this.props.markers}
+
               />
             </div>
           )}
