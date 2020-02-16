@@ -12,8 +12,8 @@
 #signupButton:focus {
   background-color:
     lighten(
-    desaturate($secondary, 10),
-    10
+      desaturate($secondary, 10),
+      10
     );
   color: $light;
 }

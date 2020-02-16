@@ -11,29 +11,30 @@ const Viewer = lazy(() => import("./pages/Viewer"));
 const UpdateProfile = lazy(() => import("./pages/UpdateProfile/UpdateProfile"));
 
 
-const NotFound = () => (
-  <div
-    className="container is-center"
-    style={{
-      height: "100vh",
-      maxWidth: "600px",
-      paddingTop: "0",
-      marginTop: "0"
-    }}
-  >
-    <div className="columns is-vcentered" style={{ height: "100%" }}>
-      <div className="column">
-        <div className="box">
-          <h1>404 NOT FOUND</h1>
-          <h3>Looks like you got lost along the way</h3>
-        </div>
-      </div>
-    </div>
-  </div>
-);
+// const NotFound = () => (
+//   <div
+//     className="container is-center"
+//     style={{
+//       height: "100vh",
+//       maxWidth: "600px",
+//       paddingTop: "0",
+//       marginTop: "0"
+//     }}
+//   >
+//     <div className="columns is-vcentered" style={{ height: "100%" }}>
+//       <div className="column">
+//         <div className="box">
+//           <h1>404 NOT FOUND</h1>
+//           <h3>Looks like you got lost along the way</h3>
+//         </div>
+//       </div>
+//     </div>
+//   </div>
+// );
 class App extends Component {
   state = {
-    user: null
+    user: null,
+    markers:""
   };
 
   setUser = user => {
@@ -47,6 +48,7 @@ class App extends Component {
         this.setState(key.data);
       })
       .catch(err => console.log(err));
+    axios.get("/api/markers").then(markers => this.setState({markers: markers.data}));
 
     const token = localStorage.getItem("token");
     if (token) {
@@ -71,7 +73,9 @@ class App extends Component {
               }}
             >
               <Switch>
-                <ProtectedRoute exact path="/mainpage" component={Mainpage} />
+            <ProtectedRoute exact path="/mainpage" 
+            component={(props) => <Mainpage {...props} markers={this.state.markers}/> }
+            />
                 <Route exact path="/viewer" component={Viewer} />
                 <ProtectedRoute exact path="/profile" component={UpdateProfile} />
                 <Route
@@ -80,7 +84,7 @@ class App extends Component {
                   user={this.state.user}
                   component={LoginPage}
                 />
-                <Route component={NotFound} />
+                {/* <Route component={NotFound} /> */}
               </Switch>
             </UserContext.Provider>
           </Suspense>
