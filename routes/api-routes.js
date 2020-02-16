@@ -349,8 +349,11 @@ module.exports = function(app, io) {
 
   //static map markers from database
   app.get("/api/markers",function(req,res){
-    db.Marker.find().then((markers) => res.json(markers)); 
+    db.Marker.find().then((markers) => res.json(markers))
+    .catch(err => {
+      console.log(err);
+      res.json({error:err});
+    })
   });
-
 };
 

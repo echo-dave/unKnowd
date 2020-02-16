@@ -74,7 +74,8 @@ class MapContainer extends Component {
         onClick={this.onMapClicked}
       >
         {this.displayMarkers()}
-        {this.staticMarkers()}
+        
+        {this.props.markers ? this.staticMarkers() : null }
 
         <InfoWindow
           marker={this.state.activeMarker}
