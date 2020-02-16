@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
 import moment from "moment";
+import Axios from "axios";
 
 class MapContainer extends Component {
   state = {
@@ -12,8 +13,8 @@ class MapContainer extends Component {
   displayMarkers = () =>
     this.props.events.map((events, index) => (
       <Marker
-        key={index}
-        id={index}
+        key={events._id}
+        id={events._id}
         title={events.title}
         description={events.description}
         address={events.address}
@@ -26,6 +27,28 @@ class MapContainer extends Component {
         name={events.title}
       />
     ));
+
+    //asynchronis loading seems to mean the data loads, but no markers.
+    staticMarkers = () => {
+    Axios.get("api/markers").then((markers) => {
+      console.log("marker data ", markers.data);
+      
+      markers.data.map((staticMarker, index) => (
+          <Marker
+            key={index}
+            id={index}
+            title={staticMarker.name}
+            position={{
+              lat: staticMarker.position.lat,
+              lng: staticMarker.position.lng
+            }}
+            onClick={this.onMarkerCLick}
+            name={staticMarker.name}
+            address="Goat Farm"
+            description=""
+          />
+          ));
+     })};
 
   onMarkerClick = (props, marker, e) =>
     this.setState({
@@ -49,10 +72,10 @@ class MapContainer extends Component {
         google={this.props.google}
         zoom={18}
         initialCenter={{ lat: 33.7859878, lng: -84.4162648 }}
-        // initialCenter={{ lat: 33.753746, lng: -84.38633 }}
         onClick={this.onMapClicked}
       >
         {this.displayMarkers()}
+        {/* {this.staticMarkers()} */}
 
         <InfoWindow
           marker={this.state.activeMarker}
@@ -62,7 +85,7 @@ class MapContainer extends Component {
             <h1 className="title is-4" style={{ marginBottom: ".5rem" }}>
               {this.state.selectedPlace.name}
             </h1>
-            <p className="is-size-7">{moment (this.state.selectedPlace.date).format("dddd MMM Do YYYY")}</p>
+            <p className="is-size-7">{moment (this.state.selectedPlace.date).format("ddd MMM Do YYYY")}</p>
             <div className="is-size-6">
               <p>
                 <span className="has-text-weight-bold">Where: </span>
