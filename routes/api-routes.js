@@ -355,5 +355,69 @@ module.exports = function(app, io) {
       res.json({error:err});
     })
   });
+
+  //pssword resets
+  app.post("/api/user/reset",function(req,res){
+    console.log(req.query);
+    console.log(req.body);
+    console.log(req.params);
+
+    db.User.find({email:req.body.email, resetToken:req.body.token}).then(response => {
+      console.log(response);
+      if (response.length === 1) {
+        let uId = response[0]._id;
+        console.log("uid ", uId);
+        
+      req.body.password = bcrypt.hashSync(req.body.password, 10);
+        db.User.findByIdAndUpdate(uId, {password: req.body.password},{new: true}).then(status => {
+          console.log(status);
+          res.json({messsage:"Password Updated"});
+        })
+      }
+    }).catch(err => {
+      console.log(err);
+      res.json(err)      
+    })
+  })
+
+
+
+  app.get("/api/user/requestreset",function(req,res){
+    console.log("connected");
+    console.log("params",req.params)
+    console.log("body",req.body);
+    console.log("query",req.query);
+    
+    db.User.find({email:req.query.email}).select("email").then(response =>  {
+      console.log("response",response);
+      
+      if (response.length !== 1) {
+        res.json({error:"no user"});
+      } else {
+        db.User.findByIdAndUpdate(response[0]._id, {resetToken: makeToken()},{new: true,select:"resetToken"}).then(updatedUser => {
+          console.log(updatedUser);
+          res.json([updatedUser,{token:updatedUser.resetToken}]);
+        })
+       
+        // res.json(makeToken());
+      };
+      }).catch(err => console.log(err)
+      );
+
+      makeToken = () => {
+        let randToken
+        rand = () => {
+          let cTime = new Date();
+          cTime= Date.parse(cTime)
+          randToken = Math.random()*cTime
+        randToken = randToken.toString(36).substr(2)
+        }
+        rand()
+        token = randToken
+        rand()
+        token += randToken
+        return token
+      }
+  })
 };
 

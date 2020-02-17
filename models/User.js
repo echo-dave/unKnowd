@@ -29,7 +29,7 @@ const UserSchema = new Schema({
   role: {
     type: String
   }
-});
+},{ strict: false });
 
 UserSchema.methods.comparePassword = function(inputPass) {
   return bcrypt.compareSync(inputPass, this.password);
