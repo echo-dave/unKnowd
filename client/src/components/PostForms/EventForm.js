@@ -90,7 +90,6 @@ class EventForm extends Component {
         data: eventData,
         headers: {"Content-Type": "multipart/form-data"}
       }).then(() => {
-          this.props.toggleLoading();
           if (!this.props.eventShow) this.props.togglePostEventViews();
           this.props.closeForm ? this.props.closeForm() : this.props.editThisEvent();
         })

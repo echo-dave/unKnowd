@@ -9,28 +9,29 @@ import "./app.scss";
 const Mainpage = lazy(() => import("./pages/Main/Main"));
 const Viewer = lazy(() => import("./pages/Viewer"));
 const UpdateProfile = lazy(() => import("./pages/UpdateProfile/UpdateProfile"));
+const Reset = lazy(() => import("./pages/Reset"));
 
 
-// const NotFound = () => (
-//   <div
-//     className="container is-center"
-//     style={{
-//       height: "100vh",
-//       maxWidth: "600px",
-//       paddingTop: "0",
-//       marginTop: "0"
-//     }}
-//   >
-//     <div className="columns is-vcentered" style={{ height: "100%" }}>
-//       <div className="column">
-//         <div className="box">
-//           <h1>404 NOT FOUND</h1>
-//           <h3>Looks like you got lost along the way</h3>
-//         </div>
-//       </div>
-//     </div>
-//   </div>
-// );
+const NotFound = () => (
+  <div
+    className="container is-center"
+    style={{
+      height: "100vh",
+      maxWidth: "600px",
+      paddingTop: "0",
+      marginTop: "0"
+    }}
+  >
+    <div className="columns is-vcentered" style={{ height: "100%" }}>
+      <div className="column">
+        <div className="box">
+          <h1>404 NOT FOUND</h1>
+          <h3>Looks like you got lost along the way</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+);
 class App extends Component {
   state = {
     user: null,
@@ -84,7 +85,8 @@ class App extends Component {
                   user={this.state.user}
                   component={LoginPage}
                 />
-                {/* <Route component={NotFound} /> */}
+                <Route exact path="/user/reset" component={Reset} />
+                <Route component={NotFound} />
               </Switch>
             </UserContext.Provider>
           </Suspense>
