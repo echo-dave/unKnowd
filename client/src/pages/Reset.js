@@ -36,8 +36,7 @@ componentDidMount() {
         if (this.state.email && this.state.token && this.state.password) {
             axios.post("/api/user/reset",{email:this.state.email,token:this.state.token,password:this.state.password}).then(response => {
                console.log(response);
-                this.setState({email: "", token: "", password: "", token: "", newToken: ""});
-                this.setState({status:response.data.message});
+                this.setState({email: "", token: "", password: "", newToken: "", statusMsg: response.data.message});
             })
         } else {
             axios.get("/api/user/requestreset",{params: {email: this.state.email}}).then(newToken => {
@@ -69,9 +68,9 @@ componentDidMount() {
                                 <p className="tokenText">{this.state.newToken}</p>
                              </div> 
                         : null }
-                        {this.state.newToken ? 
+                        {this.state.statusMsg ? 
                             <div className="box">
-                                <p className="tokenText">{this.state.status}</p>
+                                <p className="tokenText">{this.state.statusMsg}</p>
                             </div>
                         : null }
                     </div>
