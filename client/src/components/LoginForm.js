@@ -102,8 +102,9 @@ class LoginForm extends Component {
             Login
           </button>
         </form>
-        {!this.state.badlogin == "" ? (
+        {!this.state.badlogin == "" ? ( <>
           <p className="badlogin">{this.state.badlogin}</p>
+          <p><a href="/user/reset">Forgot Password?</a></p></>
         ) : null}
       </>
     );

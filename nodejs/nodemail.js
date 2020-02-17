@@ -4,7 +4,6 @@ module.exports = function(msgTo, textMsg, htmlMsg, msgSubject){
 
 // async..await is not allowed in global scope, must use a wrapper
 async function main() {
-  console.log("main function");
   
   // Generate test SMTP service account from ethereal.email
   // Only needed if you don't have a real mail account for testing
@@ -12,20 +11,23 @@ async function main() {
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-    host: process.env.MAILGUN_SMTP_SERVER,
-    port: 587,
-    secure: false, // true for 465, false for other ports
+    name: process.env.MAIL_SERVER_NAME,
+    host: process.env.SMTP_SERVER,
+    port: process.env.SMTP_PORT,
+    secure: process.env.SMTP_SECURE, // true for 465, false for other ports
     auth: {
-      user: process.env.MAILGUN_SMTP_LOGIN, // generated ethereal user
-      pass: process.env.MAILGUN_SMTP_PASSWORD // generated ethereal password
-    }
+      user: process.env.SMTP_LOGIN, // generated ethereal user
+      pass: process.env.SMTP_PASSWORD // generated ethereal password
+    },
+    tls: {
+      // do not fail on invalid certs
+      rejectUnauthorized: false
+    },
+    debug: true
   });
 
   console.log("message inputs");
-  
   console.log(msgTo, textMsg, htmlMsg, msgSubject);
-
-  console.log("trasporter ", transporter);
   
   // send mail with defined transport object
   let info = await transporter.sendMail({
@@ -40,7 +42,7 @@ async function main() {
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
   // Preview only available when sending through an Ethereal account
-  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }
 

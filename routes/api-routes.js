@@ -375,7 +375,7 @@ module.exports = function(app, io) {
       }
     }).catch(err => {
       console.log(err);
-      res.json(err)      
+      res.json({message:err})      
     })
   })
 
@@ -392,15 +392,19 @@ module.exports = function(app, io) {
       } else {
         db.User.findByIdAndUpdate(response[0]._id, {resetToken: makeToken()},{new: true,select: "resetToken email firstName"}).then(updatedUser => {
           console.log("token user",updatedUser);
-          res.json([updatedUser,{token:updatedUser.resetToken}]);
+
+          res.json({message:"Check your email for token"})
+          // res.json([updatedUser,{token:updatedUser.resetToken}]);
           //build message
           msgTo = updatedUser.email
-          resetURL = 'http://unknowd.herokuapp.com/reset'
+          resetURL = 'http://unknowd.herokuapp.com/user/reset/'
           textMsg = `Hi ${updatedUser.firstName}, sorry you lost your password! Here's a token to go get a new one: ${updatedUser.resetToken} 
-          http://url.com`
+          ${resetURL+updatedUser.resetToken}`
           htmlMsg = `<p> Hi ${updatedUser.firstName}</p, 
-          <p>Sorry you lost your password! Here's a token to go get a new one: ${updatedUser.resetToken} 
-          <a href="${resetURL}">${resetURL}</a> </p>`
+          <p>Sorry you lost your password!</p>
+          <p>Here's a token to go get a new one:</p>
+          <p>${updatedUser.resetToken}</p> 
+          <p><a href="${resetURL+updatedUser.resetToken}/${updatedUser.email}">${resetURL+updatedUser.resetToken}/${updatedUser.email}</a></p>`
           msgSubject = "unKnowd Password Reset"
 
           nodemail(msgTo,textMsg,htmlMsg,msgSubject);
