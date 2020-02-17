@@ -6,6 +6,7 @@ const authWare = require("../middleware/authware");
 // const socket = socketIOClient("http://127.0.0.1:3001");
 const upload = require("../nodejs/upload");
 const bcrypt = require("bcryptjs");
+const nodemail = require("../nodejs/nodemail");
 const googleMapsClient = require("@google/maps").createClient({
   key: process.env.GOOGLE_GEOCODE,
   Promise: Promise
@@ -358,9 +359,7 @@ module.exports = function(app, io) {
 
   //pssword resets
   app.post("/api/user/reset",function(req,res){
-    console.log(req.query);
-    console.log(req.body);
-    console.log(req.params);
+  
 
     db.User.find({email:req.body.email, resetToken:req.body.token}).then(response => {
       console.log(response);
@@ -371,22 +370,19 @@ module.exports = function(app, io) {
       req.body.password = bcrypt.hashSync(req.body.password, 10);
         db.User.findByIdAndUpdate(uId, {password: req.body.password},{new: true}).then(status => {
           console.log(status);
-          res.json({messsage:"Password Updated"});
+          res.json({message:"Password Updated"});
         })
       }
     }).catch(err => {
       console.log(err);
-      res.json(err)      
+      res.json({message:err})      
     })
   })
 
 
-
+//get password reset token
   app.get("/api/user/requestreset",function(req,res){
-    console.log("connected");
-    console.log("params",req.params)
-    console.log("body",req.body);
-    console.log("query",req.query);
+
     
     db.User.find({email:req.query.email}).select("email").then(response =>  {
       console.log("response",response);
@@ -394,12 +390,25 @@ module.exports = function(app, io) {
       if (response.length !== 1) {
         res.json({error:"no user"});
       } else {
-        db.User.findByIdAndUpdate(response[0]._id, {resetToken: makeToken()},{new: true,select:"resetToken"}).then(updatedUser => {
-          console.log(updatedUser);
-          res.json([updatedUser,{token:updatedUser.resetToken}]);
+        db.User.findByIdAndUpdate(response[0]._id, {resetToken: makeToken()},{new: true,select: "resetToken email firstName"}).then(updatedUser => {
+          console.log("token user",updatedUser);
+
+          res.json({message:"Check your email for token"})
+          // res.json([updatedUser,{token:updatedUser.resetToken}]);
+          //build message
+          msgTo = updatedUser.email
+          resetURL = 'http://unknowd.herokuapp.com/user/reset/'
+          textMsg = `Hi ${updatedUser.firstName}, sorry you lost your password! Here's a token to go get a new one: ${updatedUser.resetToken} 
+          ${resetURL+updatedUser.resetToken}`
+          htmlMsg = `<p> Hi ${updatedUser.firstName}</p, 
+          <p>Sorry you lost your password!</p>
+          <p>Here's a token to go get a new one:</p>
+          <p>${updatedUser.resetToken}</p> 
+          <p><a href="${resetURL+updatedUser.resetToken}/${updatedUser.email}">${resetURL+updatedUser.resetToken}/${updatedUser.email}</a></p>`
+          msgSubject = "unKnowd Password Reset"
+
+          nodemail(msgTo,textMsg,htmlMsg,msgSubject);
         })
-       
-        // res.json(makeToken());
       };
       }).catch(err => console.log(err)
       );

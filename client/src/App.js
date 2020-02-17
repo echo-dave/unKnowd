@@ -9,7 +9,7 @@ import "./app.scss";
 const Mainpage = lazy(() => import("./pages/Main/Main"));
 const Viewer = lazy(() => import("./pages/Viewer"));
 const UpdateProfile = lazy(() => import("./pages/UpdateProfile/UpdateProfile"));
-const Reset = lazy(() => import("./pages/Reset"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword/ResetPassword"));
 
 
 const NotFound = () => (
@@ -85,7 +85,8 @@ class App extends Component {
                   user={this.state.user}
                   component={LoginPage}
                 />
-                <Route exact path="/user/reset" component={Reset} />
+                <Route exact path="/user/reset" component={ResetPassword}/>
+                <Route path="/user/reset/:token/:email" component={ResetPassword} />
                 <Route component={NotFound} />
               </Switch>
             </UserContext.Provider>
