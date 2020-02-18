@@ -88,6 +88,8 @@ class MapContainer extends Component {
 
   render() {
     return (
+      <>
+      {this.props.mapKey ? 
       <Map
         google={this.props.google}
         zoom={17}
@@ -120,6 +122,8 @@ class MapContainer extends Component {
           </div>
         </InfoWindow>
       </Map>
+      :  <h1>Loading...</h1>}
+      </>
     );
   }
 }
