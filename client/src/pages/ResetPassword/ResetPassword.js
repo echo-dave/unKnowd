@@ -1,7 +1,6 @@
 import React from "react";
 import Nav from "../../components/Nav/Nav";
 import axios from "axios";
-import "../../app.scss";
 import "./resetPassword.scss";
 
 class PassReset extends React.Component {
