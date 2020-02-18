@@ -25,6 +25,17 @@ class MapContainer extends Component {
         date={events.date.start}
         onClick={this.onMarkerClick}
         name={events.title}
+        label={{ 
+          text: events.title,
+          color: "#008cff",
+          // fontSize: "1rem"
+        }}
+        icon={{url:"http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+          labelOrigin: {
+            x: 15,
+            y: -15
+          }
+        }}
       />
     ));
 
@@ -36,7 +47,7 @@ class MapContainer extends Component {
         id={index}
         title={events.name}
         // description="{events.description}"
-        address="Goat Farm"
+        // address="Goat Farm"
         position={{
           lat: events.position.lat,
           lng: events.position.lng
@@ -49,7 +60,11 @@ class MapContainer extends Component {
             y: 35
           }
         }}
-        label={events.name}
+        label={{
+          text: events.name,
+          color: "#008cff",
+          // fontSize: "1rem"
+        }}
         name={events.name}
       />
       ));
@@ -75,8 +90,8 @@ class MapContainer extends Component {
     return (
       <Map
         google={this.props.google}
-        zoom={18}
-        initialCenter={{ lat: 33.7859878, lng: -84.4162648 }}
+        zoom={17}
+        initialCenter={{ lat: 33.785678, lng: -84.416687 }}
         onClick={this.onMapClicked}
       >
         {this.displayMarkers()}
@@ -91,11 +106,13 @@ class MapContainer extends Component {
             <h1 className="title is-4" style={{ marginBottom: ".5rem" }}>
               {this.state.selectedPlace.name}
             </h1>
-            {this.state.selectedPlace.date ?  <p className="is-size-7">{moment (this.state.selectedPlace.date).format("ddd MMM Do YYYY")}</p> : null }
+            {this.state.selectedPlace.date ? <p className="is-size-7">{moment (this.state.selectedPlace.date).format("ddd MMM Do YYYY")}</p> : null }
             <div className="is-size-6">
               <p>
+                {this.state.selectedPlace.address ? <>
                 <span className="has-text-weight-bold">Where: </span>
-                {this.state.selectedPlace.address} <br />
+                {this.state.selectedPlace.address} <br /> </>
+                : null }
                 {this.state.selectedPlace.description ?  <><span className="has-text-weight-bold">What: </span>
               {this.state.selectedPlace.description} </> : null }
               </p>
