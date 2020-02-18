@@ -20,7 +20,15 @@ app.use(
     }
   )
 );
-
+if (process.env.NODE_ENV === "production") {
+app.use(function (req, res, next) {
+  if (req.header('x-forwarded-proto') === 'http') {
+    res.redirect(301, 'https://' + req.hostname + req.url);
+    return
+  }
+  next()
+});
+}
 app.use(fileUpload());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
