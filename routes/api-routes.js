@@ -404,8 +404,8 @@ module.exports = function(app, io) {
           resetURL = 'http://unknowd.herokuapp.com/user/reset/'
           textMsg = `Hi ${updatedUser.firstName}, sorry you lost your password! Here's a token to go get a new one: ${updatedUser.resetToken} 
           ${resetURL+updatedUser.resetToken}`
-          htmlMsg = `<p> Hi ${updatedUser.firstName}</p, 
-          <p>Sorry you lost your password!</p>
+          htmlMsg = `<p> Hi ${updatedUser.firstName}, 
+          <br />Sorry you lost your password!</p>
           <p>Here's a token to go get a new one:</p>
           <p>${updatedUser.resetToken}</p> 
           <p><a href="${resetURL+updatedUser.resetToken}/${updatedUser.email}">${resetURL+updatedUser.resetToken}/${updatedUser.email}</a></p>`
