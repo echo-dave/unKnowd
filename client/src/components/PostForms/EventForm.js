@@ -93,7 +93,11 @@ class EventForm extends Component {
           if (!this.props.eventShow) this.props.togglePostEventViews();
           this.props.closeForm ? this.props.closeForm() : this.props.editThisEvent();
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          console.log(err.response.data.err.json.error_message);
+        this.setState({err: err.response.data.err.json.error_message})
+        this.props.toggleLoading();
+        });
     }
   };
 
@@ -160,6 +164,7 @@ class EventForm extends Component {
               fileName="img"
               photoFileName={this.state.img.name}
             /> */}
+            {this.state.err ? <p className="error">{this.state.err}</p> : null }
             <button
               id="submitEvent"
               className="button newPost is-small"
