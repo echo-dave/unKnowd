@@ -83,6 +83,7 @@ class PostForm extends Component {
       headers: { "Content-Type": "multipart/form-data" }
     })
       .then(() => {
+        if (this.props.eventShow) this.props.togglePostEventViews();
         this.props.closeForm ? this.props.closeForm() : this.props.editThisPost();
       })
       .catch(err => console.log(err));

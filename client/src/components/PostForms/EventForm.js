@@ -36,12 +36,10 @@ class EventForm extends Component {
         address: eventData.address,
         preview: eventData.img,
         start: new Date(eventData.date.start)
-
       })
-
     }
-
   }
+  
   fileChangeHandler = event => this.fileChange(event, "img");
 
   removeImage = () => {
@@ -63,7 +61,6 @@ class EventForm extends Component {
 
     let url;
     let method;
-    let lastEdit = new Date();
     if (!this.props.eventData){
       method = "post";
       url = "event";

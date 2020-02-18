@@ -14,10 +14,9 @@ const googleMapsClient = require("@google/maps").createClient({
 
 module.exports = function(app, io) {
   app.post("/api/signup", function(req, res) {
-    console.log("signup body", req.body, req.files);
+    // console.log("signup body", req.body, req.files);
 
     if (req.files != null) {
-      console.log("file--------------file");
       // console.log(req.files);
 
       upload(req, "photo", signup);
@@ -29,7 +28,7 @@ module.exports = function(app, io) {
       User.create(req.body)
         .then(function(result) {
           if (result._id) {
-            console.log(result);
+            // console.log(result);
 
             res.json({ message: "user created", user: result._id });
           }
@@ -74,14 +73,6 @@ module.exports = function(app, io) {
       .catch(err => console.log(err));
   });
 
-  // app.get("/api/protected", authWare, function(req, res) {
-  //   const user = req.user;
-  //   res.json({
-  //     message:
-  //       user.email + ", you should only see this if you're authenticated."
-  //   });
-  // });
-
   app.get("/api/me", authWare, function(req, res) {
     User.findById(req.user._id).then(dbUser => {
       dbUser = {
@@ -115,8 +106,6 @@ module.exports = function(app, io) {
   app.post("/api/post", authWare, function(req, res) {
     req.body.lastEdit = req.body.dateCreated
     if (req.files != null) {
-      console.log("file--------------file");
-      console.log(req.files);
 
       upload(req, "photos", newPost);
     } else {
@@ -191,11 +180,8 @@ module.exports = function(app, io) {
         req.body.lat = response.json.results[0].geometry.location.lat;
         req.body.lon = response.json.results[0].geometry.location.lng;
 
-        console.log("<------------------>");
-        console.log(req.body);
-        res.json(req.body);
+        // res.json(req.body);
         if (req.files != null) {
-          console.log("file--------------file");
 
           upload(req, "img", newEvent);
         } else {
@@ -209,8 +195,6 @@ module.exports = function(app, io) {
                 .execPopulate()
                 .then(populatedData => {
                   io.sockets.emit("new event", populatedData);
-                  console.log("done");
-
                   res.end();
                 })
                 .catch(function(err) {
@@ -257,7 +241,7 @@ module.exports = function(app, io) {
   //make post comment
   app.post("/api/replyComment", authWare, function(req, res) {
     if (req.files != null) {
-      console.log("file--------------file");
+      // console.log("file--------------file");
       // console.log(req.files);
       upload(req, "photos", postComment);
     } else {
@@ -271,7 +255,6 @@ module.exports = function(app, io) {
         { new: true }
       ).then(function(newReply) {
         io.sockets.emit("new comment", { post: newReply.replies });
-        console.log("done");
 
         res.end();
       });
@@ -282,8 +265,8 @@ module.exports = function(app, io) {
   app.post("/api/replyEventComment", authWare, function(req, res) {
     // console.log("event req", req.body);
     if (req.files != null) {
-      console.log("file--------------file");
-      console.log(req.files);
+      // console.log("file--------------file");
+      // console.log(req.files);
       upload(req, "photos", eventComment);
     } else {
       eventComment(req);
@@ -326,7 +309,7 @@ module.exports = function(app, io) {
       req.body.password = bcrypt.hashSync(req.body.password, 10);
     }
     if (req.files != null) {
-      console.log("file--------------file");
+      // console.log("file--------------file");
       console.log(req.files);
       upload(req, "photo", userInfoUpdating);
     } else {
@@ -336,7 +319,7 @@ module.exports = function(app, io) {
     function userInfoUpdating(req) {
       User.findByIdAndUpdate(req.body.id, req.body, { new: true })
         .then(function(response) {
-          console.log("newResponse", response);
+          // console.log("newResponse", response);
           res.json(response);
         })
         .catch(function(err) {
@@ -389,13 +372,13 @@ module.exports = function(app, io) {
 
     
     db.User.find({email:req.query.email}).select("email").then(response =>  {
-      console.log("response",response);
+      // console.log("response",response);
       
       if (response.length !== 1) {
         res.json({error:"no user"});
       } else {
         db.User.findByIdAndUpdate(response[0]._id, {resetToken: makeToken()},{new: true,select: "resetToken email firstName"}).then(updatedUser => {
-          console.log("token user",updatedUser);
+          // console.log("token user",updatedUser);
 
           res.json({message:"Check your email for token"})
           // res.json([updatedUser,{token:updatedUser.resetToken}]);
