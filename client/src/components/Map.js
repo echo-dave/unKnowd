@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
 import moment from "moment";
-import Axios from "axios";
 
 class MapContainer extends Component {
   state = {
@@ -10,7 +9,7 @@ class MapContainer extends Component {
     selectedPlace: {}
   };
 
-  displayMarkers = () =>
+  displayMarkers = (google) => 
     this.props.events.map((events, index) => (
       <Marker
         key={events._id}
@@ -27,20 +26,24 @@ class MapContainer extends Component {
         name={events.title}
         label={{ 
           text: events.title,
-          color: "#008cff",
-          // fontSize: "1rem"
+          color: "#f19203",
+          fontFamily: "Montserrat",
+          fontWeight: "bold",
+          fontSize: "14px"
         }}
         icon={{url:"http://maps.google.com/mapfiles/ms/icons/red-dot.png",
           labelOrigin: {
             x: 15,
             y: -15
-          }
+          },
+          scaledSize: new google.maps.Size(45,45)
         }}
       />
     ));
+      
 
     //asynchronis loading seems to mean the data loads, but no markers.
-    staticMarkers = () => 
+    staticMarkers = (google) => 
       this.props.markers.map((events, index) => (
         <Marker
         key={index}
@@ -57,13 +60,16 @@ class MapContainer extends Component {
         icon={{url:"/img/info-i_maps.png",
           labelOrigin:{
             x: 15,
-            y: 35
-          }
+            y: 30
+          },
+          scaledSize: new google.maps.Size(25,25)
         }}
         label={{
           text: events.name,
-          color: "#008cff",
-          // fontSize: "1rem"
+          color: "#0080a7",
+          fontFamily: "Montserrat",
+          fontWeight: "bold",
+          fontSize: "14px"
         }}
         name={events.name}
       />
@@ -96,9 +102,9 @@ class MapContainer extends Component {
         initialCenter={{ lat: 33.785678, lng: -84.416687 }}
         onClick={this.onMapClicked}
       >
-        {this.displayMarkers()}
+        {this.displayMarkers(this.props.google)}
         
-        {this.props.markers ? this.staticMarkers() : null }
+        {this.props.markers ? this.staticMarkers(this.props.google) : null }
 
         <InfoWindow
           marker={this.state.activeMarker}
