@@ -72,6 +72,7 @@ class Event extends Component {
             postId={_id}
             closeForm={this.toggleReply}
             eventShow={this.props.eventShow}
+            toggleComments={this.toggleComments}
           />
         ) : null}
         {this.state.readComments
