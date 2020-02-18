@@ -10,7 +10,7 @@ Real community for real people without the social stalking.
 
 - Realtime updating of events to the public via available public displays [https://unknowd.herokuapp.com/viewer](https://unknowd.herokuapp.com/viewer)
 - Current design goals only make public events available to viewer displays
-- Users can communicate with the community without having to first friend everyone and or pass around information - need to borrow a ladder or need a hand? Ask the real people in you local community
+- Users can communicate with the community without having to first friend everyone - need to borrow a ladder or need a hand? Ask the real people in your community
 - Users can upload photos so it’s easier to recognize people you don’t see often in the community and applies that photo to posts and events
 - Community members can post events like a simple gathering for food or a gallery opening across town
 
@@ -26,6 +26,7 @@ Real community for real people without the social stalking.
 - MongoDB with Mongoose ODM storing user information, photo urls, and content
 - Bulma CSS framework and sass variables allowing simple flexible styling
 - React-datepicker reliable cross-brosser date picking method for consistent database entry
+- Nodemailer for sending out our tokens for password resets
 
 # Deployment
 
@@ -40,10 +41,22 @@ Real community for real people without the social stalking.
    You’ll need to have:
    1. CLOUDINARY_URL (this should be filled in when adding to app)
    2. MAP_API (This is a Google map api key you’ll need to get from Google)
-   3. MONGODB_URI (this should be filled in for you if you used mLab)
-   4. SECRET (this is just a string used for tokens)
-   5. PM2 Keys can be found on [https://app.pm2.io/](https://app.pm2.io/) via the blue Connect button at top
+   3. GOOGLE_GEOCODE is another Google api key (I separated mine)
+   4. MONGODB_URI (this should be filled in for you if you used mLab)
+   5. SECRET (this is just a string used for tokens)
+   6. PM2 Keys can be found on [https://app.pm2.io/](https://app.pm2.io/) via the blue Connect button at top
+   For sending password reset mails you'll need:
+   1. MAIL_SERVER_NAME is just an identifier
+   2. RETURN_ADDRESS
+   3. SMTP_LOGIN
+   4. SMTP_PASSWORD
+   5. SMTP_PORT
+   6. SMTP_SECURE true if port 465 otherwise false
+   7. SMTP_SERVER
 7. Once all that’s done you can go back to deploy towards the bottom and deploy your master branch
+
+## Local
+   You can run development build with `npm start` or you can run develoment build by first running `npm run build` to build it followed by `ENV_NODE=production npm start`
 
 # Updates
 
