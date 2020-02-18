@@ -39,7 +39,7 @@ class Nav extends Component {
         >
           <div className="navbar-brand">
             <a className="navbar-item" href="/mainpage">
-              <h1 id="title">UnKnowd</h1>
+              <img alt="logo" src="/img/logo.svg" id="logo" /><h1 id="title">UnKnowd</h1>
             </a>
             <a
               role="button"
