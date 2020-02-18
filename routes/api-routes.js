@@ -372,6 +372,9 @@ module.exports = function(app, io) {
         db.User.findByIdAndUpdate(uId, {password: req.body.password},{new: true}).then(status => {
           console.log(status);
           res.json({message:"Password Updated"});
+          db.User.findByIdAndUpdate(uId, {$unset: {resetToken: 1}},{new: true}).then(user => {
+            console.log("deleted token ", user);            
+          })
         })
       }
     }).catch(err => {
