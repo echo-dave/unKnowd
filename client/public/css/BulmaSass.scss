@@ -10,8 +10,8 @@
 
 //used for event titles
 
-
-.posts p, #profile p {
+.posts p,
+#profile p {
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
   font-size: 0.85em;
@@ -87,7 +87,6 @@ h1 {
   #signup-container .box {
     background-color: rgba(250, 250, 250, 0.85);
   }
-
   .badlogin {
     color: red;
     font-size: 0.9em;
@@ -100,7 +99,7 @@ h1 {
       float: none;
       img {
         max-height: 125px;
-        border-radius: .25rem;
+        border-radius: 0.25rem;
       }
     }
     .error {
@@ -118,7 +117,8 @@ h1 {
   }
 }
 
-#submitPost, #submitEvent {
+#submitPost,
+#submitEvent {
   margin-top: 0.5rem;
 }
 
@@ -136,7 +136,7 @@ h1 {
 div.column.events > div {
   position: relative;
   height: calc(100vh - 30px - 5em);
-  margin-top: .6em;
+  margin-top: 0.6em;
 }
 
 //main
@@ -152,7 +152,8 @@ h1#title {
   margin: 10px;
 }
 
-.post, .event {
+.post,
+.event {
   position: relative;
 }
 

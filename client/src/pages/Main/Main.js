@@ -27,7 +27,6 @@ class Mainpage extends React.Component {
 
   setUser = user => {
     this.setState({ user });
-    // setTimeout(() => console.log("****STATE", this.state), 100);
   };
 
   componentDidMount() {
@@ -213,6 +212,8 @@ class Mainpage extends React.Component {
                 toggleLoading={this.toggleLoading}
                 userState={this.state.user}
                 closeForm={this.togglePostForm}
+                eventShow={this.state.eventShow}
+                togglePostEventViews={this.togglePostEventViews}
               />
             ) : null}
 
@@ -251,7 +252,9 @@ class Mainpage extends React.Component {
                     toggleLoading={this.toggleLoading}
                   />
                 ))}
-                {this.state.postPages > this.state.page ? <button className="more button is-small" onClick={this.incrementPostPage}>More Posts</button> : null}
+                {this.state.postPages > this.state.page && !this.state.eventShow ? 
+                <button className="more button is-small" onClick={this.incrementPostPage}>More Posts</button> 
+                : null}
           </div>
           {window.innerWidth <= 768 && !this.state.mapShow ? null : (
             <div className="column events">
