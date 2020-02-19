@@ -2,7 +2,7 @@ const cloudinary = require("cloudinary").v2;
 const path = require("path");
 
 module.exports = function(filename) {
-   filename = filename.split(".");
+  filename = filename.split(".");
   let fileExtension = filename[filename.length - 1];
   filename.pop();
   filename = filename.join(".");
