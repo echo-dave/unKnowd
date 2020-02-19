@@ -31,7 +31,7 @@ class MapContainer extends Component {
           fontWeight: "bold",
           fontSize: "14px"
         }}
-        icon={{url:"http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+        icon={{url:"https://maps.google.com/mapfiles/ms/icons/red-dot.png",
           labelOrigin: {
             x: 15,
             y: -15
