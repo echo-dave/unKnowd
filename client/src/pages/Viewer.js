@@ -73,7 +73,7 @@ class Viewer extends React.Component {
         <div className="columns">
           <div className="column posts">
             {this.state.events.map(event => (
-              <Event key={event._id} eventData={event} />
+              <Event key={event._id} eventData={event} userState={{id:null}} />
             ))}
           </div>
           <div className="column events">
