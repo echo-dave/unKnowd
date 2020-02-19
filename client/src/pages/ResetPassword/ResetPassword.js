@@ -65,7 +65,8 @@ componentDidMount() {
                                 <label className="label" >Token</label>
                                 <input className="input" value={this.state.token} type="text" id="ptoken" name="token" onChange={this.changeHandler}/>
                                 <label className="label">New Password</label>
-                                <input className="input" value={this.state.password} type="password" id="pNew" name="password" onChange={this.changeHandler}/>
+                                <input className="input" value={this.state.password} type="password" id="pNew" name="password" onChange={this.changeHandler}pattern=".{8,}"
+                      placeholder="min 8 chars"/>
                                 <button className="button is-small" type="submit" style={{marginTop: "1rem"}}>Submit</button>
                             </form>
                         </div>
