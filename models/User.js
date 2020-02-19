@@ -28,7 +28,8 @@ const UserSchema = new Schema({
   },
   role: {
     type: String
-  }
+  },
+  resetToken: String
 });
 
 UserSchema.methods.comparePassword = function(inputPass) {

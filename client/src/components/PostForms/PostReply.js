@@ -1,27 +1,32 @@
 import React, { Component } from "react";
-import axios from "axios";
+import authenticatedAxios from "../../utils/AuthenticatedAxios"
 import { clearImageSelect, fileChange } from "../../utils/ClearImageSelect";
 import PhotoInput from "../PhotoInput/PhotoInput";
 import "./styles.scss";
+import Spinner from "../Spinner/Spinner";
 
-class PostForm extends Component {
+class ReplyForm extends Component {
   //settting compoent forms initial structure
   state = {
     msg: "",
-    creator: this.props.userState.id,
+    creator: "",
     dateCreated: "",
     photos: "",
-    parrentComment: ""
+    parrentComment: "",
+    preview: ""
   };
 
   componentDidMount() {
     this.setState({
-      parrentComment: this.props.postId
+      parrentComment: this.props.postId,
+      creator: this.props.userState.id
     });
     this.clearImageSelect = clearImageSelect.bind(this);
     this.fileChange = fileChange.bind(this);
   }
-  fileChangeHandler = event => this.fileChange(event, "photo");
+
+  //stores file changes in state and builds preview images
+  fileChangeHandler = event => this.fileChange(event, "photos");
 
   removeImage = () => this.clearImageSelect("photos");
 
@@ -33,18 +38,14 @@ class PostForm extends Component {
     });
   };
 
-  fileChangeHandler = event => {
-    var file = event.target.files[0];
-    // console.log(file);
-    this.setState({
-      photos: file
-    });
-  };
-
   //want to prevent the default of form submit which is to just refresh the page
   submitHandler = e => {
     e.preventDefault();
-    // console.log(Auth.getToken());
+    if (!this.state.msg) {
+    console.log("What did you want to say?");
+    return;
+  }
+
     let currentDate = new Date();
 
     let formPostData = new FormData();
@@ -58,38 +59,25 @@ class PostForm extends Component {
     // for (var [key, value] of formPostData.entries()) {
     //   console.log(key, value);
     // }
+
+    this.props.toggleLoading();
+
+//consolidated to single savePost function. true saves event reply, false saves post reply
     this.props.eventShow
-      ? this.saveEvent(formPostData)
-      : this.savePost(formPostData);
+      ? this.savePost(formPostData, "replyEventComment")
+      : this.savePost(formPostData, "replyComment");
   };
 
-  saveEvent = postData => {
-    console.log("save event reply");
+  savePost = (postData, route) => {
 
-    axios({
+    authenticatedAxios({
       method: "post",
-      url: "/api/replyEventComment",
+      url: `/api/${route}`,
       data: postData,
       headers: { "Content-Type": "multipart/form-data" }
     })
       .then(() => {
-        this.props.closeForm();
-        // this.props.refreshComments();
-      })
-      .catch(err => console.log(err));
-  };
-
-  savePost = postData => {
-    console.log("save post reply");
-
-    axios({
-      method: "post",
-      url: "/api/replyComment",
-      data: postData,
-      headers: { "Content-Type": "multipart/form-data" }
-    })
-      .then(() => {
-        // this.props.refreshComments();
+        if (!this.props.readComments) this.props.toggleComments();
         this.props.closeForm();
       })
       .catch(err => console.log(err));
@@ -97,42 +85,49 @@ class PostForm extends Component {
 
   render() {
     return (
-      <div id="postform">
-        <button className="button is-smaller" onClick={this.props.closeForm}>
+      <div id="replyform">
+        {/* <button className="button is-smaller" onClick={this.props.closeForm}>
           X
-        </button>
-        <form className="event" onSubmit={this.submitHandler}>
-          <div className="field">
-            <label className="label" htmlFor="msg">
-              Message
-            </label>
-            <textarea
+        </button> */}
+
+        <div className="post box clearfix">
+          <form className="event" onSubmit={this.submitHandler}>
+
+            {!this.state.preview == "" ? (
+            <div className="postPhotos">
+              <img alt="" src={this.state.preview} />
+            </div>
+              ) : null}
+              <PhotoInput
+              fileChangeHandler={this.fileChangeHandler}
+              removeImage={this.removeImage}
+              fileName="photos"
+              photoFileName={this.state.photos.name}
+            />
+             
+            <textarea 
               placeholder="message to community"
               type="text"
-              rows="3"
-              className="textarea"
+              rows="4"
+              className="clearfix textarea"
               name="msg"
               value={this.state.msg}
               onChange={this.changeHandler}
             />
-          </div>
-          <PhotoInput
-            fileChangeHandler={this.fileChangeHandler}
-            removeImage={this.removeImage}
-            fileName="photos"
-            photoFileName={this.state.photos.name}
-          />
-          <button
-            id="replyButton"
-            className="button is-primary is-small"
-            type="submit"
-          >
+       
+            <button
+              id="replyButton"
+              className="button newComment is-small"
+              type="submit"
+            >
             Post!
-          </button>
-        </form>
-      </div>
+            </button>
+            {this.props.loading ? <Spinner /> : null}
+          </form>
+        </div>
+      </div>        
     );
   }
 }
 
-export default PostForm;
+export default ReplyForm;

@@ -39,7 +39,7 @@ class Nav extends Component {
         >
           <div className="navbar-brand">
             <a className="navbar-item" href="/mainpage">
-              <h1 id="title">UnKnowd</h1>
+              <img alt="logo" src="/img/logo.svg" id="logo" /><h1 id="title">UnKnowd</h1>
             </a>
             <a
               role="button"
@@ -68,7 +68,7 @@ class Nav extends Component {
                         id="viewChange"
                         onClick={this.props.togglePostEventViews}
                       >
-                        {this.props.eventShow ? "Posts" : "Events"}
+                        {this.props.eventShow ? <>&#x2192;<br/>Posts</> : <>&#x2192;<br/>Events</>}
                       </a>
                     </div>
                     <div className="navbar-item" id="postMaker">
@@ -113,7 +113,7 @@ class Nav extends Component {
                           className="button is-small"
                           onClick={this.props.toggleMapMobile}
                         >
-                          Hide
+                           {this.props.mapShow? "-" : "+" }
                           <br />
                           Map
                         </a>

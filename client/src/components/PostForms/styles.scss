@@ -6,11 +6,26 @@
   border-radius: 0 0 0.25rem 0.25rem;
 }
 
-#postform > .is-smaller,
+#postForm > .is-smaller,
 #eventForm > .is-smaller {
   font-size: 0.7em;
 }
-.newPost {
+
+.button.close {
+  border-radius: 50%;
+  height: 1rem;
+  width: 1.8rem;
+  position: absolute;
+  top: -.5rem;
+  left: -.5rem;
+  z-index: 1;
+}
+
+#replyButton {
+  margin-top: 0.5rem;
+}
+
+.newPost, .newComment {
   background-color: $secondary;
   color: $light;
 }
@@ -21,10 +36,82 @@
   color: white;
 }
 
-#postform {
-  z-index: 10;
+#replyform, #postForm, #eventForm {
+  margin-top: 1.5rem;
+  .postPhotos {
+    width: 100%;
+    float: none;
+    img {
+      max-height: 200px;
+      max-width: 100%;
+      border-radius: .25rem;
+    }
+  }
+  .file {
+    display: block;
+    margin-bottom: .75rem;
+  }
+  textarea, input {
+    width: 100%;
+    font-size: .85rem;
+    padding: .5rem;
+    border-radius: .25rem;
+    border: rgb(219, 219, 219);
+    margin-bottom: .75rem;
+  }
+  input#eventAddress {
+    max-width: 100%;
+    width: calc(100% - 6rem - 1rem);
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  textarea:focus, input:focus {
+    // border: 1px rgb(50, 115, 220) solid;
+    outline-offset: -2px;
+    outline-width: 2px;
+    outline-color: rgb(50, 115, 220);
+  }
+  #replyButton, #submitPost, #submitEvent {
+    margin-top: .5rem;
+    float: right;
+  }
+  .box {
+    background-color: lighten($commentGrey, 5%);
+  }
+  #replyButton:hover,
+  #replyButton:active,
+  #replyButton:focus {
+    background-color: lighten($secondary, 5.686274509803921);
+    color: white;
+  }
+}
+
+#postForm, #eventForm {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  position: relative;
+  .box {
+    background-color: $light;
+  }
 }
 
 .react-datepicker-wrapper {
-  width: 100%;
+  width: 6rem;
+  margin-right: 1rem;
+}
+
+span.timePosted {
+  position: absolute;
+  top: 1.4rem;
+  right: 3rem;
+  text-align: right;
+  font-size: .85em;
+}
+
+.loader {
+  margin-right: 1rem;
+  float: right;
+  position: relative;
+  top: 1rem;
 }

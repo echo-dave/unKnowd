@@ -4,12 +4,13 @@ import "./PhotoInput.scss";
 class PhotoInput extends Component {
   render() {
     return (
-      <div className="file has-name is-fullwidth is-primary">
+      <div className="file has-name is-fullwidth is-primary photoInput clearfix">
         <label className="file-label">
           <input
             id="imageSelect"
             className="file-input"
             type="file"
+            accept="image/png, image/jpeg"
             name={this.props.fileName}
             onChange={this.props.fileChangeHandler}
           />

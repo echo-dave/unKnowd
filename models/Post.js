@@ -9,6 +9,7 @@ const PostSchema = new Schema({
     ref: "User"
   },
   dateCreated: Date,
+  lastEdit: {type: Date, default: null},
   photos: Array,
   replies: [
     {

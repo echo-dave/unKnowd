@@ -1,14 +1,16 @@
-import React, { Component } from "react";
-// import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import React, { Component, lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
 import authenticatedAxios from "./utils/AuthenticatedAxios";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
 import UserContext from "./context/UserContext";
-import Mainpage from "./pages/Main";
-import Viewer from "./pages/Viewer";
-import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
+import axios from "axios";
 import "./app.scss";
+const Mainpage = lazy(() => import("./pages/Main/Main"));
+const Viewer = lazy(() => import("./pages/Viewer"));
+const UpdateProfile = lazy(() => import("./pages/UpdateProfile/UpdateProfile"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword/ResetPassword"));
+
 
 const NotFound = () => (
   <div
@@ -32,7 +34,8 @@ const NotFound = () => (
 );
 class App extends Component {
   state = {
-    user: null
+    user: null,
+    markers:""
   };
 
   setUser = user => {
@@ -40,6 +43,14 @@ class App extends Component {
   };
 
   componentDidMount() {
+    axios
+      .get("/api/mapsecretkeys")
+      .then(key => {
+        this.setState(key.data);
+      })
+      .catch(err => console.log(err));
+    axios.get("/api/markers").then(markers => this.setState({markers: markers.data}));
+
     const token = localStorage.getItem("token");
     if (token) {
       authenticatedAxios
@@ -54,25 +65,32 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <UserContext.Provider
-            value={{
-              user: user,
-              setUser: setUser
-            }}
-          >
-            <Switch>
-              <ProtectedRoute exact path="/mainpage" component={Mainpage} />
-              <Route exact path="/viewer" component={Viewer} />
-              <ProtectedRoute exact path="/profile" component={UpdateProfile} />
-              <Route
-                exact
-                path="/"
-                user={this.state.user}
-                component={LoginPage}
-              />
-              <Route component={NotFound} />
-            </Switch>
-          </UserContext.Provider>
+          <Suspense fallback={<div>Loading...</div>}>
+            <UserContext.Provider
+              value={{
+                user: user,
+                setUser: setUser,
+                mapKey: this.state.mapKey
+              }}
+            >
+              <Switch>
+            <ProtectedRoute exact path="/mainpage" 
+            component={(props) => <Mainpage {...props} markers={this.state.markers}/> }
+            />
+                <Route exact path="/viewer" component={Viewer} />
+                <ProtectedRoute exact path="/profile" component={UpdateProfile} />
+                <Route
+                  exact
+                  path="/"
+                  user={this.state.user}
+                  component={LoginPage}
+                />
+                <Route exact path="/user/reset" component={ResetPassword}/>
+                <Route path="/user/reset/:token/:email" component={ResetPassword} />
+                <Route component={NotFound} />
+              </Switch>
+            </UserContext.Provider>
+          </Suspense>
         </div>
       </Router>
     );

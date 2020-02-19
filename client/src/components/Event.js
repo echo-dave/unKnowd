@@ -38,12 +38,14 @@ class Event extends Component {
         <div>
           <h2>{title}</h2>
           <h3 className="address">
-            {address} | {moment(date.start).format("MMM Do YYYY")}
+          {moment(date.start).format("ddd MMM Do YYYY")} @ {address}
           </h3>
           <UserDisplay
             firstName={creator.firstName}
             creatorPhoto={creator.photo}
           />
+          {this.props.userState.id === this.props.eventData.creator._id ? <i className="fas fa-edit" onClick={this.props.editThisEvent}></i> : null}
+
           {img ? (
             <div className="postPhotos">
               <img src={img} alt="" />
@@ -64,10 +66,13 @@ class Event extends Component {
         </div>
         {this.state.toggleReply ? (
           <PostReply
+            loading={this.props.loading}
+            toggleLoading={this.props.toggleLoading}
             userState={this.props.userState}
             postId={_id}
             closeForm={this.toggleReply}
             eventShow={this.props.eventShow}
+            toggleComments={this.toggleComments}
           />
         ) : null}
         {this.state.readComments

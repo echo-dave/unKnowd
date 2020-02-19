@@ -4,6 +4,8 @@ import Event from "../components/Event";
 import EventMap from "../components/Map";
 import socketIOClient from "socket.io-client";
 import Nav from "../components/Nav/Nav";
+import UserContext from "../context/UserContext";
+
 
 class Viewer extends React.Component {
   state = {
@@ -22,14 +24,12 @@ class Viewer extends React.Component {
     // socket.on("new post", data => console.log(data));
 
     socket.on("new post", post => {
-      console.log(post);
       this.setState({
         posts: [post, ...this.state.posts]
       });
     });
 
     socket.on("new event", event => {
-      console.log(event);
       this.setState({
         events: [event, ...this.state.events]
       });
@@ -37,9 +37,7 @@ class Viewer extends React.Component {
   }
 
   resizeVh = bodyHeight => {
-    console.log("rezize");
     bodyHeight = window.innerHeight;
-    // bodyHeight = window.innerHeight;
     document.documentElement.style.setProperty(
       "--bodyHeight",
       `${bodyHeight}px`
@@ -54,7 +52,6 @@ class Viewer extends React.Component {
     axios
       .get("/api/posts")
       .then(res => {
-        console.log(res);
         this.setState({ posts: res.data });
       })
       .catch(err => console.log(err));
@@ -65,7 +62,6 @@ class Viewer extends React.Component {
       .get("/api/events")
       .then(res => {
         this.setState({ events: res.data });
-        console.log(this.state.events);
       })
       .catch(err => console.log(err));
   };
@@ -81,12 +77,12 @@ class Viewer extends React.Component {
             ))}
           </div>
           <div className="column events">
-            <EventMap events={this.state.events} />
+            <EventMap events={this.state.events} mapKey={this.context.mapKey}/>
           </div>
         </div>
       </div>
     );
   }
 }
-
+Viewer.contextType = UserContext;
 export default Viewer;

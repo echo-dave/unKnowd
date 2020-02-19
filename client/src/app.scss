@@ -1,5 +1,10 @@
-$secondary: rgb(56, 0, 17);
-$tertiary: lighten(desaturate($secondary, 80%), 70);
+// $secondaryColor: rgb(56, 0, 17);
+//orange
+$secondaryColor: rgb(241, 146, 3);
+//blue
+// $secondaryColor: rgb(0, 183, 255);
+$secondary: lighten($secondaryColor, 0);
+$tertiary: lighten(desaturate($secondaryColor, 80%), 70);
 $primary: rgba(242, 242, 242, 0.95);
 //smaller size for commenting buttons
 $smaller: 2.5em;
@@ -12,6 +17,23 @@ $family-sans-serif: "Montserrat", sans-serif;
 $family-secondary: "Indie Flower", cursive;
 @import "../../node_modules/bulma/sass/utilities/_all.sass";
 @import "../../node_modules/bulma/sass/base/_all.sass";
+@import "../../node_modules/bulma/sass/elements/title.sass";
+@import "../../node_modules/bulma/sass/elements/content.sass";
+
+body {
+  background: desaturate(lighten($secondary, 40), 0);
+  font-family: "Montserrat", sans-serif;
+  height: var(--bodyHeight);
+  overflow: hidden;
+}
+
+h2 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 1.2em;
+  color: $secondary;
+  margin-bottom: 0.5em;
+}
 
 #imageRemove {
   font-weight: bold;
@@ -24,8 +46,9 @@ $family-secondary: "Indie Flower", cursive;
   //   border: 1px solid grey;
   border: none;
   border-radius: 0.25rem;
-  background: #ffffff;
+  background: #fff;
 }
+
 #imageRemove:hover {
   cursor: pointer;
   //   border: 1px solid grey;

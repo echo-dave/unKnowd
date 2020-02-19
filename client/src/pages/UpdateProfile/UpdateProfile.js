@@ -6,7 +6,7 @@ import Auth from "../../utils/Auth";
 import { clearImageSelect, fileChange } from "../../utils/ClearImageSelect";
 import PhotoInput from "../../components/PhotoInput/PhotoInput";
 import "./UpdateProfile.scss";
-// import Auth from "../utils/Auth";
+import Spinner from "../../components/Spinner/Spinner";
 
 class UpdateProfile extends Component {
   constructor(props) {
@@ -21,7 +21,10 @@ class UpdateProfile extends Component {
       user: "",
       currentPassword: "",
       newPassword: "",
-      passwordCheck: ""
+      passwordCheck: "",
+      loading:false,
+      error: "",
+      preview: ""
     };
   }
 
@@ -37,20 +40,14 @@ class UpdateProfile extends Component {
     const token = localStorage.getItem("token");
     if (token) {
       authenticatedAxios.get("/api/me").then(response => {
-        // console.log(response);
         this.setState({ user: response.data });
-        // console.log(this.state.user);
       });
     }
 
-    // console.log("post form user", this.props.userState);
-    // console.log("creator state", this.state.creator);
     authenticatedAxios
       .get("/api/userInfo", this.state.user.id)
       .then(response => {
-        // console.log(response);
         this.setState({ info: response.data });
-        // console.log(this.state.info);
       })
       .catch(function(error) {
         console.log(error.response);
@@ -61,7 +58,6 @@ class UpdateProfile extends Component {
   }
 
   resizeVh = bodyHeight => {
-    console.log("rezize");
     bodyHeight = window.innerHeight;
     // bodyHeight = window.innerHeight;
     document.documentElement.style.setProperty(
@@ -70,7 +66,7 @@ class UpdateProfile extends Component {
     );
   };
 
-  fileChangeHandler = event => this.fileChange(event, "photo");
+  fileChangeHandler = (event, fileName) => this.fileChange(event, fileName);
 
   removeImage = () => {
     this.clearImageSelect("photo");
@@ -81,14 +77,6 @@ class UpdateProfile extends Component {
     this.setState({ [name]: value });
   };
 
-  // fileChangeHandler = event => {
-  //   var file = event.target.files[0];
-  //   // console.log(file);
-  //   this.setState({
-  //     photo: file
-  //   });
-  // };
-
   logout = () => {
     Auth.logOut(() => (window.location = "/"));
   };
@@ -97,26 +85,17 @@ class UpdateProfile extends Component {
     e.preventDefault();
 
     //build data set to update
-
     Auth.logIn(this.state.info.email, this.state.currentPassword, response => {
-      console.log(response.status);
-
       if (response.status === 200) {
-        console.log("initial auth ok");
-
         let updatingUser = new FormData();
         if (this.state.email) updatingUser.append("email", this.state.email);
-        if (this.state.firstName)
-          updatingUser.append("firstName", this.state.firstName);
-        if (this.state.lastName)
-          updatingUser.append("lastName", this.state.lastName);
+        if (this.state.firstName) updatingUser.append("firstName", this.state.firstName);
+        if (this.state.lastName) updatingUser.append("lastName", this.state.lastName);
         if (this.state.photo) updatingUser.append("photo", this.state.photo);
         updatingUser.append("id", this.state.user.id);
-        if (
-          this.state.newPassword === this.state.passwordCheck &&
+        if (this.state.newPassword === this.state.passwordCheck &&
           this.state.newPassword != ""
-        )
-          updatingUser.append("password", this.state.newPassword);
+        ) updatingUser.append("password", this.state.newPassword);
 
         //authenticated posting of user updates
         authenticatedAxios
@@ -136,11 +115,18 @@ class UpdateProfile extends Component {
           })
           .catch(function(err) {
             console.log(err.response);
+            this.setState({
+              loading: !this.state.loading,
+              error: `${err.response.status} | ${err.response.data.error}`
+            });
           });
       } else if (response.status === 401) {
-        console.log("bad password");
+          this.setState({
+            loading: !this.state.loading,
+            error: `${response.response.status} | ${response.response.data.error}`
+          });
       }
-      document.querySelector("#profile.container .column").scrollTop = 0;
+      document.querySelector("#profile.container").scrollTop = 0;
     });
   };
 
@@ -170,9 +156,7 @@ class UpdateProfile extends Component {
                     </tr>
                   </tbody>
                 </table>
-                {/* <p>First Name: {this.state.info.firstName}</p>
-                <p>Last Name: {this.state.info.lastName}</p>
-                <p>Email: {this.state.info.email}</p> */}
+      
               </div>
               <form
                 id="updateUserForm"
@@ -223,31 +207,17 @@ class UpdateProfile extends Component {
                     />
                   </div>
                 </div>
+                {!this.state.preview == "" ? (
+                <div className="postPhotos">
+                  <img alt="" src={this.state.preview} />
+                </div>
+                  ) : null}
                 <PhotoInput
                   fileChangeHandler={this.fileChangeHandler}
                   removeImage={this.removeImage}
                   fileName="photo"
                   photoFileName={this.state.photo.name}
                 />
-                {/* <div className="field">
-                  <label className="label" htmlFor="photo">
-                    Photo
-                  </label>
-                  <div className="control">
-                    <span id="imageRemove" onClick={this.removeImage}>
-                      x
-                    </span>
-                    <input
-                      id="imageSelect"
-                      // id="userPhoto"
-                      className="input"
-                      name="photo"
-                      type="file"
-                      // value={this.state.photo}
-                      onChange={this.fileChangeHandler}
-                    />
-                  </div>
-                </div> */}
 
                 <div className="field">
                   <label className="label" htmlFor="newPassword">
@@ -308,6 +278,8 @@ class UpdateProfile extends Component {
                 >
                   Update
                 </button>
+                {this.state.loading ? <Spinner /> : null}
+                {this.state.error ? <span className="error">{this.state.error}</span> : null}
               </form>
             </div>
           </div>

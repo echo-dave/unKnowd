@@ -15,12 +15,20 @@ app.use(
     ":date[iso] :remote-addr :remote-user :method :status :url HTTP/:http-version :res[content-length] - :response-time ms",
     {
       skip: function(req, res) {
-        return res.statusCode <= 200;
+        return res.statusCode <= 200 || res.statusCode === 304;
       }
     }
   )
 );
-
+if (process.env.NODE_ENV === "production") {
+app.use(function (req, res, next) {
+  if (req.header('x-forwarded-proto') === 'http') {
+    res.redirect(301, 'https://' + req.hostname + req.url);
+    return
+  }
+  next()
+});
+}
 app.use(fileUpload());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -34,7 +42,6 @@ app.use(express.json());
 
 // Mongoose
 const mongoose = require("mongoose");
-db = require("./models");
 mongoose.Promise = Promise;
 const mongoUrl = process.env.MONGODB_URI;
 mongoose.set("useCreateIndex", true);

@@ -1,32 +1,32 @@
 @import "../../app.scss";
+
 .file-name {
   background-color: white;
 }
 
-.file {
-  margin: 1rem auto;
-}
-
 .file.is-primary .file-cta {
-  background-color: darken(desaturate($color: $tertiary, $amount: 100), 10);
+  background-color: lighten(desaturate($color: $secondary, $amount: 0), 0);
   color: $light;
+
   :hover,
   :focus,
   .is-hovered {
-    background-color: lighten(
-      desaturate($color: $tertiary, $amount: 100),
-      $amount: 5
-    );
-    color: $dark;
+    background-color:
+      lighten(
+        desaturate($color: $secondary, $amount: 10),
+        $amount: 10
+      );
+    color: $light;
   }
 }
 
 .file.is-primary:hover .file-cta,
 .file.is-primary.is-hovered .file-cta,
 .file.is-primary:focus .file-cta {
-  background-color: lighten(
-    desaturate($color: $tertiary, $amount: 100),
-    $amount: 5
-  );
-  color: $dark;
+  background-color:
+    lighten(
+      desaturate($color: $secondary, $amount: 10),
+      $amount: 10
+      );
+  color: $light;
 }

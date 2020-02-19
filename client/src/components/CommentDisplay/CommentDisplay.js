@@ -2,17 +2,24 @@ import React, { Component } from "react";
 import UserDisplay from "../UserDisplay/UserDisplay";
 import "./commentDisplay.scss";
 import { urlClick } from "../../utils/ClearImageSelect";
+import moment from "moment";
 
 class CommentDisplay extends Component {
   render() {
-    const { _id, creator, photos, msg } = this.props.comments;
+    const { _id, creator, photos, msg, dateCreated } = this.props.comments;
     return (
       <div className="post comments box clearfix" data-id={_id}>
         <UserDisplay
           firstName={creator.firstName}
           creatorPhoto={creator.photo}
         />
-        {photos ? <img alt="" className="postPhotos" src={photos} /> : null}
+        <span className="timePosted">{moment(dateCreated).fromNow(true)}</span>
+
+        {photos ? (
+          <div className="postPhotos">
+            <img alt="" className="commentPhotos" src={photos} />
+          </div>
+        ) : null}
         <p
           className={!photos == "" ? "clearRight description" : "description"}
           dangerouslySetInnerHTML={{

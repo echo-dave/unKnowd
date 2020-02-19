@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-// import eventPost from "../utils/EventPost";
-import axios from "axios";
+import authenticatedAxios from "../../utils/AuthenticatedAxios"
 import DatePicker from "react-datepicker";
 import { clearImageSelect, fileChange } from "../../utils/ClearImageSelect";
 import PhotoInput from "../PhotoInput/PhotoInput";
 import "react-datepicker/dist/react-datepicker.css";
 import "./styles.scss";
+import Spinner from "../Spinner/Spinner";
 
 class EventForm extends Component {
   constructor(props) {
@@ -17,16 +17,30 @@ class EventForm extends Component {
       address: "",
       lat: "",
       lon: "",
-      start: new Date(),
+      start: null,
       img: "",
-      creator: this.props.userState.id
+      creator: "",
+      preview: ""
     };
   }
   componentDidMount() {
+    this.setState({creator: this.props.userState.id, start: new Date()});
     this.clearImageSelect = clearImageSelect.bind(this);
     this.fileChange = fileChange.bind(this);
+
+    if (this.props.eventData) {
+      const {eventData} = this.props
+      this.setState({
+        title: eventData.title,
+        description: eventData.description,
+        address: eventData.address,
+        preview: eventData.img,
+        start: new Date(eventData.date.start)
+      })
+    }
   }
-  fileChangeHandler = event => this.fileChange(event, "photo");
+  
+  fileChangeHandler = event => this.fileChange(event, "img");
 
   removeImage = () => {
     this.clearImageSelect("img");
@@ -42,51 +56,44 @@ class EventForm extends Component {
     });
   };
 
-  fileChangeHandler = event => {
-    var file = event.target.files[0];
-    // console.log(file);
-    this.setState({
-      img: file
-    });
-  };
-
   submitHandler = e => {
     e.preventDefault();
 
+    let url;
+    let method;
+    if (!this.props.eventData){
+      method = "post";
+      url = "event";
+    } else {
+      method = "put";
+      url = "event/update";
+    };
+ 
     if (this.state.title && this.state.description) {
-      axios
-        .get(
-          `https://api.opencagedata.com/geocode/v1/json?q=${this.state.address}&key=73b2bdf763ad428694bf092b08ad995d&language=es&pretty=1`
-        )
-        .then(data => {
-          // console.log(data);
-          this.setState({
-            lat: data.data.results[0].geometry.lat,
-            lon: data.data.results[0].geometry.lng
-          });
-          // console.log(this.state.lat);
-          // console.log(this.state.lon);
+      let eventData = new FormData();
+      eventData.append("title", this.state.title);
+      eventData.append("description", this.state.description);
+      eventData.append("address", this.state.address);
+      eventData.append("date.start", this.state.start);
+      if (!this.props.eventData) eventData.append("creator", this.state.creator);
+      if (this.state.img != "" || !this.state.img && !this.state.preview) eventData.append("img", this.state.img);
+      if (this.props.eventData) eventData.append("eventId", this.props.eventData._id);
 
-          let eventData = new FormData();
-          eventData.append("title", this.state.title);
-          eventData.append("description", this.state.description);
-          eventData.append("address", this.state.address);
-          eventData.append("lat", this.state.lat);
-          eventData.append("lon", this.state.lon);
-          eventData.append("date.start", this.state.start);
-          eventData.append("creator", this.state.creator);
-          eventData.append("img", this.state.img);
+      this.props.toggleLoading();
 
-          axios
-            .post("/api/event", eventData)
-            .then(() => {
-              if (!this.props.eventShow) this.props.togglePostEventViews();
-              this.props.closeForm();
-            })
-            .catch(err => console.log(err.response));
+      authenticatedAxios({
+        method: method,
+        url: `/api/${url}`,
+        data: eventData,
+        headers: {"Content-Type": "multipart/form-data"}
+      }).then(() => {
+          if (!this.props.eventShow) this.props.togglePostEventViews();
+          this.props.closeForm ? this.props.closeForm() : this.props.editThisEvent();
         })
-        .catch(error => {
-          console.log(error);
+        .catch(err => {
+          console.log(err.response.data.err.json.error_message);
+        this.setState({err: err.response.data.err.json.error_message})
+        this.props.toggleLoading();
         });
     }
   };
@@ -95,28 +102,30 @@ class EventForm extends Component {
     const { title, description, address } = this.state;
     return (
       <div id="eventForm">
-        <button className="button is-smaller" onClick={this.props.closeForm}>
+        <button className="button close is-smaller" onClick={!this.props.editThisEvent ? this.props.closeForm : this.props.editThisEvent}>
           X
         </button>
-        <form onSubmit={this.submitHandler}>
-          <div className="field">
-            <label className="label">Name of event</label>
-            <div className="control">
-              <input
+        <div className="post box clearfix">
+          <form onSubmit={this.submitHandler}>
+            {/* title */}
+            <input
+              className="input"
+              type="text"
+              name="title"
+              placeholder="Title of the event"
+              value={title}
+              onChange={this.changeHandler}
+            />
+            <div style={{position:"relative"}}>
+              <DatePicker
+                selected={this.state.start}
+                onChange={this.handleDateChange}
                 className="input"
-                type="text"
-                name="title"
-                placeholder="Title of the event"
-                value={title}
-                onChange={this.changeHandler}
               />
-            </div>
-          </div>
 
-          <div className="field">
-            <label className="label">Address of event</label>
-            <div className="control">
+              {/* address */}
               <input
+                id="eventAddress"
                 className="input"
                 type="text"
                 name="address"
@@ -125,42 +134,44 @@ class EventForm extends Component {
                 onChange={this.changeHandler}
               />
             </div>
-          </div>
-          <h1 className="label">Date</h1>
-          <DatePicker
-            selected={this.state.start}
-            onChange={this.handleDateChange}
-            className="input"
-          />
-
-          <div className="field">
-            <label className="label">Description of event</label>
-            <div className="control">
-              <textarea
-                type="text"
-                className="textarea"
-                rows="3"
-                name="description"
-                placeholder="Description of the event"
-                value={description}
-                onChange={this.changeHandler}
-              />
+            {!this.state.preview == "" ? (
+            <div className="postPhotos">
+              <img alt="" src={this.state.preview} />
             </div>
-          </div>
-          <PhotoInput
-            fileChangeHandler={this.fileChangeHandler}
-            removeImage={this.removeImage}
-            fileName="img"
-            photoFileName={this.state.img.name}
-          />
-          <button
-            id="submitEvent"
-            className="button newPost is-small"
-            type="submit"
-          >
-            Submit
-          </button>
-        </form>
+              ) : null}
+              <PhotoInput
+              fileChangeHandler={this.fileChangeHandler}
+              removeImage={this.removeImage}
+              fileName="img"
+              photoFileName={this.state.img.name}
+            />
+
+            <textarea
+              type="text"
+              className="textarea clearfix"
+              rows="4"
+              name="description"
+              placeholder="Description of the event"
+              value={description}
+              onChange={this.changeHandler}
+            />
+            {/* <PhotoInput
+              fileChangeHandler={this.fileChangeHandler}
+              removeImage={this.removeImage}
+              fileName="img"
+              photoFileName={this.state.img.name}
+            /> */}
+            {this.state.err ? <p className="error">{this.state.err}</p> : null }
+            <button
+              id="submitEvent"
+              className="button newPost is-small"
+              type="submit"
+            >
+              {!this.props.eventData ? <>Submit</> : <>Update</>}
+            </button>
+            {this.props.loading ? <Spinner /> : null}
+          </form>
+        </div>
       </div>
     );
   }

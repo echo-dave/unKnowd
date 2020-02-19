@@ -1,80 +1,48 @@
-// const db = require("../models");
-const path = require("path");
+const db = require("../models");
 const User = require("../models/User");
-const Event = require("../models/Event");
 const jwt = require("jsonwebtoken");
 const authWare = require("../middleware/authware");
 // const socketIOClient = require("socket.io-client");
 // const socket = socketIOClient("http://127.0.0.1:3001");
-const cloud = require("../nodejs/cloudinaryUp");
 const upload = require("../nodejs/upload");
 const bcrypt = require("bcryptjs");
+const nodemail = require("../nodejs/nodemail");
+const googleMapsClient = require("@google/maps").createClient({
+  key: process.env.GOOGLE_GEOCODE,
+  Promise: Promise
+});
 
 module.exports = function(app, io) {
   app.post("/api/signup", function(req, res) {
-    console.log("signup body", req.body, req.files);
+    // console.log("signup body", req.body, req.files);
 
     if (req.files != null) {
-      console.log("file--------------file");
-      console.log(req.files);
+      // console.log(req.files);
 
-      req.files.photo.namelong =
-        req.files.photo.name.slice(0, -4) +
-        "-" +
-        Date.now() +
-        req.files.photo.name.slice(-4);
-
-      req.files.photo.mv(
-        path.join(
-          __dirname,
-          "../client/public/upload",
-          req.files.photo.namelong
-        ),
-        function(err) {
-          if (err) {
-            console.log(err);
-            res.send(err);
-          } else {
-            console.log("upload success");
-            cloud(req.files.photo.namelong)
-              .then(function(imageurl) {
-                console.log("create doc next");
-                req.body.photo = imageurl;
-                console.log(req.body);
-
-                User.create(req.body)
-                  .then(function(result) {
-                    res.json({ message: "user created", user: result._id });
-                  })
-                  .catch(function(err) {
-                    res.status(500).json({ error: err.message });
-                  });
-              })
-              .catch(function(err) {
-                console.log(err);
-              });
-          }
-        }
-      );
+      upload(req, "photo", signup);
     } else {
+      signup(req);
+    }
+
+    function signup(req) {
       User.create(req.body)
         .then(function(result) {
-          res.json({ message: "user created", user: result._id });
+          if (result._id) {
+            // console.log(result);
+
+            res.json({ message: "user created", user: result._id });
+          }
         })
         .catch(function(err) {
-          res.status(500).json({ error: err.message });
+          if (err.code === 11000){
+            res.status(500).json({ error: "email in use" });
+          }
+          else {
+            res.status(500).json({ error: err.errmsg });
+          }
+          console.log(err);
         });
     }
-  });
-
-  app.post("/api/eventForm", function(req, res) {
-    Event.create(req.body)
-      .then(function(result) {
-        res.json({ message: "user created" });
-      })
-      .catch(function(err) {
-        res.status(500).json({ error: err.message });
-      });
   });
 
   app.post("/api/authenticate", function(req, res) {
@@ -105,20 +73,6 @@ module.exports = function(app, io) {
       .catch(err => console.log(err));
   });
 
-  app.get("/api/protected", authWare, function(req, res) {
-    const user = req.user;
-    res.json({
-      message:
-        user.email + ", you should only see this if you're authenticated."
-    });
-  });
-
-  // app.get("/api/public", function(req, res) {
-  //   res.json({
-  //     message: "this is available for everyone"
-  //   });
-  // });
-
   app.get("/api/me", authWare, function(req, res) {
     User.findById(req.user._id).then(dbUser => {
       dbUser = {
@@ -126,84 +80,39 @@ module.exports = function(app, io) {
         firstName: dbUser.firstName,
         photo: dbUser.photo
       };
-      // console.log("dbuser", dbUser);
       res.json(dbUser);
     });
   });
 
-  app.get("/api/posts", function(req, res) {
+  app.get("/api/posts/:page", authWare, function(req, res) {
+    
     db.Post.find()
-      .sort({ dateCreated: -1 })
+      .sort({ lastEdit: -1, dateCreated: -1})
       .limit(20)
-      .populate("creator")
-      .populate("replies.creator")
+      .skip(Math.max(parseInt(req.params.page)-1,0)*20)
+      .populate({path: "creator", select: "-email -password -lastName"})
+      .populate({path: "replies.creator", select: "-email -password -lastName"})
       .then(posts => {
-        for (let i = 0; i < posts.length; i++) {
-          posts[i].creator.email = "";
-          posts[i].creator.password = "";
-          posts[i].creator.lastName = "";
-          for (let j = 0; j < posts[i].replies.length; j++) {
-            posts[i].replies[j].creator.email = "";
-            posts[i].replies[j].creator.password = "";
-            posts[i].replies[j].creator.lastName = "";
-          }
-        }
-        // console.log("trimmed", posts[0]);
+        db.Post.countDocuments().then(postsCount => res.json({posts:posts,count:postsCount}));
+        
 
-        res.json(posts);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({ error: err.message });
+      });
   });
 
-  app.post("/api/post", function(req, res) {
-    console.log(req.body);
-    console.log(req.files);
-
+  app.post("/api/post", authWare, function(req, res) {
+    req.body.lastEdit = req.body.dateCreated
     if (req.files != null) {
-      console.log("file--------------file");
-      console.log(req.files);
 
-      req.files.photos.namelong =
-        req.files.photos.name.slice(0, -4) +
-        "-" +
-        Date.now() +
-        req.files.photos.name.slice(-4);
-
-      req.files.photos.mv(
-        path.join(
-          __dirname,
-          "../client/public/upload",
-          req.files.photos.namelong
-        ),
-        function(err) {
-          if (err) {
-            console.log(err);
-            res.send(err);
-          } else {
-            console.log("upload success");
-            cloud(req.files.photos.namelong)
-              .then(function(imageurl) {
-                console.log("create doc next");
-                req.body.photos = [imageurl];
-
-                db.Post.create(req.body).then(function(data) {
-                  data
-                    .populate("creator")
-                    .execPopulate()
-                    .then(populatedData => {
-                      io.sockets.emit("new post", populatedData);
-                      res.end();
-                    });
-                  // res.json(data);
-                });
-              })
-              .catch(function(err) {
-                console.log(err);
-              });
-          }
-        }
-      );
+      upload(req, "photos", newPost);
     } else {
+      newPost(req);
+    }
+
+    function newPost(req) {
       db.Post.create(req.body).then(function(data) {
         data
           .populate("creator")
@@ -211,59 +120,47 @@ module.exports = function(app, io) {
           .then(populatedData => {
             io.sockets.emit("new post", populatedData);
             res.end();
-          });
-        // res.json(data);
+          })
+          .catch(err => res.status(500).json({ error: err.message }));
       });
     }
   });
 
-  //maps related api call
-  // app.get("/api/all", function(req, res) {
-  //   Event.find({})
-  //     .then(function(result) {
-  //       res.json(result);
-  //     })
-  //     .catch(function(err) {
-  //       res.status(500).json({ error: err.message });
-  //     });
-  // });
+  app.put("/api/post/update", authWare, function(req,res){
+    let postId = req.body.postId;
+    delete req.body.postId;
 
-  app.get("/api/maps", function(req, res) {
-    let currentDate = new Date();
-    // console.log(currentDate);
-    db.Event.find({
-      "date.start": { $gte: new Date(currentDate) }
-    })
-      .then(mapEvents => res.json(mapEvents))
-      .catch(err => {
-        console.log(err);
-        res.json(err.response);
-      });
-  });
+    if (req.files != null) {
+      // console.log("file--------------file");
+      // console.log(req.files);
+      upload(req, "photos", updatePost);
+    } else updatePost(req);
+
+    function updatePost (req) {
+      db.Post.findOneAndUpdate({_id: postId},{$set: req.body},{new: true})
+        .populate({path:"creator",select: "-email -password -lastName"})
+        .populate({path:"replies.creator", select: "-email -password -lastName"})
+        .then(updatePopulated => {
+          io.sockets.emit("new post", {updatePost: updatePopulated});
+          res.end();
+        }).catch(function(err) {
+          console.log(err);
+          res.status(500).json({error: err.message});
+        });
+    }
+ });
 
   app.get("/api/events", function(req, res) {
     let currentDate = new Date();
-    // console.log(currentDate);
+    let yesterday = currentDate.setDate(currentDate.getDate() - 1);
+
     db.Event.find({
-      "date.start": { $gte: new Date(currentDate) }
+      "date.start": { $gte: new Date(yesterday) }
     })
       .sort({ "date.start": 1 })
-      .populate("creator")
-      .populate("replies.creator")
-      .then(events => {
-        for (let i = 0; i < events.length; i++) {
-          events[i].creator.email = "";
-          events[i].creator.password = "";
-          events[i].creator.lastName = "";
-
-          for (let j = 0; j < events[i].replies.length; j++) {
-            events[i].replies[j].creator.email = "";
-            events[i].replies[j].creator.password = "";
-            events[i].replies[j].creator.lastName = "";
-          }
-        }
-        // console.log("events", events);
-
+      .populate({path: "creator", select: "-email -password -lastName"})
+      .populate({path: "replies.creator", select: "-email -password -lastName"})
+      .then(events => {        
         res.json(events);
       })
       .catch(err => {
@@ -273,94 +170,79 @@ module.exports = function(app, io) {
   });
 
   //we need to have the user _id to insert into the event as well as getting the user name and user photo from the User collection
-  app.post("/api/event", function(req, res) {
+  app.post("/api/event", authWare, function(req, res) {
     console.log(req.body);
+    //get latitude on longitude and store in request object
+    googleMapsClient
+      .geocode({ address: req.body.address })
+      .asPromise()
+      .then(response => {
+        req.body.lat = response.json.results[0].geometry.location.lat;
+        req.body.lon = response.json.results[0].geometry.location.lng;
 
-    if (req.files != null) {
-      console.log("file--------------file");
-      console.log(req.files);
+        // res.json(req.body);
+        if (req.files != null) {
 
-      req.files.img.namelong =
-        req.files.img.name.slice(0, -4) +
-        "-" +
-        Date.now() +
-        req.files.img.name.slice(-4);
-
-      req.files.img.mv(
-        path.join(__dirname, "../client/public/upload", req.files.img.namelong),
-        function(err) {
-          if (err) {
-            console.log(err);
-            res.send(err);
-          } else {
-            console.log("upload success");
-            cloud(req.files.img.namelong)
-              .then(function(imageurl) {
-                console.log("create doc next");
-                req.body.img = imageurl;
-                console.log(req.body);
-
-                db.Event.create(req.body).then(function(data) {
-                  data
-                    .populate("creator")
-                    .execPopulate()
-                    .then(populatedData => {
-                      io.sockets.emit("new event", populatedData);
-                      res.end();
-                    });
-                  // res.json(data);
+          upload(req, "img", newEvent);
+        } else {
+          newEvent(req);
+        }
+        function newEvent(req) {
+          db.Event.create(req.body)
+            .then(function(data) {
+              data
+                .populate("creator")
+                .execPopulate()
+                .then(populatedData => {
+                  io.sockets.emit("new event", populatedData);
+                  res.end();
+                })
+                .catch(function(err) {
+                  console.log(err);
+                  res.status(500).json({ error: err });
                 });
-              })
-              .catch(function(err) {
-                console.log(err);
-              });
-          }
-        }
-      );
-    } else {
-      db.Event.create(req.body)
-        .then(function(data) {
-          data
-            .populate("creator")
-            .execPopulate()
-            .then(populatedData => {
-              io.sockets.emit("new event", populatedData);
-              res.end();
+            })
+            .catch(function(err) {
+              console.log(err);
+              res.status(500).json({ error: err });
             });
-        })
-        .catch(function(err) {
-          console.log(err);
-        });
-    }
-  });
-
-  //get post comments
-  app.get("/api/getComments", function(req, res) {
-    console.log("query post comments", req.query);
-    db.Post.find({ _id: req.query._id })
-      .populate("replies.creator")
-      .then(function(comments) {
-        // console.log("returned comments", comments);
-        // console.log("array post Replies", comments[0].replies);
-        for (let i = 0; i < comments[0].replies.length; i++) {
-          comments[0].replies[i].creator.email = "";
-          comments[0].replies[i].creator.password = "";
-          comments[0].replies[i].creator.lastName = "";
         }
-        // console.log("trimmed creator", comments[0].replies[0]);
-
-        res.json(comments[0].replies);
       })
-      .catch(function(err) {
+      .catch(err => {
         console.log(err);
+        res.status(500).json({err: err})
       });
   });
+
+  app.put("/api/event/update", authWare, function(req,res){
+   let eventId = req.body.eventId;
+   delete req.body.eventId; 
+
+   if (req.files != null) {
+    upload(req, "img", updateEvent);
+   } else {
+    updateEvent(req)
+   }
+   function updateEvent(req) {
+    db.Event.findOneAndUpdate({_id: eventId},{$set:req.body},{new: true})
+    .populate({path:"creator", select: "-email -password -lastName"})
+    .populate({path:"replies.creator", select: "-email -password -lastName"})
+    .then(eventUpdate => {
+      io.sockets.emit("new event", {updateEvent: eventUpdate});
+      res.end();
+    }).catch(function(err) {
+      console.log(err);
+      res.status(500).json({error: err});
+    });
+   }
+
+  })
+
   //make post comment
-  app.post("/api/replyComment", function(req, res) {
-    // console.log(req.body);
+  app.post("/api/replyComment", authWare, function(req, res) {
     if (req.files != null) {
-      console.log("file--------------file");
-      console.log(req.files);
+      // console.log("file--------------file");
+      // console.log(req.files);
       upload(req, "photos", postComment);
     } else {
       postComment(req);
@@ -372,38 +254,19 @@ module.exports = function(app, io) {
         { $push: { replies: req.body } },
         { new: true }
       ).then(function(newReply) {
-        // console.log("newPostReply", newReply.replies);
-        // io.sockets.emit("new post reply", newReply.replies);
         io.sockets.emit("new comment", { post: newReply.replies });
-        console.log("done");
 
         res.end();
       });
     }
   });
 
-  // get event comments
-  app.get("/api/getEventComments", function(req, res) {
-    console.log("query event comments", req.query);
-    db.Event.find({ _id: req.query._id })
-      .populate("replies.creator")
-      .then(function(comments) {
-        // console.log(comments);
-        console.log("array Replies", comments[0].replies);
-        for (let i = 0; i < comments[0].replies.length; i++) {
-          comments[0].replies[i].creator.email;
-          comments[0].replies[i].creator.password = "";
-          comments[0].replies[i].creator.lastName = "";
-        }
-        res.json(comments[0].replies);
-      });
-  });
   //make event comment
-  app.post("/api/replyEventComment", function(req, res) {
+  app.post("/api/replyEventComment", authWare, function(req, res) {
     // console.log("event req", req.body);
     if (req.files != null) {
-      console.log("file--------------file");
-      console.log(req.files);
+      // console.log("file--------------file");
+      // console.log(req.files);
       upload(req, "photos", eventComment);
     } else {
       eventComment(req);
@@ -414,8 +277,6 @@ module.exports = function(app, io) {
         { _id: req.body.commentId },
         { $push: { replies: req.body } }
       ).then(function(newReply) {
-        // console.log("newEventReply", newReply);
-        // io.sockets.emit("new post reply", newReply);
         io.sockets.emit("new comment", { event: newReply.replies });
         // res.json(newReply);
         res.end();
@@ -428,6 +289,7 @@ module.exports = function(app, io) {
     // console.log("request", req.user._id);
 
     User.findById(req.user._id)
+      .lean()
       .then(function(data) {
         let userData = data;
         delete userData.password;
@@ -447,7 +309,7 @@ module.exports = function(app, io) {
       req.body.password = bcrypt.hashSync(req.body.password, 10);
     }
     if (req.files != null) {
-      console.log("file--------------file");
+      // console.log("file--------------file");
       console.log(req.files);
       upload(req, "photo", userInfoUpdating);
     } else {
@@ -457,7 +319,7 @@ module.exports = function(app, io) {
     function userInfoUpdating(req) {
       User.findByIdAndUpdate(req.body.id, req.body, { new: true })
         .then(function(response) {
-          console.log("newResponse", response);
+          // console.log("newResponse", response);
           res.json(response);
         })
         .catch(function(err) {
@@ -465,4 +327,93 @@ module.exports = function(app, io) {
         });
     }
   });
+
+  app.get("/api/mapsecretkeys", function(req, res) {
+    res.json({ mapKey: process.env.MAPJS });
+  });
+
+  //static map markers from database
+  app.get("/api/markers",function(req,res){
+    db.Marker.find().then((markers) => res.json(markers))
+    .catch(err => {
+      console.log(err);
+      res.json({error:err});
+    })
+  });
+
+  //pssword resets
+  app.post("/api/user/reset",function(req,res){
+  
+
+    db.User.find({email:req.body.email, resetToken:req.body.token}).then(response => {
+      console.log(response);
+      if (response.length === 1) {
+        let uId = response[0]._id;
+        console.log("uid ", uId);
+        
+      req.body.password = bcrypt.hashSync(req.body.password, 10);
+        db.User.findByIdAndUpdate(uId, {password: req.body.password},{new: true}).then(status => {
+          console.log(status);
+          res.json({message:"Password Updated"});
+          db.User.findByIdAndUpdate(uId, {$unset: {resetToken: 1}},{new: true}).then(user => {
+            console.log("deleted token ", user);            
+          })
+        })
+      }
+    }).catch(err => {
+      console.log(err);
+      res.json({message:err})      
+    })
+  })
+
+
+//get password reset token
+  app.get("/api/user/requestreset",function(req,res){
+
+    
+    db.User.find({email:req.query.email}).select("email").then(response =>  {
+      // console.log("response",response);
+      
+      if (response.length !== 1) {
+        res.json({error:"no user"});
+      } else {
+        db.User.findByIdAndUpdate(response[0]._id, {resetToken: makeToken()},{new: true,select: "resetToken email firstName"}).then(updatedUser => {
+          // console.log("token user",updatedUser);
+
+          res.json({message:"Check your email for token"})
+          // res.json([updatedUser,{token:updatedUser.resetToken}]);
+          //build message
+          msgTo = updatedUser.email
+          resetURL = 'http://unknowd.herokuapp.com/user/reset/'
+          textMsg = `Hi ${updatedUser.firstName}, sorry you lost your password! Here's a token to go get a new one: ${updatedUser.resetToken} 
+          ${resetURL+updatedUser.resetToken}`
+          htmlMsg = `<p> Hi ${updatedUser.firstName}, 
+          <br />Sorry you lost your password!</p>
+          <p>Here's a token to go get a new one:</p>
+          <p>${updatedUser.resetToken}</p> 
+          <p><a href="${resetURL+updatedUser.resetToken}/${updatedUser.email}">${resetURL+updatedUser.resetToken}/${updatedUser.email}</a></p>`
+          msgSubject = "unKnowd Password Reset"
+
+          nodemail(msgTo,textMsg,htmlMsg,msgSubject);
+        })
+      };
+      }).catch(err => console.log(err)
+      );
+
+      makeToken = () => {
+        let randToken
+        rand = () => {
+          let cTime = new Date();
+          cTime= Date.parse(cTime)
+          randToken = Math.random()*cTime
+        randToken = randToken.toString(36).substr(2)
+        }
+        rand()
+        token = randToken
+        rand()
+        token += randToken
+        return token
+      }
+  })
 };
+
