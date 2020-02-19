@@ -16,6 +16,7 @@ installButton.addEventListener("click", installPWA);
 function saveBeforeInstallPromptEvent(evt) {
   // CODELAB: Add code to save event & show the install button.
   deferredInstallPrompt = evt;
+  showInstallPromotion()
   installButton.removeAttribute("hidden");
 }
 
@@ -41,7 +42,7 @@ function installPWA(evt) {
  */
 function logAppInstalled(evt) {
   // CODELAB: Add code to log the event
-  console.log("Weather App was installed.", evt);
+  console.log("App was installed.", evt);
 }
 
 // CODELAB: Add event listener for appinstalled event

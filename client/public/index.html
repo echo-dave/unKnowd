@@ -16,14 +16,13 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="UnKowd">
   <meta name="description" content="Bringing back community">
-  <!-- <script src="%PUBLIC_URL%/scripts/install.js"></script> -->
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
   <link rel="stylesheet" href=https://use.fontawesome.com/releases/v5.7.1/css/all.css>
   <link rel="icon" href="/img/favicons/favicon-32.png" sizes="32x32">
   <link rel="icon" href="/img/favicons/favicon-96.png" sizes="96x96">
   <link rel="icon" href="/img/favicons/favicon-192.png" sizes="192x192">
   <link rel="icon" href="/img/favicons/favicon-228.png" sizes="228x228">
-  <link rel="apple-touch-icon-precomposed" href="/img/favicons/apple-touch-icon-180.png" sizes="180x180">
+  <link rel="apple-touch-icon-icon" href="/img/favicons/apple-touch-icon-180.png" sizes="180x180">
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
   <link rel="stylesheet" href="%PUBLIC_URL%/css/style.css">
   <!--
@@ -42,6 +41,12 @@
   <noscript>
     You need to enable JavaScript to run this app.
   </noscript>
+  <div id="btnAdd" style="display:none;">
+    <div style="z-index:35">
+    <button class="button" name="userChoice"style="width:100%;text-align:center;">Install App</button>
+    <!-- <button class="button"  name="Dismiss" >Dismiss</button> -->
+    </div>
+  </div>
   <div id="root"></div>
   <!--
       This HTML file is a template.
@@ -53,6 +58,7 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-</body>
+    <script src="%PUBLIC_URL%/scripts/install2.js"></script>
+  </body>
 
 </html>
