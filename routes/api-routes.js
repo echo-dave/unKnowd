@@ -343,22 +343,20 @@ module.exports = function(app, io) {
 
   //pssword resets
   app.post("/api/user/reset",function(req,res){
-  
-
     db.User.find({email:req.body.email, resetToken:req.body.token}).then(response => {
       console.log(response);
       if (response.length === 1) {
         let uId = response[0]._id;
         console.log("uid ", uId);
         
-      req.body.password = bcrypt.hashSync(req.body.password, 10);
-        db.User.findByIdAndUpdate(uId, {password: req.body.password},{new: true}).then(status => {
-          console.log(status);
-          res.json({message:"Password Updated"});
-          db.User.findByIdAndUpdate(uId, {$unset: {resetToken: 1}},{new: true}).then(user => {
-            console.log("deleted token ", user);            
+        req.body.password = bcrypt.hashSync(req.body.password, 10);
+          db.User.findByIdAndUpdate(uId, {password: req.body.password},{new: true}).then(status => {
+            console.log(status);
+            res.json({message:"Password Updated"});
+            db.User.findByIdAndUpdate(uId, {$unset: {resetToken: 1}},{new: true}).then(user => {
+              console.log("deleted token ", user);            
+            })
           })
-        })
       }
     }).catch(err => {
       console.log(err);
@@ -369,8 +367,6 @@ module.exports = function(app, io) {
 
 //get password reset token
   app.get("/api/user/requestreset",function(req,res){
-
-    
     db.User.find({email:req.query.email}).select("email").then(response =>  {
       // console.log("response",response);
       
@@ -379,7 +375,6 @@ module.exports = function(app, io) {
       } else {
         db.User.findByIdAndUpdate(response[0]._id, {resetToken: makeToken()},{new: true,select: "resetToken email firstName"}).then(updatedUser => {
           // console.log("token user",updatedUser);
-
           res.json({message:"Check your email for token"})
           // res.json([updatedUser,{token:updatedUser.resetToken}]);
           //build message

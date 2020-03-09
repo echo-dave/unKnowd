@@ -72,7 +72,9 @@ As a work in progress here’s what what’s been added:
 - added a user profile page for updating info - click name / photo top right
 - added signup form validations that were missing
 - realtime comment updating is now working
+- proper passwrod reset function emailing token
 
-![mobile login and posts](readmeImages/loginMobile_posts.jpg)
-![mobile menu and events](readmeImages/mobileMenu_events.jpg)
-![mobile add post and add event](readmeImages/addPostMobile_addEvent.jpg)
+![Login](readmeImages/085/Login.jpg)
+![Bad login and password reset](readmeImages/085/Reset.jpg)
+![Post feed](readmeImages/085/PostFeed.jpg)
+![Forms](readmeImages/085/Forms.jpg)
