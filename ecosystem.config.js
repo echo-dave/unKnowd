@@ -3,12 +3,13 @@ module.exports = {
     {
       name: "unKnowd",
       script: "./server.js",
-      watch: true,
       env_dev: {
-        NODE_ENV: "development",
+        watch: true,
+        NODE_ENV: "development || \"\"",
         ignore_watch: ["client","client/*",".git"]
       },
       env_production: {
+        watch: false,
         NODE_ENV: "production",
         ignore_watch: [
           "client/public/upload",
