@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "description": "Mern Demo",
   "private": true,
-  "proxy": "http://localhost:3001/",
+  "proxy": "http://0.0.0.0:3001/",
   "dependencies": {
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-    "react-scripts": "^3.3.0"
+    "react-scripts": "^3.4.4"
   },
   "scripts": {
     "start": "react-scripts start",

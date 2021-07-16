@@ -3,8 +3,8 @@ const express = require("express");
 const path = require("path");
 const morgan = require("morgan");
 const app = express();
-var http = require("http").createServer(app);
-var io = require("socket.io")(http);
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
 const fileUpload = require("express-fileupload");
 
 const PORT = process.env.PORT || 3001;
@@ -20,6 +20,7 @@ app.use(
     }
   )
 );
+// https  redirect
 if (process.env.NODE_ENV === "production") {
 app.use(function (req, res, next) {
   if (req.header('x-forwarded-proto') === 'http') {
@@ -55,17 +56,17 @@ require("./routes/api-routes.js")(app, io);
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+  app.use("/", express.static(path.join(__dirname, "client/build")));
 }
 
 // Send every other request to the React app
 // Define any API routes before this runs
 if (process.env.NODE_ENV === "production") {
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "./client/build/index.html"));
+    res.sendFile(path.join(__dirname, "client/build/index.html"));
   });
 }
 
 http.listen(PORT, () => {
-  console.log(`🌎 ==> API server now on port ${PORT}!`);
+  console.log(`🌎 ==> API server now on port ${PORT}! \n node env: ${process.env.NODE_ENV}`);
 });
