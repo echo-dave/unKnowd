@@ -12,6 +12,7 @@ module.exports = {
         NODE_ENV: "production",
         ignore_watch: [
           "client/public/upload",
+          "client/node_modules",
           "node_modules",
           ".pm2",
           ".ssh",
