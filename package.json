@@ -2,6 +2,10 @@
   "name": "unknowd",
   "version": "0.8.0",
   "description": "Putting the communitiy back in community",
+  "engines" : {
+    "npm": ">7.0.0",
+    "node": ">16.0.0"
+  },
   "main": "server.js",
   "scripts": {
     "preinstall": "npm i pm2 -g",
