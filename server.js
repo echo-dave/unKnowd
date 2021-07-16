@@ -68,5 +68,5 @@ if (process.env.NODE_ENV === "production") {
 }
 
 http.listen(PORT, () => {
-  console.log(`🌎 ==> API server now on port ${PORT}!`);
+  console.log(`🌎 ==> API server now on port ${PORT}! \n node env: ${process.env.NODE_ENV}`);
 });
