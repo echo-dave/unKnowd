@@ -45,12 +45,7 @@ app.use(express.json());
 const mongoose = require("mongoose");
 mongoose.Promise = Promise;
 const mongoUrl = process.env.MONGODB_URI;
-mongoose.set("useCreateIndex", true);
-mongoose.connect(mongoUrl, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false
-});
+mongoose.connect(mongoUrl);
 
 require("./routes/api-routes.js")(app, io);
 
