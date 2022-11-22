@@ -116,7 +116,7 @@ module.exports = function(app, io) {
       db.Post.create(req.body).then(function(data) {
         data
           .populate("creator")
-          .execPopulate()
+          // .execPopulate()
           .then(populatedData => {
             io.sockets.emit("new post", populatedData);
             res.end();
@@ -192,7 +192,7 @@ module.exports = function(app, io) {
             .then(function(data) {
               data
                 .populate("creator")
-                .execPopulate()
+                // .execPopulate()
                 .then(populatedData => {
                   io.sockets.emit("new event", populatedData);
                   res.end();
