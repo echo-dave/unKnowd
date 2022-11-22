@@ -81,6 +81,9 @@ module.exports = function(app, io) {
         photo: dbUser.photo
       };
       res.json(dbUser);
+    }).catch(err => {
+      res.status(500).json({error: err.message});
+      console.log(err);
     });
   });
 

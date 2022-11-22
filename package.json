@@ -8,7 +8,6 @@
   },
   "main": "server.js",
   "scripts": {
-    "preinstall": "npm i pm2 -g",
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:prod": "pm2-runtime start ecosystem.config.js --env production -i max",
     "start:dev": "concurrently \"pm2 start --env dev\" \"npm run client\"",
@@ -48,7 +47,7 @@
     "react-datepicker": "^2.16.0",
     "react-router-dom": "^5.2.0",
     "sass": "^1.35.2",
-    "socket.io": "^2.4.1",
-    "socket.io-client": "^2.4.0"
+    "socket.io": "^4.5.3",
+    "socket.io-client": "^4.5.3"
   }
 }
