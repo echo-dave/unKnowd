@@ -43,11 +43,11 @@
     "morgan": "^1.10.0",
     "nodemailer": "^6.6.3",
     "path": "^0.12.7",
-    "pm2": "^5.1.2",
+    "pm2": "^5.2.2",
     "react-datepicker": "^2.16.0",
     "react-router-dom": "^5.2.0",
     "sass": "=1.35.2",
-    "socket.io": "^4.5.3",
-    "socket.io-client": "^4.5.3"
+    "socket.io": "^4.5.4",
+    "socket.io-client": "^4.5.4"
   }
 }
