@@ -20,7 +20,7 @@ app.use(
     }
   )
 );
-// https  redirect
+// https redirect
 if (process.env.NODE_ENV === "production") {
 app.use(function (req, res, next) {
   if (req.header('x-forwarded-proto') === 'http') {
@@ -34,13 +34,6 @@ app.use(fileUpload());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// io.on("connection", function(socket) {
-//   console.log("a user connected");
-//   // Define API routes here
-
-//   socket.on("disconnect", () => console.log("user disconnected"));
-// });
-
 // Mongoose
 const mongoose = require("mongoose");
 mongoose.Promise = Promise;
@@ -49,7 +42,7 @@ mongoose.connect(mongoUrl);
 
 require("./routes/api-routes.js")(app, io);
 
-// Serve up static assets (usually on heroku)
+// Serve up static assets
 if (process.env.NODE_ENV === "production") {
   app.use("/", express.static(path.join(__dirname, "client/build")));
 }
