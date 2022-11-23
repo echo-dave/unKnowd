@@ -3,8 +3,8 @@
   "version": "0.8.0",
   "description": "Putting the communitiy back in community",
   "engines": {
-    "npm": "^7.18.1",
-    "node": "^16.4.2"
+    "npm": "^8.1.2",
+    "node": "^16.13.1"
   },
   "main": "server.js",
   "scripts": {
