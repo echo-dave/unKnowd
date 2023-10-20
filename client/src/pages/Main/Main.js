@@ -40,8 +40,8 @@ class Mainpage extends React.Component {
     }
 
     let bodyHeight = window.innerHeight;
-    this.resizeVh(bodyHeight);
-    window.addEventListener("resize", this.resizeVh.bind(this));
+    this.resize(bodyHeight);
+    window.addEventListener("resize", this.resize.bind(this));
 
     if (window.innerWidth < 769) this.toggleMapMobile();
 
@@ -83,12 +83,16 @@ class Mainpage extends React.Component {
     });
   }
 
-  resizeVh = bodyHeight => {
+  resize = bodyHeight => {
     bodyHeight = window.innerHeight;
     document.documentElement.style.setProperty(
       "--bodyHeight",
       `${bodyHeight}px`
     );
+    if (window.innerWidth > 768) {
+      document.querySelector(".column.posts").removeAttribute("style")
+      this.setState({mapShow: true})
+    }
   };
 
   // componentWillUnmount() {
