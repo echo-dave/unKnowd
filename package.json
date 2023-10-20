@@ -3,8 +3,8 @@
   "version": "0.8.0",
   "description": "Putting the communitiy back in community",
   "engines": {
-    "npm": "^8.1.2",
-    "node": "^16.13.1"
+    "npm": "^10.1.0",
+    "node": "^20.8.1"
   },
   "main": "server.js",
   "scripts": {
@@ -37,7 +37,7 @@
     "express-fileupload": "^1.4.0",
     "google-maps-react": "^2.0.6",
     "if-env": "^1.0.4",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.2",
     "moment": "^2.29.4",
     "mongoose": "^6.7.3",
     "morgan": "^1.10.0",
