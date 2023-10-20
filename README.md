@@ -30,7 +30,15 @@ Real community for real people without the social stalking.
 
 # Deployment
 
-## Heroku
+2 files requirements have been added for JWT asymetrical key signing for authentication:
+.privKey and .pubKey as an ES256 key pair
+
+```bash
+openssl ecparam -name secp256k1 -genkey -noout -out .privKey
+openssl ec -in .privKey -pubout > .pubKey
+```
+
+## Heroku - no longer testing heroku
 
 1. Fork the repo
 2. Login to Heroku and make a new app.
@@ -43,7 +51,7 @@ Real community for real people without the social stalking.
    2. MAP_API (This is a Google map api key you’ll need to get from Google)
    3. GOOGLE_GEOCODE is another Google api key (I separated mine)
    4. MONGODB_URI (this should be filled in for you if you used mLab)
-   5. SECRET (this is just a string used for tokens)
+   ~~5. SECRET (this is just a string used for tokens)~~
    6. PM2 Keys can be found on [https://app.pm2.io/](https://app.pm2.io/) via the blue Connect button at top
    For sending password reset mails you'll need:
    1. MAIL_SERVER_NAME is just an identifier
