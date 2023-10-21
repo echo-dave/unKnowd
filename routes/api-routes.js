@@ -51,7 +51,6 @@ module.exports = function(app, io) {
   });
 
   app.post("/api/authenticate", function(req, res) {
-    console.log('hit the api');
     const { email, password } = req.body;
     User.findOne({ email: email })
       .then(function(dbUser) {
@@ -59,8 +58,6 @@ module.exports = function(app, io) {
           res.status(401).json({ msg: "email or password is incorrect" });
         }
         if (dbUser.comparePassword(password)) {
-          console.log('doing the if');
-          console.log("private key: ", privateKey)
           //note the type should be ES256K which is not yet supported properly so we have to allow invalid tyeps for now
           const token = jwt.sign(
             {
