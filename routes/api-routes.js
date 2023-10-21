@@ -2,6 +2,8 @@ const db = require("../models");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const authWare = require("../middleware/authware");
+const fs = require("fs");
+const privateKey = fs.readFileSync('.privkey',{encoding: 'utf8'},(err,data) => err ? console.log(err) : data)
 // const socketIOClient = require("socket.io-client");
 // const socket = socketIOClient("http://127.0.0.1:3001");
 const upload = require("../nodejs/upload");
@@ -11,6 +13,9 @@ const googleMapsClient = require("@google/maps").createClient({
   key: process.env.GOOGLE_GEOCODE,
   Promise: Promise
 });
+
+
+
 
 module.exports = function(app, io) {
   app.post("/api/signup", function(req, res) {
@@ -53,11 +58,17 @@ module.exports = function(app, io) {
           res.status(401).json({ msg: "email or password is incorrect" });
         }
         if (dbUser.comparePassword(password)) {
+          //note the type should be ES256K which is not yet supported properly so we have to allow invalid tyeps for now
           const token = jwt.sign(
             {
               data: dbUser._id
             },
-            process.env.SECRET
+            privateKey,
+            {
+              algorithm: 'ES256',
+              expiresIn:'720h',
+              allowInvalidAsymmetricKeyTypes: true
+            }
           );
 
           res.json({
@@ -65,7 +76,6 @@ module.exports = function(app, io) {
             email: dbUser.email,
             token: token
           });
-          console.log(email);
         } else {
           res.status(401).json({ msg: "email or password incorrect" });
         }
